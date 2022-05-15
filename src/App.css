@@ -1,38 +1,367 @@
-.App {
-  text-align: center;
-}
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap');
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+/* Main Colors
+#A0CD53
+#25283D
+*/
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+/* Accent Colors
+#DC602E ORANGE
+#37AE49 GREEN
+#188EB9 BLUE
+#9046CF PURPLE
+#E05263 PINK/RED */
 
-.App-header {
-  background-color: #282c34;
+
+.app {
+  width: 100%;
+  font-family: 'M PLUS Rounded 1c';
+  padding-top: 70px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  color: #414141;
+}
+
+.align-center {
   align-items: center;
+}
+
+
+.app-header {
+  width: 100%;
+  height: 70px;
+  background-color: #FFF;
+  border-bottom: 2px solid #e5e5e5;
+  position: fixed;
+  top: 0;
+  z-index: 5;
+}
+
+.header-content {
+  text-align: center;
+  display: flex;
+  width: 1000px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.nav-link {
+  font-size: 19px;
+  user-select: none;
+  font-weight: 700;
+  color: #929292;
+  cursor: pointer;
+  margin-right: 35px;
+}
+
+.nav-link:hover {
+  color: #414141;
+  transition: .2s;
+}
+
+.nav-link-active {
+  font-size: 19px;
+  font-weight: 700;
+  color: #929292;
+  user-select: none;
+  margin-right: 35px;
+  color: #A0CD53;
+}
+
+.nav-profile {
+  height: 40px;
+  border-radius: 50%;
+  width: 40px;
+  margin-left: auto;
+  margin-top: 12px;
+  border: solid 3px #414141;
+  cursor: pointer;
+}
+
+.content {
+  width: 100%;
+  padding-top: 40px;
+  margin-bottom: 50px;
+}
+
+.content-description {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.text-title {
+  font-size: 30px;
+  font-weight: 700;
+  margin: 10px 0px 10px 0px;
+}
+
+.text-secondary {
+  font-size: 19px;
+  font-weight: 400;
+  margin: 5px 0px 5px 0px;
+}
+
+.challenge-container {
+  width: 900px;
+  margin: 50px auto 0px auto;
+}
+
+.job-container {
+  width: 900px;
+  margin: 20px auto 0px auto;
+}
+
+.job-card {
+  width: 100%;
+  height: 150px;
+  border-radius: 20px;
+  background-color: #FFF;
+  box-shadow: #e5e5e5 -1.95px 1.95px 2.6px;
+  border: 2px solid #e5e5e5;
+  border-left: 7px solid;
+  transition: .1s;
+  cursor: pointer;
+}
+
+.job-card:hover {
+  transition: .2s;
+  transform: rotate(-.5deg);
+}
+
+.job-title {
+  box-sizing: border-box;
+  margin: 10px 0px 10px 0px;
+  padding-left: 20px;
+  font-size: 17px;
+  font-weight: 700;
+  width: 100%;
+}
+
+.job-info {
+  padding-left: 20px;
+  display: flex;
+}
+
+.job-info p {
+  margin: 0px;
+}
+
+.job-info-name {
+  padding-left: 20px;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.job-info-value {
+  padding-left: 20px;
+  font-size: 14px;
+}
+
+.job-info-extra {
+  align-items: center;
+  margin-left: 20px;
+  font-size: 16px;
+  padding-top: 10px;
+  display: flex;
+}
+
+.profile-info {
+  box-sizing: border-box;
+  width: 1000px;
+  border-radius: 20px;
+  background-color: #FFF;
+  box-shadow: #e5e5e5 -1.95px 1.95px 2.6px;
+  border: 2px solid #e5e5e5;
+  margin: 0px auto 20px auto;
+  padding: 25px;
+  display: flex;
+}
+
+.profile-info p {
+  margin: 0px;
+}
+
+.profile-section {
+  box-sizing: border-box;
+  width: 1000px;
+  background-color: #FFF;
+  margin: 0px auto 20px auto;
+  padding: 25px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.profile-info-name {
+  padding-left: 20px;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.profile-info-position {
+  padding-left: 20px;
+  font-size: 20px;
+}
+
+.profile-info-extra {
+  align-items: center;
+  margin-left: 20px;
+  font-size: 14px;
+  padding-top: 10px;
+  display: flex;
+  font-weight: 700;
+}
+
+.profile-info-extra p {
+  margin-right: 10px;
+}
+
+.icon-margin-right {
+  margin-right: 10px;
+}
+
+.profile-picture {
+  border-radius: 75px;
+  border: 5px solid;
+  height: 110px;
+  width: 110px;
+}
+
+.skills {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.profile-skill {
+  width: 33%;
+  display: flex;
+  margin-top: 15px;
+  font-size: 1em;
+}
+
+.profile-call-to-action {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.profile-apply-button {
+  height: 45px;
+  width: 220px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: #e5e5e5 -1.95px 1.95px 2.6px;
+  background-color: #0f9fd3;
+  color: #FFF;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.profile-apply-button:hover {
+  background-color: hsl(196, 87%, 41%);
+}
+
+
+.profile-apply-button p {
+  margin: 0;
+}
+
+.company-logo {
+  border-radius: 10px;
+  border: 2px solid #e5e5e5;
+  height: 90px;
+  width: 90px;
+}
+
+.group-title {
+  width: 100%;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.card-group {
+  margin: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 120px;
+  height: 120px;
+  background-color: #FFF;
+  border: 2px solid #e5e5e5;
+  margin: 20px;
+  border-radius: 20px;
+  box-shadow: #e5e5e5 -1.95px 1.95px 2.6px;
+  transition: .1s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+
+.form-card {
+  background-color: #FFF;
+  border: 2px solid #e5e5e5;
+  box-shadow: #e5e5e5 -1.95px 1.95px 2.6px;
+  border-radius: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  width: 100%;
+}
+
+.card:hover {
+  width: 160px;
+  height: 160px;
+  border-radius: 25px;
+  transition: .3s;
+  margin: 0px;
+  transform: rotate(-3deg);
+}
+
+.card:hover .card-description {
+  transition: .3s;
+  display: block;
+  position: absolute;
+  font-weight: 700;
+  z-index: 2;
+}
+
+.card-image {
+  transition: .1s;
+  margin: 0px auto 0px auto;
+  height: 40%;
+  width: 40%;
+}
+
+.card-description {
+  user-select: none;
+  pointer-events: none;
+  display: none;
+  transform: translateX(170px);
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.card-description p {
+  background-color: #414141;
+  width: max-content;
+  padding: 3px 8px 3px 8px;
+  margin: 10px 0px 10px 0px;
+  border-radius: 2px;
+  color: #FFF;
+}
+
+.app-logo {
+  margin: 15px;
+  height: 35px;
+}
+
+.footer {
+  height: 250px;
+  background-color: #25283D;
+  width: 100%;
+  margin-top: auto;
 }
