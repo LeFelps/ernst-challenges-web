@@ -18,20 +18,23 @@ Page redirection between login and register must be made from the link under the
 After logging in the user is redirected to the challenges (list) page.
 
 
-### **Endpoints**
-`GET /login`
-```json
+## **Endpoints**
+## **`GET? /login`**
 Payload:
+```json
     {
         "username": "String",
         "password": "String"
     }
+```
 
 Response:
+```json
     {
         "token": "String"
     }
 ```
+
 
 ---
 
@@ -46,14 +49,15 @@ After signup the user is redirected to the challenges (list) page.
 ### **Endpoints**
 `POST /login`
 ```json
-Payload:
     {
         "username": "String",
         "password": "String",
         "email": "String"
     }
+```
 
 Response:
+```json
     {
         "token": "String"
     }

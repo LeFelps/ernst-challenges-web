@@ -1,26 +1,28 @@
-# Candidates 
+# Challenges 
 
 General functionalities and goals here
 
 ---
 
-## List
+## **List**
 
 ### **Description**
 Screen prototype
 
-
 Page functionalities here
 
-### **Endpoints**
-`GET /user/all`
-```json
+## **Endpoints**
+## **`GET /user/all`**
+
 Payload:
+```json
     {
         
     }
+```
 
 Response:
+```json
     [
         {
 
@@ -31,23 +33,26 @@ Response:
 
 ---
 
-## Details (user profile)
+## **Details**
 
 ### **Description**
 Screen prototype
 
 Page functionalities here
 
-### **Endpoints**
-`GET /user/{userId}`
-```json
+## **Endpoints**
+## **`GET /user/{userId}`**
 Payload:
-    {
-        
-    }
-
-Response:
+```json
     {
         
     }
 ```
+
+Response:
+```json
+    {
+
+    }
+```
+

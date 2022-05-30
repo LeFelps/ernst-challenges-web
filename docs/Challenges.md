@@ -4,7 +4,7 @@ General functionalities and goals here
 
 ---
 
-## List
+## **List**
 
 ### **Description**
 Screen prototype
@@ -12,15 +12,18 @@ Screen prototype
 
 Page functionalities here
 
-### **Endpoints**
-`GET /challenge/all`
-```json
+## **Endpoints**
+## **`GET /challenge/all`**
+
 Payload:
+```json
     {
         
     }
+```
 
 Response:
+```json
     [
         {
 
@@ -31,7 +34,7 @@ Response:
 
 ---
 
-## Details
+## **Details**
 
 ### **Description**
 Screen prototype
@@ -39,21 +42,23 @@ Screen prototype
 
 Page functionalities here
 
-### **Endpoints**
-`GET /challenge/{challengeId}`
-```json
+## **Endpoints**
+## **`GET /challenge/{challengeId}`**
 Payload:
-    {
-        
-    }
-
-Response:
+```json
     {
         
     }
 ```
+
+Response:
+```json
+    {
+
+    }
+```
 ---
-## Registration / Edit
+## **Registration / Edit**
 
 ### **Description**
 Screen prototype
@@ -61,19 +66,21 @@ Screen prototype
 
 Page functionalities here
 
-### **Endpoints**
-`POST /challenge`
+## **Endpoints**
+## **`POST /challenge`**
 
-`PUT /challenge/{challengeId}`
-```json
+## **`PUT /challenge/{challengeId}`**
 Payload:
+```json
     {
         
     }
+```
 
 Response:
+```json
     {
-       
+
     }
 ```
 

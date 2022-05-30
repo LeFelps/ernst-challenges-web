@@ -1,26 +1,28 @@
-# Jobs 
+# Challenges 
 
 General functionalities and goals here
 
 ---
 
-## List
+## **List**
 
 ### **Description**
 Screen prototype
 
-
 Page functionalities here
 
-### **Endpoints**
-`GET /job/all`
-```json
+## **Endpoints**
+## **`GET /job/all`**
+
 Payload:
+```json
     {
         
     }
+```
 
 Response:
+```json
     [
         {
 
@@ -31,47 +33,51 @@ Response:
 
 ---
 
-## Details
+## **Details**
 
 ### **Description**
 Screen prototype
 
 Page functionalities here
 
-### **Endpoints**
-`GET /job/{jobId}`
-```json
+## **Endpoints**
+## **`GET /job/{jobId}`**
 Payload:
-    {
-        
-    }
-
-Response:
+```json
     {
         
     }
 ```
+
+Response:
+```json
+    {
+
+    }
+```
 ---
-## Registration / Edit
+## **Registration / Edit**
 
 ### **Description**
 Screen prototype
 
 Page functionalities here
 
-### **Endpoints**
-`POST /job`
+## **Endpoints**
+## **`POST /job`**
 
-`PUT /job/{jobId}`
-```json
+## **`PUT /job/{jobId}`**
 Payload:
+```json
     {
         
     }
+```
 
 Response:
+```json
     {
-       
+
     }
 ```
 

@@ -4,23 +4,25 @@ General functionalities and goals here
 
 ---
 
-## List
+## **List**
 
 ### **Description**
 Screen prototype
 
-
 Page functionalities here
 
-### **Endpoints**
-`GET /opponent/all`
-```json
+## **Endpoints**
+## **`GET /opponent/all`**
+
 Payload:
+```json
     {
         
     }
+```
 
 Response:
+```json
     [
         {
 
@@ -31,47 +33,51 @@ Response:
 
 ---
 
-## Details
+## **Details**
 
 ### **Description**
 Screen prototype
 
 Page functionalities here
 
-### **Endpoints**
-`GET /opponent/{opponentId}`
-```json
+## **Endpoints**
+## **`GET /opponent/{opponentId}`**
 Payload:
-    {
-        
-    }
-
-Response:
+```json
     {
         
     }
 ```
+
+Response:
+```json
+    {
+
+    }
+```
 ---
-## Registration / Edit
+## **Registration / Edit**
 
 ### **Description**
 Screen prototype
 
 Page functionalities here
 
-### **Endpoints**
-`POST /opponent`
+## **Endpoints**
+## **`POST /opponent`**
 
-`PUT /opponent/{opponentId}`
-```json
+## **`PUT /opponent/{opponentId}`**
 Payload:
+```json
     {
         
     }
+```
 
 Response:
+```json
     {
-       
+
     }
 ```
 

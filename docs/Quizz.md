@@ -9,20 +9,20 @@ General functionalities and goals here
 ### **Description**
 Screen prototype
 
-
 Page functionalities here
 
-### **Endpoints**
-`GET /quiz`
+## **Endpoints**
+## **`GET /quiz`**
+
+Payload:
 ```json
-Params:
     {
-        "weapon": "challengeId",
-        "shield": "challengeId",
-        "opponent": "opponentId"
+        
     }
+```
 
 Response:
+```json
     [
         {
 
