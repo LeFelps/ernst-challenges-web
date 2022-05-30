@@ -9,10 +9,11 @@ General functionalities and goals here
 ### **Description**
 Screen prototype
 
+
 Page functionalities here
 
 ### **Endpoints**
-`GET /challenge/all`
+`GET /opponent/all`
 ```json
 Payload:
     {
@@ -38,7 +39,7 @@ Screen prototype
 Page functionalities here
 
 ### **Endpoints**
-`GET /challenge/{challengeId}`
+`GET /opponent/{opponentId}`
 ```json
 Payload:
     {
@@ -59,9 +60,9 @@ Screen prototype
 Page functionalities here
 
 ### **Endpoints**
-`POST /challenge`
+`POST /opponent`
 
-`PUT /challenge/{challengeId}`
+`PUT /opponent/{opponentId}`
 ```json
 Payload:
     {

@@ -1,4 +1,4 @@
-# Challenges 
+# Jobs 
 
 General functionalities and goals here
 
@@ -9,10 +9,11 @@ General functionalities and goals here
 ### **Description**
 Screen prototype
 
+
 Page functionalities here
 
 ### **Endpoints**
-`GET /challenge/all`
+`GET /job/all`
 ```json
 Payload:
     {
@@ -38,7 +39,7 @@ Screen prototype
 Page functionalities here
 
 ### **Endpoints**
-`GET /challenge/{challengeId}`
+`GET /job/{jobId}`
 ```json
 Payload:
     {
@@ -59,9 +60,9 @@ Screen prototype
 Page functionalities here
 
 ### **Endpoints**
-`POST /challenge`
+`POST /job`
 
-`PUT /challenge/{challengeId}`
+`PUT /job/{jobId}`
 ```json
 Payload:
     {

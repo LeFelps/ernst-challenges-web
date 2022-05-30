@@ -1,4 +1,4 @@
-# Challenges 
+# Candidates 
 
 General functionalities and goals here
 
@@ -9,10 +9,11 @@ General functionalities and goals here
 ### **Description**
 Screen prototype
 
+
 Page functionalities here
 
 ### **Endpoints**
-`GET /challenge/all`
+`GET /user/all`
 ```json
 Payload:
     {
@@ -30,7 +31,7 @@ Response:
 
 ---
 
-## Details
+## Details (user profile)
 
 ### **Description**
 Screen prototype
@@ -38,7 +39,7 @@ Screen prototype
 Page functionalities here
 
 ### **Endpoints**
-`GET /challenge/{challengeId}`
+`GET /user/{userId}`
 ```json
 Payload:
     {
@@ -50,27 +51,3 @@ Response:
         
     }
 ```
----
-## Registration / Edit
-
-### **Description**
-Screen prototype
-
-Page functionalities here
-
-### **Endpoints**
-`POST /challenge`
-
-`PUT /challenge/{challengeId}`
-```json
-Payload:
-    {
-        
-    }
-
-Response:
-    {
-       
-    }
-```
-
