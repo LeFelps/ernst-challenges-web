@@ -1,18 +1,21 @@
 ## Autenticação 
-**importante!** inicialmente o nível de usuário (admin, gestor, candidato) será gerenciado apenas diretamente pelo banco de dados
+**important!** initially user level (admin, manager, candidate) will be managed only and directly through the database
 
-A autenticação vai contar inicialmente com apenas duas telas, login e cadastro, seguindo o modelo seguinte:
+The authentication will at first have only two pages, login and register, as shown on the following images:
 
 ![image](https://user-images.githubusercontent.com/34667580/170843837-c67f5749-fc86-4cc8-be22-63d61c62673d.png)
 
-A tela de login deve autenticar as credenciais do usuário (Nome de usuário e senha) e manter o usuário logado.
+The login screen must authenticate the user’s credentials and keep him logged in.
 
-Inicialmente não é necessária a geração de um token criptografado já que não haverá problemas de segurança na etapa de projeto acadêmico.
-O redirecionamento à tela de cadastro é feito a partir do link/texto abaixo do card.
+Initially it is not necessary to create and manage an encrypted token, as it will not pose a security problem in the **academic project** stage.
 
-Ao ser feito o login o usuário é redirecionado à tela de desafios.
+Page redirection between login and register must be made from the link under the form.
+
+After logging in the user is redirected to the challenges (list) page.
+
 
 ![image](https://user-images.githubusercontent.com/34667580/170843867-bac8304d-f7d6-4018-ac27-4ea2799db686.png)
 
-O cadastro de usuário deve ser feito a partir das informações de Nome, Email e Senha (incluir campo para confirmação da senha).
-Ao concluir o cadastro, o usuário é imediatamente redirecionado à página de desafios
+The user register must be made from the basic information (name, email and password/confirmation).
+
+After signup the user is redirected to the challenges (list) page.
