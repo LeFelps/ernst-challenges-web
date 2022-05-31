@@ -7,11 +7,12 @@ The authentication will at first have only two pages, login and register, as sho
 
 ## Login
 Screen prototype
+
 ![image](https://user-images.githubusercontent.com/34667580/170843837-c67f5749-fc86-4cc8-be22-63d61c62673d.png)
 
 The login screen must authenticate the user’s credentials and keep him logged in.
 
-Initially it is not necessary to create and manage an encrypted token, as it will not pose a security problem in the **academic project** stage.
+Initially it is not necessary to create and manage an encrypted token, as it will not pose a security problem in the **academic project** stage. (try **Super tokens**)
 
 Page redirection between login and register must be made from the link under the form.
 
@@ -40,6 +41,7 @@ Response:
 
 ## Register
 Screen prototype
+
 ![image](https://user-images.githubusercontent.com/34667580/170843867-bac8304d-f7d6-4018-ac27-4ea2799db686.png)
 
 The user register must be made from the basic information (name, email and password/confirmation).
