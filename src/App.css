@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;600;700;900&display=swap');
 
 /* Main Colors
 #A0CD53
@@ -12,6 +12,82 @@
 #9046CF PURPLE
 #E05263 PINK/RED */
 
+
+.input-text {
+  width: 100%;
+  border: 2px #e5e5e5 solid;
+  border-radius: 5px;
+  height: 2.1rem;
+  padding: 0px 8px 0px 8px;
+  box-sizing: border-box;
+  min-width: 250px;
+  font-size: 1rem;
+  margin-top: 3px;
+}
+
+.input-text:focus {
+  outline: none;
+}
+
+.login-input-area {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.auth-bg {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F8F8F8;
+}
+
+.auth-title {
+  font-weight: 900;
+  font-size: 2.3rem;
+  margin: 0px auto 40px auto;
+}
+
+.login-logo {
+  margin-bottom: 40px;
+}
+
+.auth-button {
+  width: 100%;
+  background-color: #0F9FD3;
+  color: white;
+  border-radius: 4px;
+  border: none;
+  font-size: 1.1rem;
+  padding: 7px;
+  width: 70%;
+  margin: 0px auto 0px auto;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-card {
+  width: 500px;
+  padding: 65px;
+  box-sizing: border-box;
+  border-radius: 7px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, .25);
+}
+
+.register-link {
+  font-size: 0.9rem;
+  color: #0F9FD3;
+  transform: translate(0px, 95px);
+  margin: -.9rem auto 0px auto;
+  cursor: pointer;
+  text-decoration: none;
+}
 
 .app {
   width: 100%;
@@ -366,64 +442,4 @@
   background-color: #25283D;
   width: 100%;
   margin-top: auto;
-}
-
-.auth-nav {
-  position: sticky;
-  z-index: 2;
-  width: 100%;
-  height: 65px;
-  background-color: #ffffff;
-  display: flex;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  margin-bottom: -66px;
-  border-bottom: #414141 1px solid;
-}
-
-.auth-nav-img {
-  height: 40px;
-  width: auto;
-  margin-left: 20px;
-}
-
-.auth-nav-link {
-  text-decoration: none;
-  width: 100px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0px 20px 0px auto;
-  border-radius: 5px;
-  color: #A0CD53;
-  font-weight: 600;
-  background-color: #414141;
-  transition: .1s;
-}
-
-.auth-nav-link:hover {
-  color: #414141;
-  background-color: #A0CD53;
-  transition: .3s;
-}
-
-.auth-nav-link-active {
-  display: none;
-}
-
-.login-bg {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.login-card {
-  width: 450px;
-  height: 450px;
-  border: #414141 1px solid;
-  border-radius: 10px;
 }

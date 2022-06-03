@@ -22,17 +22,17 @@ After logging in the user is redirected to the challenges (list) page.
 ## **Endpoints**
 ## **`GET? /login`**
 Payload:
-```json
+```js
     {
-        "username": "String",
-        "password": "String"
+        username: "String",
+        password: "String"
     }
 ```
 
 Response:
-```json
+```js
     {
-        "token": "String"
+        token: "String"
     }
 ```
 
@@ -50,17 +50,17 @@ After signup the user is redirected to the challenges (list) page.
 
 ### **Endpoints**
 `POST /login`
-```json
+```js
     {
-        "username": "String",
-        "password": "String",
-        "email": "String"
+        username: "String",
+        password: "String",
+        email: "String"
     }
 ```
 
 Response:
-```json
+```js
     {
-        "token": "String"
+        token: "String"
     }
 ```

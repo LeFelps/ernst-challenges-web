@@ -23,7 +23,7 @@ function JobList() {
                     <div className='job-info'>
                         <img src={logo} alt="" className='company-logo' />
                         <div className='align-center'>
-                            <p className='job-info-name'>Koalify</p>
+                            <p className='job-info-name'>Ernest Young</p>
                             <p className='job-info-value'>R$ 4000,00</p>
                             <div className='job-info-extra'>
                                 <FontAwesomeIcon className='icon-margin-right' icon={faPlusCircle} color='#188EB9' />
@@ -44,7 +44,7 @@ function JobList() {
                     <div className='job-info'>
                         <img src={logo} alt="" className='company-logo' />
                         <div className='align-center'>
-                            <p className='job-info-name'>Koalify</p>
+                            <p className='job-info-name'>Ernest Young</p>
                             <p className='job-info-value'>R$ 14000,00</p>
                             <div className='job-info-extra'>
                                 <FontAwesomeIcon className='icon-margin-right' icon={faPlusCircle} color='#188EB9' />
@@ -64,7 +64,7 @@ function JobList() {
                     <div className='job-info'>
                         <img src={logo} alt="" className='company-logo' />
                         <div className='align-center'>
-                            <p className='job-info-name'>Koalify</p>
+                            <p className='job-info-name'>Ernest Young</p>
                             <p className='job-info-value'>R$ 4000,00</p>
                         </div>
                     </div>
@@ -78,7 +78,7 @@ function JobList() {
                     <div className='job-info'>
                         <img src={logo} alt="" className='company-logo' />
                         <div className='align-center'>
-                            <p className='job-info-name'>Koalify</p>
+                            <p className='job-info-name'>Ernest Young</p>
                             <p className='job-info-value'>R$ 4000,00</p>
                             <div className='job-info-extra'>
                                 <FontAwesomeIcon className='icon-margin-right' icon={faPlusCircle} color='#188EB9' />
@@ -98,7 +98,7 @@ function JobList() {
                     <div className='job-info'>
                         <img src={logo} alt="" className='company-logo' />
                         <div className='align-center'>
-                            <p className='job-info-name'>Koalify</p>
+                            <p className='job-info-name'>Ernest Young</p>
                             <p className='job-info-value'>R$ 4000,00</p>
                         </div>
                     </div>
