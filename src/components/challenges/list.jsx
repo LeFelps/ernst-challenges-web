@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBug, faCartShopping, faChartPie, faDatabase, faEthernet, faFingerprint, faGlobe, faKey, faListCheck, faLock, faMessage, faNetworkWired, faServer, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBug, faCartShopping, faChartPie, faDatabase, faEthernet, faFingerprint, faGlobe, faKey, faListCheck, faLock, faMessage, faNetworkWired, faPen, faServer, faUser } from '@fortawesome/free-solid-svg-icons';
 
 function ChallengeList() {
 
@@ -29,6 +29,9 @@ function ChallengeList() {
                                 Build a working shopping list
                             </p>
                         </div>
+                        <button className='edit-button'>
+                        <FontAwesomeIcon icon={faPen} className="card-image"/>
+                        </button>
                     </div>
                     <div className='card'>
                         <FontAwesomeIcon icon={faMessage} className="card-image" style={{ color: '#188EB9' }} />

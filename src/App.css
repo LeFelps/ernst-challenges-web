@@ -13,6 +13,8 @@
 #E05263 PINK/RED */
 
 
+/* AUTH SCREENS */
+
 .input-text {
   width: 100%;
   border: 2px #e5e5e5 solid;
@@ -89,6 +91,83 @@
   text-decoration: none;
 }
 
+/* CHALLENGES */
+
+.edit-button {
+  color: #484848;
+  background-color: #E5D82A;
+  height: 45px;
+  width: 45px;
+  border: none;
+  border-radius: 50%;
+  position: absolute;
+  transition: .1s;
+  transform: translate(200%, 100%);
+}
+
+.edit-button:hover {
+  background-color: hsl(56, 78%, 46%);
+  cursor: pointer;
+}
+
+.card:hover .edit-button {
+  height: 60px;
+  width: 60px;   
+  transition: .3s;
+}
+
+.card-description {
+  user-select: none;
+  pointer-events: none;
+  display: none;
+  transform: translateX(170px);
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.card-description p {
+  background-color: #414141;
+  width: max-content;
+  padding: 3px 8px 3px 8px;
+  margin: 10px 0px 10px 0px;
+  border-radius: 2px;
+  color: #FFF;
+}
+
+.card {
+  width: 120px;
+  height: 120px;
+  background-color: #FFF;
+  border: 2px solid #e5e5e5;
+  margin: 20px;
+  border-radius: 20px;
+  box-shadow: #e5e5e5 -1.95px 1.95px 2.6px;
+  transition: .1s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.card:hover {
+  width: 160px;
+  height: 160px;
+  border-radius: 25px;
+  transition: .3s;
+  margin: 0px;
+  transform: rotate(-3deg);
+}
+
+.card:hover .card-description {
+  transition: .3s;
+  display: block;
+  position: absolute;
+  font-weight: 700;
+  z-index: 2;
+}
+
+
+/* UNSORTED */
+
 .app {
   width: 100%;
   font-family: 'M PLUS Rounded 1c';
@@ -132,7 +211,6 @@
 }
 
 .nav-link:hover {
-
   color: #414141;
   transition: .2s;
 }
@@ -364,21 +442,6 @@
   flex-wrap: wrap;
 }
 
-.card {
-  width: 120px;
-  height: 120px;
-  background-color: #FFF;
-  border: 2px solid #e5e5e5;
-  margin: 20px;
-  border-radius: 20px;
-  box-shadow: #e5e5e5 -1.95px 1.95px 2.6px;
-  transition: .1s;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-
 .form-card {
   background-color: #FFF;
   border: 2px solid #e5e5e5;
@@ -390,23 +453,6 @@
   width: 100%;
 }
 
-.card:hover {
-  width: 160px;
-  height: 160px;
-  border-radius: 25px;
-  transition: .3s;
-  margin: 0px;
-  transform: rotate(-3deg);
-}
-
-.card:hover .card-description {
-  transition: .3s;
-  display: block;
-  position: absolute;
-  font-weight: 700;
-  z-index: 2;
-}
-
 .card-image {
   transition: .1s;
   margin: 0px auto 0px auto;
@@ -414,23 +460,7 @@
   width: 40%;
 }
 
-.card-description {
-  user-select: none;
-  pointer-events: none;
-  display: none;
-  transform: translateX(170px);
-  font-size: 1.2rem;
-  font-weight: 500;
-}
 
-.card-description p {
-  background-color: #414141;
-  width: max-content;
-  padding: 3px 8px 3px 8px;
-  margin: 10px 0px 10px 0px;
-  border-radius: 2px;
-  color: #FFF;
-}
 
 .app-logo {
   margin: 15px;
