@@ -43,15 +43,37 @@ function Dashboard() {
                                 Jobs
                             </p>
                         </NavLink>
+                        <NavLink
+                            className={({ isActive }) => {
+                                let linkClasses = 'nav-link';
+                                if (isActive) linkClasses = linkClasses + '-active';
+                                return linkClasses
+                            }}
+                            to="/candidates">
+                            <p>
+                                Candidates
+                            </p>
+                        </NavLink>
+                        <NavLink
+                            className={({ isActive }) => {
+                                let linkClasses = 'nav-link';
+                                if (isActive) linkClasses = linkClasses + '-active';
+                                return linkClasses
+                            }}
+                            to="/dungeon">
+                            <p>
+                                The Dungeon
+                            </p>
+                        </NavLink>
                         <NavLink to="/profile" className="nav-profile" >
                             <img src={logo} alt="Small profile" style={{ borderColor: '#188EB9' }} />
                         </NavLink>
                     </div>
                 </div>
                 <Routes>
-                    {/* <Route exact path='/' component={}></Route> */}
                     <Route path='/' exact element={<ChallengeList />}></Route>
                     <Route path='/challenges' element={<ChallengeList />}></Route>
+                    <Route path='/challenge' element={<ChallengeView />}></Route>
                     <Route path='/challenge-form' element={<ChallengeForm />}></Route>
                     <Route path='/jobs' exact element={<JobList />}></Route>
                     <Route path='/job-form' element={<JobForm />}></Route>

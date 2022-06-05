@@ -35,13 +35,13 @@ function Login() {
                 <div className="login-input-area">
                     <div>
                         <label htmlFor="username">Username</label>
-                        <input type="text" className='input-text' onChange={(e) => {
+                        <input type="text" className='input-field' onChange={(e) => {
                             setUserData({ ...userData, username: e.target.value })
                         }} value={userData.username} />
                     </div>
                     <div>
                         <label htmlFor="password">Password</label>
-                        <input type="password" className='input-text' onChange={(e) => {
+                        <input type="password" className='input-field' onChange={(e) => {
                             setUserData({ ...userData, password: e.target.value })
                         }} value={userData.password} />
                     </div>
