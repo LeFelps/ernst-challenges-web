@@ -68,7 +68,34 @@ function ChallengeForm() {
                     Quizz questions
                 </span>
                 <div className="alt-container">
-                    
+                    <div className='row'>
+                        <div className="round-card">
+                            <span className="card-title">
+                                Easy
+                            </span>
+                            <span className='card-value' style={{ backgroundColor: '#7DD30F' }}>27</span>
+                        </div>
+                        <div className="round-card">
+                            <span className="card-title">
+                                Medium
+                            </span>
+                            <span className='card-value' style={{ backgroundColor: '#D68D00' }}>15</span>
+                        </div>
+                        <div className="round-card">
+                            <span className="card-title">
+                                Hard
+                            </span>
+                            <span className='card-value' style={{ backgroundColor: '#D6000D' }}>9</span>
+                        </div>
+                    </div>
+                    <div className="row centered">
+                        <button className="button-flat bg-white text-dark">
+                            Question List
+                        </button>
+                        <button className="button-flat bg-blue text-white">
+                            Add Question
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

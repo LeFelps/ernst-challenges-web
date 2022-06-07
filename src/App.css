@@ -228,21 +228,112 @@
 .round-card {
   display: flex;
   border-radius: 25px;
-  height: 50px;
-  
+  background-color: white;
+  width: 30%;
+  align-items: center;
+  box-shadow: #e5e5e5 -4px 4px 0px;
+  padding: 15px 25px 15px 25px;
 }
 
 .section-title {
   font-weight: 700;
   font-size: 1.6rem;
+  margin-bottom: 10px;
+  box-sizing: border-box;
 }
 
 .alt-container {
   background-color: #F0F0F0;
   border-radius: 15px;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.card-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.card-value {
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 2px 10px 2px 10px;
+  border-radius: 5px;
+  margin: 0px 0px 0px auto;
+  min-width: 25px;
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  gap: 25px;
+  width: 100%;
+  flex-direction: row;
+}
+
+.button-flat {
+  border-radius: 4px;
+  border: none;
+  font-size: 1rem;
+  padding: 7px 12px 7px 12px;
+  margin: 25px 0px 0px 0px;
+  font-weight: 500;
+  cursor: pointer;
+  min-width: 200px;
+}
+
+.button-rounded {
+
+}
+.text-white {
+  color: white;
+}
+
+.text-dark {
+  color: #414141;
+}
+
+
+.centered {
+  justify-content: center;
+}
+
+.bg-yellow {
+  background-color: #E5D82A;
+}
+
+.bg-blue {
+ background-color: #0F9FD3;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.bg-green {
+  background-color: #7DD30F;
+}
+
+.bg-red {
+ background-color: #D6000D;
+}
+
+.bg-purple {
+  background-color: #9006B3;
+}
+
+.bg-grey {
+  background-color: #B1B1B1;
+}
+
+.bg-orange {
+  background-color: #D68D00;
 }
 
 /* UNSORTED */
+
+
 
 .app {
   width: 100%;
