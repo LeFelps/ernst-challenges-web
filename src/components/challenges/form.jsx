@@ -72,7 +72,6 @@ function ChallengeForm() {
                     </div>
                 </div>
                 <div>
-
                     <span className="section-title">
                         Quizz questions
                     </span>
