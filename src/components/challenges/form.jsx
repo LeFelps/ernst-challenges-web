@@ -99,7 +99,7 @@ function ChallengeForm() {
                                 </div>
                             </div>
                             <div className="row centered">
-                                <button className="button-flat white text-dark">
+                                <button className="button-flat white text-dark thin-border">
                                     Question List
                                 </button>
                                 <button className="button-flat blue text-white">
@@ -198,6 +198,14 @@ function ChallengeForm() {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className="row push-right">
+                    <button className="button-rounded gray text-white ">
+                        Cancel
+                    </button>
+                    <button className="button-rounded green text-white ">
+                        Save
+                    </button>
                 </div>
             </div>
         </div>

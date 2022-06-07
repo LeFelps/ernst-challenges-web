@@ -302,10 +302,18 @@
   font-weight: 500;
   cursor: pointer;
   min-width: 200px;
+  font-weight: 600;
 }
 
 .button-rounded {
-
+  border-radius: 12px;
+  border: none;
+  font-size: 1rem;
+  padding: 7px 12px 7px 12px;
+  font-weight: 500;
+  cursor: pointer;
+  min-width: 200px;
+  font-weight: 600;
 }
 
 .chip-section {
@@ -349,6 +357,10 @@
   cursor: pointer;
 }
 
+.thin-border {
+  border: 1px solid #8a8a8a;
+}
+
 .add-button span{
   margin-left: 10px;
 }
@@ -361,85 +373,88 @@
   color: #414141;
 }
 
-
 .centered {
   justify-content: center;
+}
+
+.push-right {
+  justify-content: end;
 }
 
 .yellow {
   background-color: #E5D82A;
 }
 
-.blue {
- background-color: #0F9FD3;
-}
-
-.white {
-  background-color: white;
-}
-
-.green {
-  background-color: #7DD30F;
-}
-
-.red {
- background-color: #D6000D;
-}
-
-.purple {
-  background-color: #9006B3;
-}
-
-.grey {
-  background-color: #B1B1B1;
-}
-
-.orange {
-  background-color: #D68D00;
-}
-
-.dark {
-  background-color: #414141;
-}
-
-.lightgray {
-  background-color: #dfdfdf;
-}
-
 .yellow:hover {
   background-color: hsl(56, 78%, 48%);
 }
 
+.blue {
+ background-color: #0F9FD3;
+}
+
 .blue:hover {
- background-color: hsl(196, 87%, 39%);
+  background-color: hsl(196, 87%, 39%);
+ }
+
+.white {
+  background-color: white;
 }
 
 .white:hover {
   background-color: hsl(0, 0%, 95%);
 }
 
+.green {
+  background-color: #7DD30F;
+}
+
 .green:hover {
   background-color: hsl(86, 87%, 39%);
 }
 
+.red {
+ background-color: #D6000D;
+}
+
 .red:hover {
- background-color: hsl(356, 100%, 37%);
+  background-color: hsl(356, 100%, 37%);
+ }
+
+.purple {
+  background-color: #9006B3;
 }
 
 .purple:hover {
   background-color: hsl(288, 94%, 41%);
 }
 
+.gray {
+  background-color: #B1B1B1;
+}
+
 .gray:hover {
   background-color: hsl(0, 0%, 64%);
+}
+
+.orange {
+  background-color: #D68D00;
 }
 
 .orange:hover {
   background-color: hsl(40, 100%, 37%);
 }
 
+.dark {
+  background-color: #414141;
+}
+
 .dark:hover {
   background-color: hsl(0, 0%, 30%);
+}
+
+.lightgray {
+  background-color: #dfdfdf;
 }
 
 .lightgray:hover {
@@ -447,8 +462,6 @@
 }
 
 /* UNSORTED */
-
-
 
 .app {
   width: 100%;
