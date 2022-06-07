@@ -154,6 +154,9 @@
 .form-container {
   width: 900px;
   margin: 20px auto 0px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
 }
 
 .form-title {
@@ -174,10 +177,10 @@
   width: 50%;
 }
 
-.input-section {
+.input-row {
   display: flex;
+  flex-direction: row;
   gap: 30px;
-  margin: 0px 0px 40px 0px;
 }
 
 .input-link {
@@ -239,14 +242,33 @@
   font-weight: 700;
   font-size: 1.6rem;
   margin-bottom: 10px;
-  box-sizing: border-box;
+  display: inline-block;
 }
 
-.alt-container {
+.filled-container {
   background-color: #F0F0F0;
   border-radius: 15px;
   padding: 30px;
   box-sizing: border-box;
+}
+
+.outlined-container {
+  border: 3px #F0F0F0 solid;
+  border-radius: 15px;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.box-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .card-title {
@@ -277,7 +299,6 @@
   border: none;
   font-size: 1rem;
   padding: 7px 12px 7px 12px;
-  margin: 25px 0px 0px 0px;
   font-weight: 500;
   cursor: pointer;
   min-width: 200px;
@@ -286,6 +307,52 @@
 .button-rounded {
 
 }
+
+.chip-section {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 10px;
+  width: auto;
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  height: 30px;
+  border-radius: 15px;
+  padding: 2px;
+  box-sizing: border-box;
+  cursor: default;
+  font-weight: 600;
+}
+
+.chip span {
+  margin: auto 15px auto 7px;
+}
+
+.chip-button {
+  background: none;
+  border: none;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 1.1rem;
+  cursor: pointer;  
+}
+
+.add-button {
+  color: #B1B1B1;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.add-button span{
+  margin-left: 10px;
+}
+
 .text-white {
   color: white;
 }
@@ -299,36 +366,84 @@
   justify-content: center;
 }
 
-.bg-yellow {
+.yellow {
   background-color: #E5D82A;
 }
 
-.bg-blue {
+.blue {
  background-color: #0F9FD3;
 }
 
-.bg-white {
+.white {
   background-color: white;
 }
 
-.bg-green {
+.green {
   background-color: #7DD30F;
 }
 
-.bg-red {
+.red {
  background-color: #D6000D;
 }
 
-.bg-purple {
+.purple {
   background-color: #9006B3;
 }
 
-.bg-grey {
+.grey {
   background-color: #B1B1B1;
 }
 
-.bg-orange {
+.orange {
   background-color: #D68D00;
+}
+
+.dark {
+  background-color: #414141;
+}
+
+.lightgray {
+  background-color: #dfdfdf;
+}
+
+.yellow:hover {
+  background-color: hsl(56, 78%, 48%);
+}
+
+.blue:hover {
+ background-color: hsl(196, 87%, 39%);
+}
+
+.white:hover {
+  background-color: hsl(0, 0%, 95%);
+}
+
+.green:hover {
+  background-color: hsl(86, 87%, 39%);
+}
+
+.red:hover {
+ background-color: hsl(356, 100%, 37%);
+}
+
+.purple:hover {
+  background-color: hsl(288, 94%, 41%);
+}
+
+.gray:hover {
+  background-color: hsl(0, 0%, 64%);
+}
+
+.orange:hover {
+  background-color: hsl(40, 100%, 37%);
+}
+
+.dark:hover {
+  background-color: hsl(0, 0%, 30%);
+}
+
+.lightgray:hover {
+  background-color: hsl(0, 0%, 82%);
 }
 
 /* UNSORTED */
@@ -405,7 +520,7 @@
 .content {
   width: 100%;
   padding-top: 130px;
-  margin-bottom: 50px;
+  margin-bottom: 90px;
 }
 
 .content-description {
@@ -601,6 +716,8 @@
   width: 100%;
   font-weight: 700;
   font-size: 18px;
+  margin-bottom: 5px;
+  display: inline-block;
 }
 
 .card-group {
@@ -626,8 +743,6 @@
   height: 40%;
   width: 40%;
 }
-
-
 
 .app-logo {
   margin: 15px;
