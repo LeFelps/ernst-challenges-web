@@ -47,6 +47,10 @@ function JobForm() {
                                 //     setUserData({ ...userData, username: e.target.value })
                                 // }} value={userData.username}
                                 />
+                                <div>
+                                    <input type="checkbox" name="check4" id="check4" />
+                                    <label for="check4">Remote</label>
+                                </div>
                             </div>
                         </div>
                         <div className="input-row">
@@ -133,13 +137,13 @@ function JobForm() {
                     <div>
                         <span className="group-title">Requirements</span>
                         <div className="chip-section">
-                            <div className="chip white text-dark">
+                            <div className="chip white text-dark border-thin">
                                 <button className="chip-button">
                                     <FontAwesomeIcon icon={fa.faCircleXmark} />
                                 </button>
                                 <span>Javascript</span>
                             </div>
-                            <div className="chip white text-dark">
+                            <div className="chip white text-dark border-thin">
                                 <button className="chip-button">
                                     <FontAwesomeIcon icon={fa.faCircleXmark} />
                                 </button>

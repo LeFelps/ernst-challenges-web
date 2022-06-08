@@ -175,13 +175,13 @@ function ChallengeForm() {
                             <div>
                                 <span className="group-title">Technologies</span>
                                 <div className="chip-section">
-                                    <div className="chip white text-dark">
+                                    <div className="chip white text-dark border-thin">
                                         <button className="chip-button">
                                             <FontAwesomeIcon icon={fa.faCircleXmark} />
                                         </button>
                                         <span>Javascript</span>
                                     </div>
-                                    <div className="chip white text-dark">
+                                    <div className="chip white text-dark border-thin">
                                         <button className="chip-button">
                                             <FontAwesomeIcon icon={fa.faCircleXmark} />
                                         </button>
