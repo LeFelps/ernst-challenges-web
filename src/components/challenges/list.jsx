@@ -29,7 +29,7 @@ function ChallengeList() {
                                 Build a working shopping list
                             </p>
                         </div>
-                        <button className='edit-button'>
+                        <button className='round-button'>
                         <FontAwesomeIcon icon={faPen} className="card-image"/>
                         </button>
                     </div>
