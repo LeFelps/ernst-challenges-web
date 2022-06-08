@@ -4,8 +4,6 @@ import * as fa from '@fortawesome/free-solid-svg-icons';
 
 function ChallengeForm() {
 
-
-
     return (
         <div className="content">
             <div className="form-container">
