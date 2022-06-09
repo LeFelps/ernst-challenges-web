@@ -96,7 +96,7 @@ function ChallengeForm() {
                                 </div>
                             </div>
                             <div className="row centered">
-                                <button className="button-flat white text-dark thin-border">
+                                <button className="button-flat white text-dark border-thin">
                                     Question List
                                 </button>
                                 <button className="button-flat blue text-white">

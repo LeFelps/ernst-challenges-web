@@ -1,10 +1,6 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import * as fa from '@fortawesome/free-solid-svg-icons';
 
 function OpponentForm() {
-
-
 
     return (
         <div className="content">
