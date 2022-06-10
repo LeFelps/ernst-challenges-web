@@ -16,9 +16,9 @@ function JobList() {
                 </p>
             </div>
             <div className='job-container'>
-                <div className='long-card highlight-left-pink'>
-                    <div className='long-card-title text-pink'>
-                        Desenvolvedor Back-end • Junior
+                <div className='long-card highlight-left-blue'>
+                    <div className='long-card-title text-blue'>
+                        Front-end developer • Junior
                     </div>
                     <div className='long-card-content'>
                         <img src={logo} alt="" className='company-logo' />
@@ -38,7 +38,7 @@ function JobList() {
             <div className='job-container'>
                 <div className='long-card highlight-left-pink'>
                     <div className='long-card-title text-pink'>
-                        Desenvolvedor Back-end • Sênior
+                        Back-end developer • Sênior
                     </div>
                     <div className='long-card-content'>
                         <img src={logo} alt="" className='company-logo' />
