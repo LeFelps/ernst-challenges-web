@@ -248,14 +248,43 @@
 
 /* GENERAL UTILITIES */
 
+.text-small {
+  font-size: .9rem;
+}
+
+.text-big {
+  font-size: 1.1rem;
+}
+
+.text-bigger {
+  font-size: 1.3rem;
+}
+
+.text-huge {
+  font-size: 1.5rem;
+}
+
 .round-card {
   display: flex;
   border-radius: 25px;
   background-color: white;
-  width: 30%;
   align-items: center;
-  box-shadow: #e5e5e5 -4px 4px 0px;
+  box-shadow: #e5e5e5 -2px 2px 0px 4px;
+  box-sizing: border-box;
   padding: 15px 25px 15px 25px;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.w-30 {
+  width: 30%;
+}
+
+.p-25 {
+  padding: 25px;
+  box-sizing: border-box;
 }
 
 .section-title {
@@ -309,9 +338,26 @@
 
 .row {
   display: flex;
-  gap: 25px;
   width: 100%;
   flex-direction: row;
+}
+
+.col {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.gap-15 {
+  gap: 15px;
+}
+
+.gap-25 {
+  gap: 25px;
+}
+
+.gap-35 {
+  gap: 35px;
 }
 
 .button-flat {
@@ -366,7 +412,7 @@
   border: none;
   color: rgba(0, 0, 0, 0.5);
   font-size: 1.1rem;
-  cursor: pointer;  
+  cursor: pointer;
 }
 
 .add-button {
@@ -381,7 +427,11 @@
   border: 1px solid #8a8a8a;
 }
 
-.add-button span{
+.text-center {
+  text-align: center;
+}
+
+.add-button span {
   margin-left: 10px;
 }
 
@@ -430,12 +480,12 @@
 }
 
 .blue {
- background-color: #0F9FD3;
+  background-color: #0F9FD3;
 }
 
 .blue:hover {
   background-color: hsl(196, 87%, 39%);
- }
+}
 
 .white {
   background-color: white;
@@ -454,12 +504,12 @@
 }
 
 .red {
- background-color: #D6000D;
+  background-color: #D6000D;
 }
 
 .red:hover {
   background-color: hsl(356, 100%, 37%);
- }
+}
 
 .purple {
   background-color: #9006B3;
@@ -501,6 +551,28 @@
   background-color: hsl(0, 0%, 82%);
 }
 
+.to-right {
+  margin-left: auto;
+}
+
+.to-left {
+  margin-right: auto;
+}
+
+.round-img {
+  border-radius: 40px;
+  border: 2px solid #e5e5e5;
+  height: 80px;
+  width: 80px;
+}
+
+.company-logo {
+  border-radius: 15px;
+  border: 2px solid #e5e5e5;
+  height: 90px;
+  width: 90px;
+}
+
 /* UNSORTED */
 
 .app {
@@ -512,10 +584,14 @@
   color: #414141;
 }
 
-.align-center {
-  align-items: center;
+.justify-center {
+  justify-content: center;
 }
 
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
 
 .app-header {
   width: 100%;
@@ -593,14 +669,9 @@
   margin: 5px 0px 5px 0px;
 }
 
-.challenge-container {
+.list-container {
   width: 900px;
-  margin: 50px auto 0px auto;
-}
-
-.job-container {
-  width: 900px;
-  margin: 20px auto 0px auto;
+  margin: 40px auto 0px auto;
 }
 
 .long-card {
@@ -609,6 +680,7 @@
   border-radius: 30px;
   background-color: #FFF;
   border: 4px solid #e5e5e5;
+  box-sizing: border-box;
   transition: .1s;
   cursor: pointer;
 }
@@ -637,20 +709,19 @@
   display: flex;
 }
 
-.job-info-name {
-  padding-left: 20px;
+.info-name {
   font-size: 19px;
   font-weight: 700;
 }
 
-.job-info-value {
-  padding-left: 20px;
-  font-size: 14px;
+.info-value {
+  font-size: .9rem;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
-.job-info-extra {
+.info-extra {
   align-items: center;
-  margin-left: 20px;
   font-size: 16px;
   padding-top: 10px;
   display: flex;
@@ -765,7 +836,6 @@
 }
 
 .group-title {
-  width: 100%;
   font-weight: 700;
   font-size: 18px;
   margin-bottom: 5px;

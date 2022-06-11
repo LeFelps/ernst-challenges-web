@@ -8,7 +8,6 @@ function ChallengeForm() {
         <div className="content">
             <div className="form-container">
                 <div>
-
                     <div className="form-title">New Challenge</div>
                     <div className="input-section">
                         <div className="input-row">
@@ -75,27 +74,27 @@ function ChallengeForm() {
                     </span>
                     <div className="filled-container">
                         <div className="input-section">
-                            <div className='row'>
-                                <div className="round-card">
+                            <div className='row gap-25'>
+                                <div className="round-card w-30">
                                     <span className="card-title">
                                         Easy
                                     </span>
                                     <span className='card-value green'>27</span>
                                 </div>
-                                <div className="round-card">
+                                <div className="round-card w-30">
                                     <span className="card-title">
                                         Medium
                                     </span>
                                     <span className='card-value orange'>15</span>
                                 </div>
-                                <div className="round-card">
+                                <div className="round-card w-30">
                                     <span className="card-title">
                                         Hard
                                     </span>
                                     <span className='card-value red'>9</span>
                                 </div>
                             </div>
-                            <div className="row centered">
+                            <div className="row centered gap-25">
                                 <button className="button-flat white text-dark border-thin">
                                     Question List
                                 </button>
@@ -196,7 +195,7 @@ function ChallengeForm() {
                         </div>
                     </div>
                 </div>
-                <div className="row push-right">
+                <div className="row push-right gap-25">
                     <button className="button-rounded gray text-white ">
                         Cancel
                     </button>

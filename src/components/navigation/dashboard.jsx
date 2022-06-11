@@ -12,6 +12,9 @@ import JobView from '../jobs/form';
 import ProfileList from '../profile/list';
 import ProfileForm from '../profile/form';
 import ProfileView from '../profile/view';
+import DungeonList from '../dungeon/list';
+import DungeonForm from '../dungeon/form';
+import DungeonView from '../dungeon/view';
 
 
 function Dashboard() {
@@ -78,6 +81,9 @@ function Dashboard() {
                     <Route path='/jobs' exact element={<JobList />}></Route>
                     <Route path='/job-form' element={<JobForm />}></Route>
                     <Route path='/profile' element={<ProfileView />}></Route>
+                    <Route path='/opponents' exact element={<DungeonList />}></Route>
+                    <Route path='/opponent-form' element={<DungeonForm />}></Route>
+                    <Route path='/dungeon' element={<DungeonView />}></Route>
                 </Routes>
                 <div className='footer'>
 

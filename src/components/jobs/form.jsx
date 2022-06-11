@@ -156,7 +156,7 @@ function JobForm() {
                         </div>
                     </div>
                 </div>
-                <div className="row push-right">
+                <div className="row push-right gap-25">
                     <button className="button-rounded gray text-white ">
                         Cancel
                     </button>

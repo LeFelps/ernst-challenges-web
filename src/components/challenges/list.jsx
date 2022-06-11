@@ -14,7 +14,7 @@ function ChallengeList() {
                     Challenges that help you test and improve your technical skills
                 </p>
             </div>
-            <div className='challenge-container'>
+            <div className='list-container'>
                 <p className="group-title" style={{ color: '#188EB9' }}>
                     Front-end development
                 </p>
@@ -79,7 +79,7 @@ function ChallengeList() {
                     </div>
                 </div>
             </div>
-            <div className='challenge-container'>
+            <div className='list-container'>
                 <p className="group-title" style={{ color: '#E05263' }}>
                     Back-end development
                 </p>
@@ -107,7 +107,7 @@ function ChallengeList() {
                     </div>
                 </div>
             </div>
-            <div className='challenge-container'>
+            <div className='list-container'>
                 <p className="group-title" style={{ color: '#37AE49' }}>
                     Infrastructure
                 </p>
