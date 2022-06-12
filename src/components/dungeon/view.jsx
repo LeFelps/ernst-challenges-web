@@ -49,28 +49,34 @@ function OpponentView() {
                     </div>
                     <div className='row gap-35'>
                         <div className="round-card w-50 gap-15">
+                            <div className="card-icon dark  text-bigger">
+                                <FontAwesomeIcon icon={faGun} />
+                            </div>
                             <div>
                                 <div className='card-sm'>
                                     <FontAwesomeIcon icon={faListCheck} className="card-image" style={{ color: '#188EB9' }} />
                                 </div>
                             </div>
-                                <div className="col gap-15">
-                                    <div className='card-description-sm'>
-                                        <p>
-                                            To-Do List
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <div className="progress-bar">
-                                            <div className="progress-bar-item blue" />
-                                            <div className="progress-bar-item blue" />
-                                            <div className="progress-bar-item blue" />
-                                            <div className="progress-bar-item lightgray" />
-                                        </div>
+                            <div className="col gap-15">
+                                <div className='card-description-sm'>
+                                    <p>
+                                        To-Do List
+                                    </p>
+                                </div>
+                                <div>
+                                    <div className="progress-bar">
+                                        <div className="progress-bar-item blue" />
+                                        <div className="progress-bar-item blue" />
+                                        <div className="progress-bar-item blue" />
+                                        <div className="progress-bar-item lightgray" />
                                     </div>
                                 </div>
+                            </div>
                         </div>
                         <div className="round-card w-50 gap-15">
+                            <div className="card-icon dark text-bigger">
+                                <FontAwesomeIcon icon={faShield} />
+                            </div>
                             <div className='card-sm'>
                                 <FontAwesomeIcon icon={faListCheck} className="card-image" style={{ color: '#188EB9' }} />
                             </div>

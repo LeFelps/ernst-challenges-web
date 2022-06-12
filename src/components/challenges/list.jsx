@@ -30,7 +30,7 @@ function ChallengeList() {
                             </p>
                         </div>
                         <button className='edit-button'>
-                        <FontAwesomeIcon icon={faPen} className="card-image"/>
+                            <FontAwesomeIcon icon={faPen} className="card-image" />
                         </button>
                     </div>
                     <div className='card'>
