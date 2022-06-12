@@ -1,4 +1,4 @@
-import { faCircleCheck, faClock, faPlus, faShield, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faCircleCheck, faClock, faGun, faListCheck, faPlus, faShield, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from '../../logo.svg';
 
@@ -47,7 +47,35 @@ function OpponentView() {
                     <div className="row">
                         <span className="group-title">Choose tour weapons!</span>
                     </div>
-
+                    <div className='row gap-35'>
+                        <div className="round-card w-50 gap-15">
+                            <div>
+                                <div className='card-sm'>
+                                    <FontAwesomeIcon icon={faListCheck} className="card-image" style={{ color: '#188EB9' }} />
+                                </div>
+                            </div>
+                                <div className="col gap-15">
+                                    <div className='card-description-sm'>
+                                        <p>
+                                            To-Do List
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <div className="progress-bar">
+                                            <div className="progress-bar-item blue" />
+                                            <div className="progress-bar-item blue" />
+                                            <div className="progress-bar-item blue" />
+                                            <div className="progress-bar-item lightgray" />
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div className="round-card w-50 gap-15">
+                            <div className='card-sm'>
+                                <FontAwesomeIcon icon={faListCheck} className="card-image" style={{ color: '#188EB9' }} />
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="list-container col gap-15">
                     <div className="row gap-25">
@@ -72,7 +100,7 @@ function OpponentView() {
                         </div>
                         <div className='row gap-35'>
                             <div className="round-card w-50 gap-15">
-                                <FontAwesomeIcon icon={faClock} className="text-bigger" />
+                                <FontAwesomeIcon icon={faGun} className="text-bigger" />
                                 <span className="card-title">
                                     Successfull attacks
                                 </span>
@@ -94,7 +122,7 @@ function OpponentView() {
                                 </span>
                                 <span className='card-value orange'>107</span>
                             </div>
-                            <div className="w-50"/>
+                            <div className="w-50" />
                         </div>
                     </div>
                 </div>

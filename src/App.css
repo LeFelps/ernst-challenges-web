@@ -94,6 +94,20 @@
   cursor: pointer;
 }
 
+.card {
+  width: 120px;
+  height: 120px;
+  background-color: #FFF;
+  border: 2px solid #e5e5e5;
+  margin: 20px;
+  border-radius: 20px;
+  box-shadow: #e5e5e5 -1.95px 1.95px 2.6px;
+  transition: .1s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
 .card:hover .edit-button {
   height: 60px;
   width: 60px;
@@ -103,10 +117,10 @@
 .card-description {
   user-select: none;
   pointer-events: none;
-  display: none;
-  transform: translateX(190px);
   font-size: 1.2rem;
   font-weight: 500;
+  display: none;
+  transform: translateX(190px);
 }
 
 .card-description p {
@@ -118,12 +132,25 @@
   color: #FFF;
 }
 
-.card {
-  width: 120px;
-  height: 120px;
+.card-description-sm {
+  font-size: .9rem;
+  font-weight: 600;
+}
+
+.card-description-sm p {
+  background-color: #414141;
+  width: max-content;
+  padding: 2px 5px 2px 5px;
+  margin: 6px 0px 6px 0px;
+  border-radius: 3px;
+  color: #FFF;
+}
+
+.card-sm {
+  width: 90px;
+  height: 90px;
   background-color: #FFF;
   border: 2px solid #e5e5e5;
-  margin: 20px;
   border-radius: 20px;
   box-shadow: #e5e5e5 -1.95px 1.95px 2.6px;
   transition: .1s;
@@ -147,6 +174,22 @@
   position: absolute;
   font-weight: 700;
   z-index: 2;
+}
+
+.progress-bar {
+  display: flex;
+  height: 10px;
+  width: 100%;
+  max-width: 200px;
+  border-radius: 5px;
+  gap: 2px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.progress-bar-item {
+  height: 10px;
+  width: 100%;
 }
 
 .highlight-left-green {
