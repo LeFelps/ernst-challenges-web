@@ -57,13 +57,17 @@ function OpponentView() {
                                     <FontAwesomeIcon icon={faListCheck} className="card-image" style={{ color: '#188EB9' }} />
                                 </div>
                             </div>
-                            <div className="col gap-15">
+                            <div className="col">
                                 <div className='card-description-sm'>
                                     <p>
                                         To-Do List
                                     </p>
                                 </div>
                                 <div>
+                                    <span>
+                                        <b className="text-big">Level 3</b>
+                                        <span className="text-small text-light">/4</span>
+                                    </span>
                                     <div className="progress-bar">
                                         <div className="progress-bar-item blue" />
                                         <div className="progress-bar-item blue" />
