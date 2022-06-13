@@ -1,4 +1,4 @@
-import { faCircleCheck, faClock, faGun, faListCheck, faPlus, faShield, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faCircleCheck, faClock, faGun, faListCheck, faPlus, faShield, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from '../../logo.svg';
 
@@ -47,20 +47,20 @@ function OpponentView() {
                     <div className="row">
                         <span className="group-title">Choose tour weapons!</span>
                     </div>
-                    <div className='row gap-35'>
+                    <div className='row gap-35 p-25'>
                         <div className="round-card w-50 gap-15">
                             <div className="card-icon dark  text-bigger">
                                 <FontAwesomeIcon icon={faGun} />
                             </div>
                             <div>
                                 <div className='card-sm'>
-                                    <FontAwesomeIcon icon={faListCheck} className="card-image" style={{ color: '#188EB9' }} />
+                                    <FontAwesomeIcon icon={faCartShopping} className="card-image" style={{ color: '#188EB9' }} />
                                 </div>
                             </div>
                             <div className="col">
                                 <div className='card-description-sm'>
                                     <p>
-                                        To-Do List
+                                        Shopping Cart
                                     </p>
                                 </div>
                                 <div>
@@ -81,8 +81,31 @@ function OpponentView() {
                             <div className="card-icon dark text-bigger">
                                 <FontAwesomeIcon icon={faShield} />
                             </div>
-                            <div className='card-sm'>
-                                <FontAwesomeIcon icon={faListCheck} className="card-image" style={{ color: '#188EB9' }} />
+                            <div>
+                                <div className='card-sm'>
+                                    <FontAwesomeIcon icon={faListCheck} className="card-image" style={{ color: '#188EB9' }} />
+                                </div>
+                            </div>
+                            <div className="col">
+                                <div className='card-description-sm'>
+                                    <p>
+                                        To-Do List
+                                    </p>
+                                </div>
+                                <div>
+                                    <span>
+                                        <b className="text-big">Level 2</b>
+                                        <span className="text-small text-light">/6</span>
+                                    </span>
+                                    <div className="progress-bar">
+                                        <div className="progress-bar-item blue" />
+                                        <div className="progress-bar-item blue" />
+                                        <div className="progress-bar-item lightgray" />
+                                        <div className="progress-bar-item lightgray" />
+                                        <div className="progress-bar-item lightgray" />
+                                        <div className="progress-bar-item lightgray" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
