@@ -109,6 +109,11 @@ function OpponentView() {
                             </div>
                         </div>
                     </div>
+                    <div className="row centered">
+                        <button className="button-flat red text-white">
+                            Enter Battle!
+                        </button>
+                    </div>
                 </div>
                 <div className="list-container col gap-15">
                     <div className="row gap-25">
