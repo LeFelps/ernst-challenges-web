@@ -30,7 +30,7 @@ function ChallengeList() {
                                 Build a working shopping list
                             </p>
                         </div>
-                        <NavLink to="/challenge-form" className='edit-button'>
+                        <NavLink to="/challenge-form" className='edit-button card-br'>
                             <FontAwesomeIcon icon={faPen} className="card-image" />
                         </NavLink>
                     </div>

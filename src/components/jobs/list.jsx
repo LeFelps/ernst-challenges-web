@@ -1,7 +1,8 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../logo.svg';
+import { NavLink } from 'react-router-dom';
 
 function JobList() {
 
@@ -33,6 +34,9 @@ function JobList() {
                             </div>
                         </div>
                     </div>
+                    <NavLink to="/job-form" className='edit-button long-card-br'>
+                        <FontAwesomeIcon icon={faPen} className="card-image" />
+                    </NavLink>
                 </div>
             </div>
             <div className='list-container'>

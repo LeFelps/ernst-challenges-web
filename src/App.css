@@ -75,7 +75,7 @@
   text-decoration: none;
 }
 
-/* CHALLENGES */
+/* CARD LISTS */
 
 .edit-button {
   color: #484848;
@@ -84,12 +84,22 @@
   width: 45px;
   border: none;
   border-radius: 50%;
-  position: absolute;
   transition: .1s;
-  transform: translate(200%, 100%);
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.card-br {
+  position: absolute;
+  transform: translate(200%, 100%);
+}
+
+.long-card-br {
+  margin-left: auto;
+  margin-bottom: -45px;
+  margin-right: -45px;
+  transform: translate(-25%, -25%);
 }
 
 .edit-button:hover {
