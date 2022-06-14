@@ -7,7 +7,6 @@ function OpponentView() {
     return (
         <div className="content">
             <div className="col gap-25">
-
                 <div className="list-container col gap-15">
                     <div className="row">
                         <span className="group-title">Your opponent is...</span>
@@ -26,7 +25,7 @@ function OpponentView() {
                                 <div className="col justify-center">
                                     <div className='row gap-15'>
                                         <span className='info-name'>Personality</span>
-                                        <span className='my-auto'>Technical</span>
+                                        <span className='my-auto'>Practical</span>
                                     </div>
                                     <div className='row gap-15'>
                                         <span className='info-name'>Difficulty</span>
