@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 function OpponentForm() {
 
@@ -53,11 +54,11 @@ function OpponentForm() {
                     </div>
                 </div>
                 <div className="row push-right gap-25">
+                    <NavLink to="/dungeon" className='button-rounded gray text-white'>
+                        Cancel
+                    </NavLink>
                     <button className="button-rounded gray text-white ">
                         Cancel
-                    </button>
-                    <button className="button-rounded green text-white ">
-                        Save
                     </button>
                 </div>
             </div>

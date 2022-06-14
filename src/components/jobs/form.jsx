@@ -157,9 +157,9 @@ function JobForm() {
                     </div>
                 </div>
                 <div className="row push-right gap-25">
-                    <button className="button-rounded gray text-white ">
+                    <NavLink to="/jobs" className='button-rounded gray text-white'>
                         Cancel
-                    </button>
+                    </NavLink>
                     <button className="button-rounded green text-white ">
                         Save
                     </button>
