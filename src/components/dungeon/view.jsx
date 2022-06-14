@@ -1,4 +1,4 @@
-import { faCartShopping, faCircleCheck, faClock, faGun, faListCheck, faPlus, faShield, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faCircleCheck, faClock, faGun, faListCheck, faPen, faPlus, faShield, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 import logo from '../../logo.svg';
@@ -46,6 +46,9 @@ function OpponentView() {
                                 </div>
                             </div>
                         </div>
+                        <NavLink to="/opponent-form" className='edit-button long-card-br'>
+                            <FontAwesomeIcon icon={faPen} className="card-image" />
+                        </NavLink>
                     </div>
                 </div>
                 <div className="list-container col gap-15">

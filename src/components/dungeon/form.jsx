@@ -57,8 +57,8 @@ function OpponentForm() {
                     <NavLink to="/dungeon" className='button-rounded gray text-white'>
                         Cancel
                     </NavLink>
-                    <button className="button-rounded gray text-white ">
-                        Cancel
+                    <button className="button-rounded green text-white ">
+                        Save
                     </button>
                 </div>
             </div>

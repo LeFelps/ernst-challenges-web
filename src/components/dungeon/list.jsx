@@ -1,4 +1,7 @@
+import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import logo from '../../logo.svg';
 
 
@@ -41,6 +44,9 @@ function OpponentList() {
                             </div>
                         </div>
                     </div>
+                    <NavLink to="/opponent-form" className='edit-button long-card-br'>
+                        <FontAwesomeIcon icon={faPen} className="card-image" />
+                    </NavLink>
                 </div>
                 <div className='long-card highlight-left-orange'>
                     <div className='long-card-title text-orange'>
