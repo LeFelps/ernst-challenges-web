@@ -425,6 +425,8 @@
   cursor: pointer;
   min-width: 200px;
   font-weight: 600;
+  text-align: center;
+  text-decoration: none;
 }
 
 .button-rounded {
@@ -436,6 +438,8 @@
   cursor: pointer;
   min-width: 200px;
   font-weight: 600;
+  text-align: center;
+  text-decoration: none;
 }
 
 .chip-section {
@@ -656,6 +660,10 @@
   display: flex;
   flex-direction: column;
   color: #414141;
+}
+
+button {
+  font-family: 'M PLUS Rounded 1c';
 }
 
 .justify-center {
