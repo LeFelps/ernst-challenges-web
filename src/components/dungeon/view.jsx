@@ -1,5 +1,6 @@
 import { faCartShopping, faCircleCheck, faClock, faGun, faListCheck, faPlus, faShield, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { NavLink } from "react-router-dom";
 import logo from '../../logo.svg';
 
 function OpponentView() {
@@ -17,7 +18,12 @@ function OpponentView() {
                     </div>
                     <div className='long-card highlight-left-green'>
                         <div className='long-card-title text-green'>
-                            Coding Goblin
+                            <div className="row gap-25">
+                                Coding Goblin
+                                <NavLink to="/opponents" className='card-value green'>
+                                    View all
+                                </NavLink>
+                            </div>
                         </div>
                         <div className="col gap-25">
                             <div className='long-card-content gap-25'>

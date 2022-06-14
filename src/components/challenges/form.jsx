@@ -80,19 +80,19 @@ function ChallengeForm() {
                                     <span className="card-title">
                                         Easy
                                     </span>
-                                    <span className='card-value green'>27</span>
+                                    <span className='card-value green to-right'>27</span>
                                 </div>
                                 <div className="round-card w-30">
                                     <span className="card-title">
                                         Medium
                                     </span>
-                                    <span className='card-value orange'>15</span>
+                                    <span className='card-value orange to-right'>15</span>
                                 </div>
                                 <div className="round-card w-30">
                                     <span className="card-title">
                                         Hard
                                     </span>
-                                    <span className='card-value red'>9</span>
+                                    <span className='card-value red to-right'>9</span>
                                 </div>
                             </div>
                             <div className="row centered gap-25">

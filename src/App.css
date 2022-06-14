@@ -387,9 +387,9 @@
   font-size: 1rem;
   padding: 2px 10px 2px 10px;
   border-radius: 5px;
-  margin: 0px 0px 0px auto;
   min-width: 25px;
   text-align: center;
+  text-decoration: none;
 }
 
 .row {
