@@ -27,7 +27,7 @@ function OpponentView() {
                         </div>
                         <div className="col gap-25">
                             <div className='long-card-content gap-25'>
-                                <img src={logo} alt="" className='round-img' />
+                                <img src={logo} alt="" className='round-img highlight-green' />
                                 <div className="col justify-center">
                                     <div className='row gap-15'>
                                         <span className='info-name'>Personality</span>

@@ -52,9 +52,9 @@ function Dashboard() {
                                 if (isActive) linkClasses = linkClasses + '-active';
                                 return linkClasses
                             }}
-                            to="/candidates">
+                            to="/heros">
                             <p>
-                                Candidates
+                                Heros
                             </p>
                         </NavLink>
                         <NavLink
@@ -81,6 +81,7 @@ function Dashboard() {
                     <Route path='/jobs' exact element={<JobList />}></Route>
                     <Route path='/job-form' element={<JobForm />}></Route>
                     <Route path='/profile' element={<ProfileView />}></Route>
+                    <Route path='/heros' element={<ProfileList />}></Route>
                     <Route path='/opponents' exact element={<DungeonList />}></Route>
                     <Route path='/opponent-form' element={<DungeonForm />}></Route>
                     <Route path='/dungeon' element={<DungeonView />}></Route>

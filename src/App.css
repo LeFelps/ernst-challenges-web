@@ -206,23 +206,43 @@
 }
 
 .highlight-left-green {
-  box-shadow: 10px 0px 0px #7DD30F inset;
+  box-shadow: 7px 0px 0px #7DD30F inset;
 }
 
 .highlight-left-orange {
-  box-shadow: 10px 0px 0px #D68D00 inset;
+  box-shadow: 7px 0px 0px #D68D00 inset;
 }
 
 .highlight-left-red {
-  box-shadow: 10px 0px 0px #D6000D inset;
+  box-shadow: 7px 0px 0px #D6000D inset;
 }
 
 .highlight-left-blue {
-  box-shadow: 10px 0px 0px #188EB9 inset;
+  box-shadow: 7px 0px 0px #188EB9 inset;
 }
 
 .highlight-left-pink {
   box-shadow: 7px 0px 0px #E05263 inset;
+}
+
+.highlight-green {
+  box-shadow: 0px 0px 0px 3px #7DD30F;
+}
+
+.highlight-orange {
+  box-shadow: 0px 0px 0px 3px #D68D00;
+}
+
+.highlight-red {
+  box-shadow: 0px 0px 0px 3px #D6000D;
+}
+
+.highlight-blue {
+  box-shadow: 0px 0px 0px 3px #188EB9;
+}
+
+.highlight-pink {
+  box-shadow: 0px 0px 0px 3px #E05263;
 }
 
 /* FORMS */
@@ -628,9 +648,10 @@
 
 .round-img {
   border-radius: 40px;
-  border: 2px solid #e5e5e5;
+  border: 2px solid white;
   height: 80px;
   width: 80px;
+  box-sizing: border-box;
 }
 
 .company-logo {
@@ -733,7 +754,7 @@ button {
 
 .content {
   width: 100%;
-  padding-top: 130px;
+  padding-top: 110px;
   margin-bottom: 90px;
 }
 
@@ -956,7 +977,7 @@ button {
 }
 
 .footer {
-  height: 250px;
+  height: 200px;
   background-color: #25283D;
   width: 100%;
   margin-top: auto;

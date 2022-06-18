@@ -14,12 +14,11 @@ function ProfileView() {
                             Front-end developer • Junior
                         </div>
                         <div className='long-card-content gap-15'>
-                            <img src={logo} alt="" className='round-img' />
+                            <img src={logo} alt="" className='round-img highlight-blue' />
                             <div className='align-center'>
                                 <p className='info-name'>Fellipe Corominas Pereira</p>
                                 <p className='info-value'>corominas.fellipe@hotmail.com</p>
                                 <p className='info-value'>+55 (11) 98886-7001</p>
-
                             </div>
                         </div>
                         <a to="/job-form" className='edit-button long-card-br'>

@@ -1,7 +1,49 @@
+import React from 'react';
+import logo from '../../logo.svg';
+import { NavLink } from 'react-router-dom';
+
 function ProfileList() {
 
     return (
-        <div>
+        <div className="content">
+            <div className="content-description">
+                <p className='text-title'>
+                    The Heros
+                </p>
+                <p className='text-secondary'>
+                    Look at how your fellow adventurers are doing!
+                </p>
+            </div>
+            <div className="list-container col gap-25">
+                <div className='long-card highlight-left-blue'>
+                    <div className='long-card-title'>
+                        Fellipe Corominas Pereira
+                    </div>
+                    <div className='long-card-content gap-15'>
+                        <img src={logo} alt="" className='round-img highlight-blue' />
+                        <div className='align-center'>
+                            <p className='info-name text-blue'>Front-end developer • Junior</p>
+                            <p className='info-value'>1 year, 9 months experience</p>
+                            <p>ReactJs</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div className='long-card highlight-left-pink'>
+                    <div className='long-card-title'>
+                        Fellipe Corominas Pereira
+                    </div>
+                    <div className='long-card-content gap-15'>
+                        <img src={logo} alt="" className='round-img highlight-pink' />
+                        <div className='align-center'>
+                            <p className='info-name text-pink'>Back-end developer • Junior</p>
+                            <p className='info-value'>1 year, 9 months experience</p>
+                            <p>ExpressJs</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
