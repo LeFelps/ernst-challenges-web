@@ -8,7 +8,7 @@ function ProfileView() {
     return (
         <div className='content'>
             <div className="col gap-35">
-                <div className='list-container'>
+                <div className='list-container col gap-25'>
                     <div className='long-card highlight-left-blue'>
                         <div className='long-card-title text-blue'>
                             Front-end developer • Junior
@@ -24,6 +24,11 @@ function ProfileView() {
                         <a to="/job-form" className='edit-button long-card-br'>
                             <FontAwesomeIcon icon={faPen} className="card-image" />
                         </a>
+                    </div>
+                    <div className="row centered">
+                        <div className="button-flat green text-white">
+                            Public Profile
+                        </div>
                     </div>
                 </div>
                 <div className="list-container col">

@@ -24,8 +24,7 @@ function ProfileList() {
                         <div className='align-center'>
                             <p className='info-name text-blue'>Front-end developer • Junior</p>
                             <p className='info-value'>1 year, 9 months experience</p>
-                            <p>ReactJs</p>
-
+                            <p>React.Js</p>
                         </div>
                     </div>
                 </div>
@@ -38,8 +37,7 @@ function ProfileList() {
                         <div className='align-center'>
                             <p className='info-name text-pink'>Back-end developer • Junior</p>
                             <p className='info-value'>1 year, 9 months experience</p>
-                            <p>ExpressJs</p>
-
+                            <p>Express.Js</p>
                         </div>
                     </div>
                 </div>

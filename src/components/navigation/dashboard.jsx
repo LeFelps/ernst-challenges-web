@@ -68,13 +68,13 @@ function Dashboard() {
                                 The Dungeon
                             </p>
                         </NavLink>
-                        <NavLink to="/profile" className="nav-profile" >
-                            <img src={logo} alt="Small profile" style={{ borderColor: '#188EB9' }} />
+                        <NavLink to="/profile" className="nav-profile highlight-blue to-right" >
+                            <img src={logo} alt="Small profile"/>
                         </NavLink>
                     </div>
                 </div>
                 <Routes>
-                    <Route path='/' exact element={<ChallengeList />}></Route>
+                    <Route path='/' exact element={<div/>}></Route>
                     <Route path='/challenges' element={<ChallengeList />}></Route>
                     <Route path='/challenge' element={<ChallengeView />}></Route>
                     <Route path='/challenge-form' element={<ChallengeForm />}></Route>
@@ -87,7 +87,6 @@ function Dashboard() {
                     <Route path='/dungeon' element={<DungeonView />}></Route>
                 </Routes>
                 <div className='footer'>
-
                 </div>
             </BrowserRouter>
 

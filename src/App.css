@@ -747,9 +747,10 @@ button {
   border-radius: 50%;
   width: 40px;
   margin-left: auto;
-  margin-top: 12px;
-  border: solid 3px #414141;
+  margin-top: 18px;
+  box-sizing: border-box;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .content {
