@@ -8,7 +8,7 @@ import ChallengeForm from '../challenges/form';
 import ChallengeView from '../challenges/form';
 import JobList from '../jobs/list';
 import JobForm from '../jobs/form';
-import JobView from '../jobs/form';
+import JobView from '../jobs/view';
 import ProfileList from '../profile/list';
 import ProfileForm from '../profile/form';
 import ProfileView from '../profile/view';
@@ -79,7 +79,8 @@ function Dashboard() {
                     <Route path='/challenge' element={<ChallengeView />}></Route>
                     <Route path='/challenge-form' element={<ChallengeForm />}></Route>
                     <Route path='/jobs' exact element={<JobList />}></Route>
-                    <Route path='/job-form' element={<JobForm />}></Route>
+                    <Route path='/job' exact element={<JobView />}></Route>
+                    <Route path='/job-form' exact element={<JobForm />}></Route>
                     <Route path='/profile' element={<ProfileView />}></Route>
                     <Route path='/heros' element={<ProfileList />}></Route>
                     <Route path='/opponents' exact element={<DungeonList />}></Route>
