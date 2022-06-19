@@ -1,4 +1,4 @@
-import { faCartShopping, faGun, faListCheck, faPen, faPlus, faShield } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faGun, faListCheck, faPen, faPlus, faPlusCircle, faShield } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import logo from '../../logo.svg';
@@ -94,6 +94,48 @@ function ProfileView() {
                                             <div className="progress-bar-item lightgray" />
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="list-container col">
+                    <div className="row gap-25">
+                        <b className='group-title text-center'>
+                            My Job Applications
+                        </b>
+                        <span className='card-value green'>
+                            View all
+                        </span>
+                    </div>
+                    <div className='list-container col gap-15'>
+                        <div className='long-card highlight-left-blue'>
+                            <div className='long-card-title text-blue'>
+                                Front-end developer • Junior
+                            </div>
+                            <div className='long-card-content gap-15'>
+                                <img src={logo} alt="" className='company-logo' />
+                                <div className='align-center'>
+                                    <p className='info-name'>Ernest Young</p>
+                                    <p className='info-value'>R$ 4000,00</p>
+                                    <div className='info-extra'>
+                                        <FontAwesomeIcon className='icon-margin-right' icon={faPlusCircle} color='#188EB9' />
+                                        <p>
+                                            Benefícios
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='long-card highlight-left-pink'>
+                            <div className='long-card-title text-pink'>
+                                Back-end developer • Sênior
+                            </div>
+                            <div className='long-card-content gap-15'>
+                                <img src={logo} alt="" className='company-logo' />
+                                <div className='align-center'>
+                                    <p className='info-name'>Ernest Young</p>
+                                    <p className='info-value'>R$ 14000,00</p>
                                 </div>
                             </div>
                         </div>
