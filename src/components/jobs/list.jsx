@@ -17,27 +17,29 @@ function JobList() {
                 </p>
             </div>
             <div className='list-container'>
-                <div className='long-card highlight-left-blue'>
-                    <div className='long-card-title text-blue'>
-                        Front-end developer • Junior
-                    </div>
-                    <div className='long-card-content gap-15'>
-                        <img src={logo} alt="" className='company-logo' />
-                        <div className='align-center'>
-                            <p className='info-name'>Ernest Young</p>
-                            <p className='info-value'>R$ 4000,00</p>
-                            <div className='info-extra'>
-                                <FontAwesomeIcon className='icon-margin-right' icon={faPlusCircle} color='#188EB9' />
-                                <p>
-                                    Benefícios
-                                </p>
+                <NavLink to="/job">
+                    <div className='long-card highlight-left-blue'>
+                        <div className='long-card-title text-blue'>
+                            Front-end developer • Junior
+                        </div>
+                        <div className='long-card-content gap-15'>
+                            <img src={logo} alt="" className='company-logo' />
+                            <div className='align-center'>
+                                <p className='info-name'>Ernest Young</p>
+                                <p className='info-value'>R$ 4000,00</p>
+                                <div className='info-extra'>
+                                    <FontAwesomeIcon className='icon-margin-right' icon={faPlusCircle} color='#188EB9' />
+                                    <p>
+                                        Benefícios
+                                    </p>
+                                </div>
                             </div>
                         </div>
+                        <NavLink to="/job-form" className='edit-button long-card-br'>
+                            <FontAwesomeIcon icon={faPen} className="card-image" />
+                        </NavLink>
                     </div>
-                    <NavLink to="/job-form" className='edit-button long-card-br'>
-                        <FontAwesomeIcon icon={faPen} className="card-image" />
-                    </NavLink>
-                </div>
+                </NavLink>
             </div>
             <div className='list-container'>
                 <div className='long-card highlight-left-pink'>

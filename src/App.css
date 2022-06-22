@@ -733,6 +733,14 @@ button {
   transition: .2s;
 }
 
+a {
+  text-decoration: none;
+}
+
+a, a:visited, a:hover, a:active {
+  color: inherit;
+}
+
 .nav-link-active {
   text-decoration: none;
   font-size: 19px;
