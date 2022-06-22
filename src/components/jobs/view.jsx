@@ -8,7 +8,7 @@ function JobView() {
 
     return (
         <div className="content">
-            <div className="col gap-35">
+            <div className="col gap-15">
                 <div className="list-container col gap-15">
                     <div className='long-card highlight-left-blue'>
                         <div className='long-card-title text-blue'>
@@ -82,6 +82,13 @@ function JobView() {
                         <li>Saga</li>
                         <li>Firebase</li>
                     </ul>
+                </div>
+                <div className='list-container'>
+                    <div className="row push-right gap-25 text-white">
+                        <NavLink to="/jobs" className='button-rounded gray'>
+                            Return
+                        </NavLink>
+                    </div>
                 </div>
             </div>
         </div>
