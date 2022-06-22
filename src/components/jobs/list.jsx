@@ -17,9 +17,9 @@ function JobList() {
                 </p>
             </div>
             <div className='list-container'>
-                <NavLink to="/job">
-                    <div className='long-card highlight-left-blue'>
-                        <div className='long-card-title text-blue'>
+                <NavLink to="/job" className="nav-card">
+                    <div className='long-card highlight-left-blue nav-card'>
+                        <div className='long-card-title text-blue nav-card'>
                             Front-end developer • Junior
                         </div>
                         <div className='long-card-content gap-15'>

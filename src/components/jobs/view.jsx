@@ -84,8 +84,8 @@ function JobView() {
                     </ul>
                 </div>
                 <div className='list-container'>
-                    <div className="row push-right gap-25 text-white">
-                        <NavLink to="/jobs" className='button-rounded gray'>
+                    <div className="row push-right gap-25">
+                        <NavLink to="/jobs" className='button-rounded gray text-white'>
                             Return
                         </NavLink>
                     </div>

@@ -53,7 +53,7 @@ function OpponentForm() {
                         </div>
                     </div>
                 </div>
-                <div className="row push-right gap-25 text-white">
+                <div className="row push-right gap-25">
                     <NavLink to="/dungeon" className='button-rounded gray text-white'>
                         Cancel
                     </NavLink>
