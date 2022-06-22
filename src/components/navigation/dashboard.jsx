@@ -5,7 +5,7 @@ import logo from '../../logo.svg';
 // Pages
 import ChallengeList from '../challenges/list';
 import ChallengeForm from '../challenges/form';
-import ChallengeView from '../challenges/form';
+import ChallengeView from '../challenges/view';
 import JobList from '../jobs/list';
 import JobForm from '../jobs/form';
 import JobView from '../jobs/view';

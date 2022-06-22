@@ -20,20 +20,22 @@ function ChallengeList() {
                     Front-end development
                 </p>
                 <div className='card-group'>
-                    <div className='card'>
-                        <FontAwesomeIcon icon={faCartShopping} className="card-image" style={{ color: '#188EB9' }} />
-                        <div className='card-description'>
-                            <p>
-                                Shopping list
-                            </p>
-                            <p>
-                                Build a working shopping list
-                            </p>
+                    <NavLink to="/challenge">
+                        <div className='card'>
+                            <FontAwesomeIcon icon={faCartShopping} className="card-image" style={{ color: '#188EB9' }} />
+                            <div className='card-description'>
+                                <p>
+                                    Shopping list
+                                </p>
+                                <p>
+                                    Build a working shopping list
+                                </p>
+                            </div>
+                            <NavLink to="/challenge-form" className='edit-button card-br'>
+                                <FontAwesomeIcon icon={faPen} className="card-image" />
+                            </NavLink>
                         </div>
-                        <NavLink to="/challenge-form" className='edit-button card-br'>
-                            <FontAwesomeIcon icon={faPen} className="card-image" />
-                        </NavLink>
-                    </div>
+                    </NavLink>
                     <div className='card'>
                         <FontAwesomeIcon icon={faMessage} className="card-image" style={{ color: '#188EB9' }} />
                         <div className='card-description'>
