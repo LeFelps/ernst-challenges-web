@@ -1,3 +1,6 @@
+import { faBarsProgress, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 function ChallengeView() {
 
     return (
@@ -29,6 +32,12 @@ function ChallengeView() {
                             <span className='input-description'>
                                 This can be either a github repository or codepen example
                             </span>
+                        </div>
+                        <div className='edit-button'>
+                            <FontAwesomeIcon icon={faBarsProgress} className="card-image" />
+                        </div>
+                        <div to="/challenge-form" className='edit-button'>
+                            <FontAwesomeIcon icon={faCheck} className="card-image" />
                         </div>
                         <div className="div to-right">
                             <button className="button-rounded green text-white to-right">
