@@ -30,6 +30,11 @@ function ChallengeView() {
                                 This can be either a github repository or codepen example
                             </span>
                         </div>
+                        <div className="div to-right">
+                            <button className="button-rounded green text-white to-right">
+                                Send
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div className='list-container'>
