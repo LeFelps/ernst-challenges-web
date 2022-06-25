@@ -1,3 +1,4 @@
+import React from 'react'
 import { faCartShopping, faCircleCheck, faClock, faGun, faListCheck, faPen, faPlus, faShield, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
@@ -118,9 +119,9 @@ function OpponentView() {
                         </div>
                     </div>
                     <div className="row centered">
-                        <button className="button-flat red text-white">
+                        <NavLink to="/battle" className='button-flat red text-white'>
                             Enter Battle!
-                        </button>
+                        </NavLink>
                     </div>
                 </div>
                 <div className="list-container col gap-15">

@@ -15,6 +15,7 @@ import ProfileView from '../profile/view';
 import DungeonList from '../dungeon/list';
 import DungeonForm from '../dungeon/form';
 import DungeonView from '../dungeon/view';
+import QuizView from '../quiz/view'
 
 
 function Dashboard() {
@@ -86,6 +87,7 @@ function Dashboard() {
                     <Route path='/opponents' exact element={<DungeonList />}></Route>
                     <Route path='/opponent-form' element={<DungeonForm />}></Route>
                     <Route path='/dungeon' element={<DungeonView />}></Route>
+                    <Route path='/battle' element={<QuizView />}></Route>
                 </Routes>
                 <div className='footer'>
                 </div>
