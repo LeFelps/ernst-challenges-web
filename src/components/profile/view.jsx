@@ -156,7 +156,7 @@ function ProfileView() {
                                 <div className='col gap-15'>
                                     <span className='info-name'>Junior, Front-end developer</span>
                                     <div className='col'>
-                                        <span className='info-name'>Allergisa</span>
+                                        <b>Allergisa</b>
                                         <span className='info-value'>2021 - Current</span>
                                     </div>
                                 </div>
@@ -168,7 +168,7 @@ function ProfileView() {
                                 <div className='col gap-15'>
                                     <span className='info-name'>Internship, Front-end developer</span>
                                     <div className='col'>
-                                        <span className='info-name'>Opsfactor</span>
+                                        <b >Opsfactor</b>
                                         <span className='info-value'>2020 - 2020</span>
                                     </div>
                                 </div>
@@ -191,7 +191,7 @@ function ProfileView() {
                                 <div className='col gap-15'>
                                     <span className='info-name'>Fiap</span>
                                     <div className='col'>
-                                        <span className='info-name'>Information Systems, Bachelors</span>
+                                        <b>Information Systems, Bachelors</b>
                                         <span className='info-value'>2019 - 2022</span>
                                     </div>
                                 </div>
