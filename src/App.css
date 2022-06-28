@@ -392,6 +392,16 @@
   box-sizing: border-box;
 }
 
+.p-30 {
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.p-40 {
+  padding: 40px;
+  box-sizing: border-box;
+}
+
 .lm-25 {
   margin-left: 25px;
 }

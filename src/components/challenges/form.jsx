@@ -73,9 +73,9 @@ function ChallengeForm() {
                     <span className="section-title">
                         Quizz questions
                     </span>
-                    <div className="radius-15 filled-container">
+                    <div className="radius-15 filled-container p-30">
                         <div className="input-section">
-                            <div className='row gap-25'>
+                            <div className='row space-between'>
                                 <div className="round-card w-30">
                                     <span className="card-title">
                                         Easy
@@ -125,7 +125,7 @@ function ChallengeForm() {
                             <div>
                                 <span className="group-title">References</span>
                                 <div className="box-section">
-                                    <div className="radius-15 filled-container">
+                                    <div className="radius-15 filled-container p-30">
                                         <div className="input-row">
                                             <div className='input-group-50'>
                                                 <label htmlFor="username">Title</label>
@@ -145,7 +145,7 @@ function ChallengeForm() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="radius-15 filled-container">
+                                    <div className="radius-15 filled-container p-30">
                                         <div className="input-row">
                                             <div className='input-group-50'>
                                                 <label htmlFor="username">Title</label>
@@ -196,7 +196,7 @@ function ChallengeForm() {
                         </div>
                     </div>
                 </div>
-                <div className="row align-right gap-25">
+                <div className="row justify-right gap-25">
                     <NavLink to="/challenges" className='button-rounded gray text-white'>
                         Cancel
                     </NavLink>

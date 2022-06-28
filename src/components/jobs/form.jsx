@@ -69,7 +69,7 @@ function JobForm() {
                 <div>
                     <span className="group-title">Responsabilities</span>
                     <div className="box-section">
-                        <div className="radius-15 filled-container">
+                        <div className="radius-15 filled-container p-30">
                             <div className="input-section">
                                 <div className="input-row">
                                     <div className='input-group'>
@@ -103,7 +103,7 @@ function JobForm() {
                 <div>
                     <span className="group-title">Compensations</span>
                     <div className="box-section">
-                        <div className="radius-15 filled-container">
+                        <div className="radius-15 filled-container p-30">
                             <div className="input-section">
                                 <div className="input-row">
                                     <div className='input-group'>
@@ -157,7 +157,7 @@ function JobForm() {
                         </div>
                     </div>
                 </div>
-                <div className="row align-right gap-25">
+                <div className="row justify-right gap-25">
                     <NavLink to="/jobs" className='button-rounded gray text-white'>
                         Cancel
                     </NavLink>

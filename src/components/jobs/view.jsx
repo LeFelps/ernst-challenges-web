@@ -84,7 +84,7 @@ function JobView() {
                     </ul>
                 </div>
                 <div className='list-container'>
-                    <div className="row align-right gap-25">
+                    <div className="row justify-right gap-25">
                         <NavLink to="/jobs" className='button-rounded gray text-white'>
                             Return
                         </NavLink>
