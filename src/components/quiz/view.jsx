@@ -50,9 +50,11 @@ function ProfileView() {
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         </span>
                     </div>
-                    <div className="row gap-15">
+                    <div className="row gap-15 vertical-center">
                         <FontAwesomeIcon icon={faClock} />
-                        <div></div>
+                        <div className='w-100 progress-bar purple'>
+                            
+                        </div>
                     </div>
                     <div className='radius-15 outlined-container'>
                         <div className='filled-container p-15 row gap-15 vertical-center w-100'>
