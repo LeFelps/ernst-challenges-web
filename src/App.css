@@ -407,6 +407,21 @@
   align-items: center;
 }
 
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .round-icon {
   height: 40px;
   width: 40px;
@@ -434,16 +449,18 @@
 
 .filled-container {
   background-color: #F0F0F0;
-  border-radius: 15px;
-  padding: 30px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .outlined-container {
   border: 3px #F0F0F0 solid;
-  border-radius: 15px;
-  padding: 30px;
   box-sizing: border-box;
+  overflow: hidden;
+}
+
+.radius-15 {
+  border-radius: 15px;
 }
 
 .input-section {
@@ -484,6 +501,10 @@
   display: flex;
   width: 100%;
   flex-direction: column;
+}
+
+.gap-5 {
+  gap: 5px;
 }
 
 .gap-10 {

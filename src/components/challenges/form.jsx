@@ -73,7 +73,7 @@ function ChallengeForm() {
                     <span className="section-title">
                         Quizz questions
                     </span>
-                    <div className="filled-container">
+                    <div className="radius-15 filled-container">
                         <div className="input-section">
                             <div className='row gap-25'>
                                 <div className="round-card w-30">
@@ -110,7 +110,7 @@ function ChallengeForm() {
                     <span className="section-title">
                         Checkpoint 1
                     </span>
-                    <div className="outlined-container">
+                    <div className="radius-15 outlined-container">
                         <div className="input-section">
                             <div className="input-row">
                                 <div className='input-group'>
@@ -125,7 +125,7 @@ function ChallengeForm() {
                             <div>
                                 <span className="group-title">References</span>
                                 <div className="box-section">
-                                    <div className="filled-container">
+                                    <div className="radius-15 filled-container">
                                         <div className="input-row">
                                             <div className='input-group-50'>
                                                 <label htmlFor="username">Title</label>
@@ -145,7 +145,7 @@ function ChallengeForm() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="filled-container">
+                                    <div className="radius-15 filled-container">
                                         <div className="input-row">
                                             <div className='input-group-50'>
                                                 <label htmlFor="username">Title</label>
