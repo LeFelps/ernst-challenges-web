@@ -110,7 +110,7 @@ function ChallengeForm() {
                     <span className="section-title">
                         Checkpoint 1
                     </span>
-                    <div className="radius-15 outlined-container">
+                    <div className="radius-15 outlined-container p-30">
                         <div className="input-section">
                             <div className="input-row">
                                 <div className='input-group'>

@@ -36,7 +36,7 @@ function ProfileView() {
                         <b className='group-title text-center'>
                             Inventory Highlights
                         </b>
-                        <span className='card-value green'>
+                        <span className='card-value green pointer'>
                             View all
                         </span>
                     </div>
@@ -104,7 +104,7 @@ function ProfileView() {
                         <b className='group-title text-center'>
                             My Job Applications
                         </b>
-                        <span className='card-value green'>
+                        <span className='card-value green pointer'>
                             View all
                         </span>
                     </div>
