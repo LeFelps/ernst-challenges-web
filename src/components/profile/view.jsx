@@ -237,19 +237,19 @@ function ProfileView() {
                     <div className="skills">
                         <div className="profile-skill">
                             <input type="checkbox" name="check1" id="check1" />
-                            <label for="check1">Javascript</label>
+                            <label className="check-label" for="check1">Javascript</label>
                         </div>
                         <div className="profile-skill">
                             <input type="checkbox" name="check2" id="check2" />
-                            <label for="check2">ReactNative</label>
+                            <label className="check-label" for="check2">ReactNative</label>
                         </div>
                         <div className="profile-skill">
                             <input type="checkbox" name="check3" id="check3" />
-                            <label for="check3">IOS</label>
+                            <label className="check-label" for="check3">IOS</label>
                         </div>
                         <div className="profile-skill">
                             <input type="checkbox" name="check4" id="check4" />
-                            <label for="check4">CSS</label>
+                            <label className="check-label" for="check4">CSS</label>
                         </div>
                     </div>
                 </div>

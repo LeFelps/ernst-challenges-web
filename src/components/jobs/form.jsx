@@ -50,7 +50,7 @@ function JobForm() {
                                 />
                                 <div>
                                     <input type="checkbox" name="check4" id="check4" />
-                                    <label for="check4">Remote</label>
+                                    <label className="check-label" for="check4">Remote</label>
                                 </div>
                             </div>
                         </div>
