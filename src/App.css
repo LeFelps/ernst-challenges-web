@@ -225,8 +225,16 @@
   box-sizing: border-box;
 }
 
-.max-200 {
+.maxw-200 {
   max-width: 200px;
+}
+
+.maxh-100 {
+  max-height: 100px;
+}
+
+.maxh-200 {
+  max-height: 200px;
 }
 
 .progress-bar-item {
@@ -300,12 +308,6 @@
   display: flex;
   flex-direction: column;
   width: 50%;
-}
-
-.input-row {
-  display: flex;
-  flex-direction: row;
-  gap: 30px;
 }
 
 .input-link {
@@ -519,6 +521,22 @@
   display: flex;
   width: 100%;
   flex-direction: column;
+}
+
+.wrap {
+  flex-wrap: wrap
+}
+
+.overflow-scroll {
+  overflow: scroll;
+}
+
+.overflowy-scroll {
+  overflow-y: scroll;
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }
 
 .gap-5 {

@@ -77,7 +77,7 @@ function OpponentView() {
                                         <b className="text-big">Level 3</b>
                                         <span className="text-small text-light">/4</span>
                                     </span>
-                                    <div className="progress-bar max-200">
+                                    <div className="progress-bar maxw-200">
                                         <div className="progress-bar-item blue" />
                                         <div className="progress-bar-item blue" />
                                         <div className="progress-bar-item blue" />

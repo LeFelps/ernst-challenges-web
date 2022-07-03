@@ -9,7 +9,7 @@ function OpponentForm() {
                 <div>
                     <div className="form-title">New Opponent</div>
                     <div className="input-section">
-                        <div className="input-row">
+                        <div className="row gap-35">
                             <div className='input-group-50'>
                                 <label htmlFor="username">Name</label>
                                 <input type="text" className='input-field'
@@ -19,7 +19,7 @@ function OpponentForm() {
                                 />
                             </div>
                         </div>
-                        <div className="input-row">
+                        <div className="row gap-35">
                             <div className='input-group-50'>
                                 <label htmlFor="username">Difficulty</label>
                                 <select className='input-field'
@@ -41,7 +41,7 @@ function OpponentForm() {
                                 </select>
                             </div>
                         </div>
-                        <div className="input-row">
+                        <div className="row gap-35">
                             <div className='input-group'>
                                 <label htmlFor="username">About</label>
                                 <textarea type="text" className='input-field textarea'

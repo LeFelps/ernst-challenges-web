@@ -56,7 +56,7 @@ function ChallengeView() {
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nunc lacus, tristique ut dolor sit amet, scelerisque congue nisi. Sed et dui id augue porttitor pharetra nec non orci.
                     </p>
-                    <div className="input-row">
+                    <div className="row gap-35">
                         <div className='input-group-50'>
                             <label htmlFor="username">Submission link</label>
                             <input type="text" className='input-field'

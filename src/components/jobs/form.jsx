@@ -12,7 +12,7 @@ function JobForm() {
 
                     <div className="form-title">New Job</div>
                     <div className="input-section">
-                        <div className="input-row">
+                        <div className="row gap-35">
                             <div className='input-group-50'>
                                 <label htmlFor="username">Title</label>
                                 <input type="text" className='input-field'
@@ -30,7 +30,7 @@ function JobForm() {
                                 />
                             </div>
                         </div>
-                        <div className="input-row">
+                        <div className="row gap-35">
                             <div className='input-group-50'>
                                 <label htmlFor="username">Salary</label>
                                 <input type="text" className='input-field'
@@ -40,7 +40,7 @@ function JobForm() {
                                 />
                             </div>
                         </div>
-                        <div className="input-row">
+                        <div className="row gap-35">
                             <div className='input-group-50'>
                                 <label htmlFor="username">Location</label>
                                 <input type="text" className='input-field'
@@ -54,7 +54,7 @@ function JobForm() {
                                 </div>
                             </div>
                         </div>
-                        <div className="input-row">
+                        <div className="row gap-35">
                             <div className='input-group'>
                                 <label htmlFor="username">Description</label>
                                 <textarea type="text" className='input-field textarea'
@@ -71,7 +71,7 @@ function JobForm() {
                     <div className="box-section">
                         <div className="radius-15 filled-container p-30">
                             <div className="input-section">
-                                <div className="input-row">
+                                <div className="row gap-35">
                                     <div className='input-group'>
                                         <label htmlFor="username">Description</label>
                                         <input type="text" className='input-field'
@@ -81,7 +81,7 @@ function JobForm() {
                                         />
                                     </div>
                                 </div>
-                                <div className="input-row">
+                                <div className="row gap-35">
                                     <div className='input-group'>
                                         <label htmlFor="username">Description</label>
                                         <input type="text" className='input-field'
@@ -105,7 +105,7 @@ function JobForm() {
                     <div className="box-section">
                         <div className="radius-15 filled-container p-30">
                             <div className="input-section">
-                                <div className="input-row">
+                                <div className="row gap-35">
                                     <div className='input-group'>
                                         <label htmlFor="username">Description</label>
                                         <input type="text" className='input-field'
@@ -115,7 +115,7 @@ function JobForm() {
                                         />
                                     </div>
                                 </div>
-                                <div className="input-row">
+                                <div className="row gap-35">
                                     <div className='input-group'>
                                         <label htmlFor="username">Description</label>
                                         <input type="text" className='input-field'
