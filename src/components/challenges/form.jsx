@@ -96,15 +96,16 @@ function ChallengeForm() {
                                         }} value={iconSearch}
                                     />
                                 </div>
-                                <div className='row gap-15 text-dark'>
-                                    <FontAwesomeIcon icon={fa[challenge.icon]} size="2x" />
-                                    <b className='text-huge'>{challenge.icon}</b>
-                                </div>
+                                {challenge.icon ?
+                                    <div className='row gap-15 text-dark'>
+                                        <FontAwesomeIcon icon={fa[challenge.icon]} size="2x" />
+                                        <b className='text-huge'>{challenge.icon}</b>
+                                    </div> : null}
                             </div>
                             <div className="row gap-15 wrap maxh-200 overflowy-scroll p-15 filled-container rounded-15">
-                                {searchMatch(iconSearch, Object.keys(fa)).map((key, index) => (
-                                    <div className={`${challenge.icon === key ? ' blue text-white ' : ' white text-dark border-light '} pointer p-5 square-small centered vertical-center`}>
-                                        <FontAwesomeIcon icon={fa[key]} size="2x" 
+                                {searchMatch(iconSearch, Object.keys(fa).filter(i => i !== 'fas' && i !== 'prefix')).map((key, index) => (
+                                    <div key={index} className={`${challenge.icon === key ? ' blue text-white ' : ' white text-dark border-light '} pointer p-5 square-small centered vertical-center`}>
+                                        <FontAwesomeIcon icon={fa[key]} size="2x"
                                             onClick={() => {
                                                 setChallenge({ ...challenge, icon: key })
                                             }} />
