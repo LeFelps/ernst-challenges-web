@@ -324,6 +324,25 @@ div {
   color: #0c81ac;
 }
 
+.search-field {
+  width: 100%;
+  border: 2px #e5e5e5 solid;
+  background-color: white;
+  border-radius: 1.3rem;
+  height: 2.6rem;
+  padding: 5px 15px 5px 15px;
+  box-sizing: border-box;
+  min-width: 250px;
+  margin-top: 3px;
+}
+
+.search-input {
+  width: 100%;
+  border: none;
+  box-sizing: border-box;
+  font-size: 1.1rem;
+}
+
 .input-field {
   width: 100%;
   border: 2px #e5e5e5 solid;
@@ -356,6 +375,9 @@ div {
   outline: none;
 }
 
+.search-input:focus {
+  outline: none;
+}
 
 /* GENERAL UTILITIES */
 

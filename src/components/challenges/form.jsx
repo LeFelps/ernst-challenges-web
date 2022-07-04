@@ -86,21 +86,18 @@ function ChallengeForm() {
                                 </span>
                             </div>
                         </div>
-                        <div className='col gap-25'>
-                            <div className="row gap-35 vertical-bottom">
-                                <div className='input-group-50'>
-                                    <label htmlFor="username">Icon search</label>
-                                    <input type="text" className='input-field'
+                        <div className='col gap-15'>
+                            <div className='input-group'>
+                                <label htmlFor="username">Icon</label>
+                                <div className='row vertical-center gap-15 search-field'>
+                                    <input type="text" className='search-input'
+                                        placeholder='Search icon...'
                                         onChange={(e) => {
                                             setIconSearch(e.target.value)
                                         }} value={iconSearch}
                                     />
+                                    <FontAwesomeIcon className="text-light text-huge to-right" icon={fa.faMagnifyingGlass} />
                                 </div>
-                                {challenge.icon ?
-                                    <div className='row gap-15 text-dark'>
-                                        <FontAwesomeIcon icon={fa[challenge.icon]} size="2x" />
-                                        <b className='text-huge'>{challenge.icon}</b>
-                                    </div> : null}
                             </div>
                             <div className="row gap-15 wrap maxh-200 overflowy-scroll p-15 filled-container rounded-15">
                                 {searchMatch(iconSearch, Object.keys(fa).filter(i => i !== 'fas' && i !== 'prefix')).map((key, index) => (
@@ -112,6 +109,12 @@ function ChallengeForm() {
                                     </div>
                                 ))}
                             </div>
+                            {challenge.icon ?
+                                <div className='row gap-10 text-dark vertical-center'>
+                                    <b>Selected:</b>
+                                    <FontAwesomeIcon icon={fa[challenge.icon]} />
+                                    <b>{challenge.icon}</b>
+                                </div> : null}
                         </div>
                         <div className="row gap-35">
                             <div className='input-group'>
