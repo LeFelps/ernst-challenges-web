@@ -1,5 +1,5 @@
 import React from 'react';
-import { faClock, faGun, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faHandBackFist, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logo from '../../logo.svg';
 
@@ -52,14 +52,14 @@ function ProfileView() {
                     </div>
                     <div className="row gap-15 vertical-center">
                         <FontAwesomeIcon icon={faClock} />
-                        <div className='w-100 progress-bar purple'>
-                            
+                        <div className='w-100 progress-bar w-100 purple'>
+
                         </div>
                     </div>
                     <div className='radius-15 outlined-container'>
                         <div className='filled-container p-15 row gap-15 vertical-center w-100'>
                             <div className="round-icon dark text-white text-big">
-                                <FontAwesomeIcon icon={faGun} />
+                                <FontAwesomeIcon icon={faHandBackFist} />
                             </div>
                             <b className="text-bigger">You are attacking!</b>
                             <div className="to-right">

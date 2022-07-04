@@ -22,7 +22,7 @@ function ChallengeForm() {
 
     const [iconSearch, setIconSearch] = useState("")
 
-    const [iconMaxValues, setIconMaxValues] = useState(48)
+    const [iconMaxValues, setIconMaxValues] = useState(60)
 
     function searchMatch(search, array) {
         const matches = array.filter(key => {
@@ -120,12 +120,12 @@ function ChallengeForm() {
                             </div>
                             <div className="row gap-15 wrap maxh-200 minh-20 overflowy-scroll p-15 filled-container rounded-15">
                                 {searchMatch(iconSearch, Object.keys(fa).filter(i => i !== 'fas' && i !== 'prefix')).map((key, index) => (
-                                    <div key={index} className={`${challenge.icon === key ? ' blue text-white ' : ' white text-dark border-light '} pointer p-5 square-small centered vertical-center`}>
-                                        <FontAwesomeIcon icon={fa[key]} size="2x"
-                                            onClick={() => {
-                                                setChallenge({ ...challenge, icon: key })
-                                            }} />
-                                    </div>
+                                    <button key={index} className={`${challenge.icon === key ? ' blue text-white ' : ' white text-dark border-light '} flex pointer p-5 square-small centered vertical-center text-small`}
+                                        onClick={() => {
+                                            setChallenge({ ...challenge, icon: key })
+                                        }}>
+                                        <FontAwesomeIcon icon={fa[key]} size="2x" />
+                                    </button>
                                 ))}
                             </div>
                             <div className="row">
@@ -140,7 +140,7 @@ function ChallengeForm() {
                                 </div>
                                 <div className="row to-right gap-15">
                                     <b>Showing</b>
-                                    <input type="number" className='text-blue naked w-75px text-center text-big' value={iconMaxValues} onChange={(e) => setIconMaxValues(e.target.value)}/>
+                                    <input type="number" className='text-blue naked w-75px text-center text-big' value={iconMaxValues} onChange={(e) => setIconMaxValues(e.target.value)} />
                                     <b>Results</b>
                                 </div>
                             </div>
@@ -199,55 +199,45 @@ function ChallengeForm() {
                                                 let checkpointList = [...challenge.checkpoints]
                                                 checkpointList[index].description = e.target.value
                                                 setChallenge({ ...challenge, checkpoints: checkpointList })
-                                            }} value={checkpoint.description}
-                                        />
+                                            }} value={checkpoint.description} />
                                     </div>
                                 </div>
                                 <div>
                                     <span className="group-title">References</span>
                                     <div className="box-section">
-                                        <div className="radius-15 filled-container p-30">
-                                            <div className="row gap-35">
-                                                <div className='input-group-50'>
-                                                    <label htmlFor="username">Title</label>
-                                                    <input type="text" className='input-field'
-                                                    // onChange={(e) => {
-                                                    //     setUserData({ ...userData, username: e.target.value })
-                                                    // }} value={userData.username}
-                                                    />
-                                                </div>
-                                                <div className='input-group-50'>
-                                                    <label htmlFor="username">Link</label>
-                                                    <input type="text" className='input-field'
-                                                    // onChange={(e) => {
-                                                    //     setUserData({ ...userData, username: e.target.value })
-                                                    // }} value={userData.username}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="radius-15 filled-container p-30">
-                                            <div className="row gap-35">
-                                                <div className='input-group-50'>
-                                                    <label htmlFor="username">Title</label>
-                                                    <input type="text" className='input-field'
-                                                    // onChange={(e) => {
-                                                    //     setUserData({ ...userData, username: e.target.value })
-                                                    // }} value={userData.username}
-                                                    />
-                                                </div>
-                                                <div className='input-group-50'>
-                                                    <label htmlFor="username">Link</label>
-                                                    <input type="text" className='input-field'
-                                                    // onChange={(e) => {
-                                                    //     setUserData({ ...userData, username: e.target.value })
-                                                    // }} value={userData.username}
-                                                    />
+                                        {checkpoint.references?.map((reference, rIndex) => (
+                                            <div className="radius-15 filled-container p-30">
+                                                <div className="row gap-35">
+                                                    <div className='input-group-50'>
+                                                        <label htmlFor="username">Title</label>
+                                                        <input type="text" className='input-field'
+                                                            onChange={(e) => {
+                                                                let editReference = checkpoint.references[rIndex]
+                                                                let checkpointList = [...challenge.checkpoints]
+                                                                checkpointList[index].references[rIndex] = editReference
+                                                                setChallenge({ ...challenge, checkpoints: checkpointList })
+                                                            }} value={reference.title} />
+                                                    </div>
+                                                    <div className='input-group-50'>
+                                                        <label htmlFor="username">Link</label>
+                                                        <input type="text" className='input-field'
+                                                            onChange={(e) => {
+                                                                let editReference = checkpoint.references[rIndex]
+                                                                let checkpointList = [...challenge.checkpoints]
+                                                                checkpointList[index].references[rIndex] = editReference
+                                                                setChallenge({ ...challenge, checkpoints: checkpointList })
+                                                            }} value={reference.link} />
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        ))}
                                         <div className="row centered">
-                                            <button className="button-flat blue text-white">
+                                            <button className="button-flat blue text-white"
+                                                onClick={() => {
+                                                    let checkpointList = [...challenge.checkpoints]
+                                                    checkpointList[index].references = [...(checkpoint.references || []), { title: null, link: null }]
+                                                    setChallenge({ ...challenge, checkpoints: checkpointList })
+                                                }}>
                                                 Add reference
                                             </button>
                                         </div>
@@ -273,13 +263,10 @@ function ChallengeForm() {
                                         ))}
                                         <button className="add-button"
                                             onClick={() => {
-                                                let technologiesList = [...(challenge.checkpoints[index].technologies || [])]
-                                                technologiesList.push("Test")
                                                 let checkpointList = [...challenge.checkpoints]
-                                                checkpointList[index].technologies = technologiesList
+                                                checkpointList[index].technologies = [...(checkpoint.technologies || []), "Test"]
                                                 setChallenge({ ...challenge, checkpoints: checkpointList })
-                                            }}
-                                        >
+                                            }}>
                                             <FontAwesomeIcon icon={fa.faPlus} />
                                             <span>Add technology</span>
                                         </button>

@@ -202,7 +202,7 @@ button:disabled {
   background-color: #414141;
   width: max-content;
   padding: 2px 5px 2px 5px;
-  margin: 6px 0px 6px 0px;
+  margin: 3px 0px 3px 0px;
   border-radius: 3px;
   color: #FFF;
 }
@@ -237,7 +237,7 @@ button:disabled {
   z-index: 2;
 }
 
-.progress-bar {
+.progress-bar{
   display: flex;
   height: 10px;
   width: 100%;
@@ -437,7 +437,6 @@ button:disabled {
   width: 75px;
 }
 
-
 .w-100px {
   width: 100px;
 }
@@ -482,25 +481,22 @@ button:disabled {
   margin: 15px;
 }
 
-.vertical-bottom {
+.flex {
   display: flex;
+}
+
+.vertical-bottom {
   align-items: end;
 }
 
 .vertical-center {
-  display: flex;
   align-items: center;
 }
 
 .space-between {
-  display: flex;
   justify-content: space-between;
 }
 
-.space-between {
-  display: flex;
-  justify-content: space-between;
-}
 
 .wrap {
   display: flex;

@@ -1,5 +1,5 @@
 import React from 'react'
-import { faCartShopping, faCircleCheck, faClock, faGun, faListCheck, faPen, faPlus, faShield, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faCircleCheck, faClock, faHandBackFist, faListCheck, faPen, faPlus, faShield, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 import logo from '../../logo.svg';
@@ -57,27 +57,27 @@ function OpponentView() {
                         <span className="group-title">Choose tour weapons!</span>
                     </div>
                     <div className='row gap-35 p-25'>
-                        <div className="round-card w-50 gap-15">
+                        <div className="round-card w-50 gap-15 vertical-center">
                             <div className="card-icon dark  text-bigger">
-                                <FontAwesomeIcon icon={faGun} />
+                                <FontAwesomeIcon icon={faHandBackFist} />
                             </div>
                             <div>
                                 <div className='card-sm'>
                                     <FontAwesomeIcon icon={faCartShopping} className="card-image" style={{ color: '#188EB9' }} />
                                 </div>
                             </div>
-                            <div className="col">
+                            <div className="col w-100">
                                 <div className='card-description-sm'>
                                     <p>
                                         Shopping Cart
                                     </p>
                                 </div>
-                                <div>
+                                <div className='w-100'>
                                     <span>
                                         <b className="text-big">Level 3</b>
                                         <span className="text-small text-light">/4</span>
                                     </span>
-                                    <div className="progress-bar maxw-200">
+                                    <div className="progress-bar w-100 maxw-200">
                                         <div className="progress-bar-item blue" />
                                         <div className="progress-bar-item blue" />
                                         <div className="progress-bar-item blue" />
@@ -86,7 +86,7 @@ function OpponentView() {
                                 </div>
                             </div>
                         </div>
-                        <div className="round-card w-50 gap-15">
+                        <div className="round-card w-50 gap-15 vertical-center">
                             <div className="card-icon dark text-bigger">
                                 <FontAwesomeIcon icon={faShield} />
                             </div>
@@ -95,7 +95,7 @@ function OpponentView() {
                                     <FontAwesomeIcon icon={faListCheck} className="card-image" style={{ color: '#188EB9' }} />
                                 </div>
                             </div>
-                            <div className="col">
+                            <div className="col w-100">
                                 <div className='card-description-sm'>
                                     <p>
                                         To-Do List
@@ -147,7 +147,7 @@ function OpponentView() {
                         </div>
                         <div className='row gap-35'>
                             <div className="round-card w-50 gap-15">
-                                <FontAwesomeIcon icon={faGun} className="text-bigger" />
+                                <FontAwesomeIcon icon={faHandBackFist} className="text-bigger" />
                                 <span className="card-title">
                                     Successfull attacks
                                 </span>

@@ -1,4 +1,4 @@
-import { faCartShopping, faGun, faListCheck, faPen, faPlus, faPlusCircle, faShield } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faHandBackFist, faListCheck, faPen, faPlus, faPlusCircle, faShield } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import logo from '../../logo.svg';
@@ -42,13 +42,13 @@ function ProfileView() {
                     </div>
                     <div className="p-25">
                         <div className='row gap-35'>
-                            <div className="row w-50 gap-15">
+                            <div className="row w-50 gap-15 vertical-center">
                                 <div>
                                     <div className='card-sm'>
                                         <FontAwesomeIcon icon={faCartShopping} className="card-image" style={{ color: '#188EB9' }} />
                                     </div>
                                 </div>
-                                <div className="col">
+                                <div className="col w-100">
                                     <div className='card-description-sm'>
                                         <p>
                                             Shopping Cart
@@ -59,7 +59,7 @@ function ProfileView() {
                                             <b className="text-big">Level 3</b>
                                             <span className="text-small text-light">/4</span>
                                         </span>
-                                        <div className="progress-bar">
+                                        <div className="progress-bar maxw-200">
                                             <div className="progress-bar-item blue" />
                                             <div className="progress-bar-item blue" />
                                             <div className="progress-bar-item blue" />
@@ -68,13 +68,13 @@ function ProfileView() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="row w-50 gap-15">
+                            <div className="row w-50 gap-15 vertical-center">
                                 <div>
                                     <div className='card-sm'>
                                         <FontAwesomeIcon icon={faListCheck} className="card-image" style={{ color: '#188EB9' }} />
                                     </div>
                                 </div>
-                                <div className="col">
+                                <div className="col w-100">
                                     <div className='card-description-sm'>
                                         <p>
                                             To-Do List
@@ -85,7 +85,7 @@ function ProfileView() {
                                             <b className="text-big">Level 2</b>
                                             <span className="text-small text-light">/6</span>
                                         </span>
-                                        <div className="progress-bar">
+                                        <div className="progress-bar  maxw-200">
                                             <div className="progress-bar-item blue" />
                                             <div className="progress-bar-item blue" />
                                             <div className="progress-bar-item lightgray" />
