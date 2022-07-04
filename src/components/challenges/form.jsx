@@ -19,6 +19,16 @@ function ChallengeForm() {
     })
     const [categories, setCategories] = useState([])
 
+    const [iconSearch, setIconSearch] = useState("")
+
+    function searchMatch(search, array) {
+        const matches = array.filter(key => {
+            var regexp = new RegExp(search, "gi")
+            return key.match(regexp)
+        })
+        return matches
+    }
+
     useEffect(() => {
         axios.get(`${consts.LOCAL_API}/challenges/categories?min=true`)
             .then(res => {
@@ -77,8 +87,18 @@ function ChallengeForm() {
                             </div>
                         </div>
                         <div className='col gap-15'>
+                            <div className="row gap-15">
+                                <div className='input-group-50'>
+                                    <label htmlFor="username">Icon search</label>
+                                    <input type="text" className='input-field'
+                                        onChange={(e) => {
+                                            setIconSearch(e.target.value)
+                                        }} value={iconSearch}
+                                    />
+                                </div>
+                            </div>
                             <div className="row gap-35 wrap maxh-200 overflowy-scroll p-15">
-                                {Object.keys(fa).map((key, index) => (
+                                {searchMatch(iconSearch, Object.keys(fa)).map((key, index) => (                 
                                     <FontAwesomeIcon icon={fa[key]} size="2x" className={`${challenge.icon === key ? ' text-blue ' : ''} pointer`}
                                         onClick={() => {
                                             setChallenge({ ...challenge, icon: key })

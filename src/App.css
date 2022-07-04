@@ -513,13 +513,11 @@
 
 .row {
   display: flex;
-  width: 100%;
   flex-direction: row;
 }
 
 .col {
   display: flex;
-  width: 100%;
   flex-direction: column;
 }
 
