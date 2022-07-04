@@ -15,11 +15,17 @@ function ChallengeForm() {
         title: null,
         brief: null,
         description: null,
-        icon: null
+        icon: null,
+        checkpoints: []
     })
     const [categories, setCategories] = useState([])
 
     const [iconSearch, setIconSearch] = useState("")
+
+    const [iconPage, setIconPage] = useState({
+        active: 0,
+        total: 0,
+    })
 
     function searchMatch(search, array) {
         const matches = array.filter(key => {
@@ -45,7 +51,9 @@ function ChallengeForm() {
         <div className="content">
             <div className="form-container">
                 <div>
-                    <div className="form-title">New Challenge</div>
+                    <div className="form-title">
+                        {challenge.id ? "Edit Challenge" : "New Challenge"}
+                    </div>
                     <div className="input-section">
                         <div className="row gap-35">
                             <div className='input-group-50'>
@@ -86,6 +94,16 @@ function ChallengeForm() {
                                 </span>
                             </div>
                         </div>
+                        <div className="row gap-35">
+                            <div className='input-group'>
+                                <label htmlFor="username">Description</label>
+                                <textarea type="text" className='input-field textarea'
+                                    onChange={(e) => {
+                                        setChallenge({ ...challenge, description: e.target.value })
+                                    }} value={challenge.description}
+                                />
+                            </div>
+                        </div>
                         <div className='col gap-15'>
                             <div className='input-group'>
                                 <label htmlFor="username">Icon</label>
@@ -109,21 +127,16 @@ function ChallengeForm() {
                                     </div>
                                 ))}
                             </div>
-                            {challenge.icon ?
+                            <div className="row">
                                 <div className='row gap-10 text-dark vertical-center'>
-                                    <b>Selected:</b>
-                                    <FontAwesomeIcon icon={fa[challenge.icon]} />
-                                    <b>{challenge.icon}</b>
-                                </div> : null}
-                        </div>
-                        <div className="row gap-35">
-                            <div className='input-group'>
-                                <label htmlFor="username">Description</label>
-                                <textarea type="text" className='input-field textarea'
-                                    onChange={(e) => {
-                                        setChallenge({ ...challenge, description: e.target.value })
-                                    }} value={challenge.description}
-                                />
+                                    <b>Selected Icon:</b>
+                                    {challenge.icon ?
+                                        <>
+                                            <FontAwesomeIcon icon={fa[challenge.icon]} />
+                                            <b>{challenge.icon}</b>
+                                        </>
+                                        : <span>None</span>}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -139,19 +152,19 @@ function ChallengeForm() {
                                     <span className="card-title">
                                         Easy
                                     </span>
-                                    <span className='card-value green to-right'>27</span>
+                                    <span className='card-value green to-right'>{challenge.questions?.filter(q => q.dificulty === "EASY")?.length || 0}</span>
                                 </div>
                                 <div className="round-card w-30">
                                     <span className="card-title">
                                         Medium
                                     </span>
-                                    <span className='card-value orange to-right'>15</span>
+                                    <span className='card-value orange to-right'>{challenge.questions?.filter(q => q.dificulty === "MEDIUM")?.length || 0}</span>
                                 </div>
                                 <div className="round-card w-30">
                                     <span className="card-title">
                                         Hard
                                     </span>
-                                    <span className='card-value red to-right'>9</span>
+                                    <span className='card-value red to-right'>{challenge.questions?.filter(q => q.dificulty === "HARD")?.length || 0}</span>
                                 </div>
                             </div>
                             <div className="row centered gap-25">
@@ -165,95 +178,118 @@ function ChallengeForm() {
                         </div>
                     </div>
                 </div>
-                <div>
-                    <span className="section-title">
-                        Checkpoint 1
-                    </span>
-                    <div className="radius-15 outlined-container p-30">
-                        <div className="input-section">
-                            <div className="row gap-35">
-                                <div className='input-group'>
-                                    <label htmlFor="username">Description</label>
-                                    <textarea type="text" className='input-field textarea'
-                                    // onChange={(e) => {
-                                    //     setUserData({ ...userData, username: e.target.value })
-                                    // }} value={userData.username}
-                                    />
-                                </div>
-                            </div>
-                            <div>
-                                <span className="group-title">References</span>
-                                <div className="box-section">
-                                    <div className="radius-15 filled-container p-30">
-                                        <div className="row gap-35">
-                                            <div className='input-group-50'>
-                                                <label htmlFor="username">Title</label>
-                                                <input type="text" className='input-field'
-                                                // onChange={(e) => {
-                                                //     setUserData({ ...userData, username: e.target.value })
-                                                // }} value={userData.username}
-                                                />
-                                            </div>
-                                            <div className='input-group-50'>
-                                                <label htmlFor="username">Link</label>
-                                                <input type="text" className='input-field'
-                                                // onChange={(e) => {
-                                                //     setUserData({ ...userData, username: e.target.value })
-                                                // }} value={userData.username}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="radius-15 filled-container p-30">
-                                        <div className="row gap-35">
-                                            <div className='input-group-50'>
-                                                <label htmlFor="username">Title</label>
-                                                <input type="text" className='input-field'
-                                                // onChange={(e) => {
-                                                //     setUserData({ ...userData, username: e.target.value })
-                                                // }} value={userData.username}
-                                                />
-                                            </div>
-                                            <div className='input-group-50'>
-                                                <label htmlFor="username">Link</label>
-                                                <input type="text" className='input-field'
-                                                // onChange={(e) => {
-                                                //     setUserData({ ...userData, username: e.target.value })
-                                                // }} value={userData.username}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row centered">
-                                        <button className="button-flat blue text-white">
-                                            Add reference
-                                        </button>
+                {challenge.checkpoints?.map((checkpoint, index) => (
+                    <div key={index}>
+                        <span className="section-title">
+                            Checkpoint {index + 1}
+                        </span>
+                        <div className="radius-15 outlined-container p-30">
+                            <div className="input-section">
+                                <div className="row gap-35">
+                                    <div className='input-group'>
+                                        <label htmlFor="username">Description</label>
+                                        <textarea type="text" className='input-field textarea'
+                                            onChange={(e) => {
+                                                let checkpointList = [...challenge.checkpoints]
+                                                checkpointList[index].description = e.target.value
+                                                setChallenge({ ...challenge, checkpoints: checkpointList })
+                                            }} value={checkpoint.description}
+                                        />
                                     </div>
                                 </div>
-                            </div>
-                            <div>
-                                <span className="group-title">Technologies</span>
-                                <div className="chip-section">
-                                    <div className="chip white text-dark border-thin">
-                                        <button className="chip-button">
-                                            <FontAwesomeIcon icon={fa.faCircleXmark} />
-                                        </button>
-                                        <span>Javascript</span>
+                                <div>
+                                    <span className="group-title">References</span>
+                                    <div className="box-section">
+                                        <div className="radius-15 filled-container p-30">
+                                            <div className="row gap-35">
+                                                <div className='input-group-50'>
+                                                    <label htmlFor="username">Title</label>
+                                                    <input type="text" className='input-field'
+                                                    // onChange={(e) => {
+                                                    //     setUserData({ ...userData, username: e.target.value })
+                                                    // }} value={userData.username}
+                                                    />
+                                                </div>
+                                                <div className='input-group-50'>
+                                                    <label htmlFor="username">Link</label>
+                                                    <input type="text" className='input-field'
+                                                    // onChange={(e) => {
+                                                    //     setUserData({ ...userData, username: e.target.value })
+                                                    // }} value={userData.username}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="radius-15 filled-container p-30">
+                                            <div className="row gap-35">
+                                                <div className='input-group-50'>
+                                                    <label htmlFor="username">Title</label>
+                                                    <input type="text" className='input-field'
+                                                    // onChange={(e) => {
+                                                    //     setUserData({ ...userData, username: e.target.value })
+                                                    // }} value={userData.username}
+                                                    />
+                                                </div>
+                                                <div className='input-group-50'>
+                                                    <label htmlFor="username">Link</label>
+                                                    <input type="text" className='input-field'
+                                                    // onChange={(e) => {
+                                                    //     setUserData({ ...userData, username: e.target.value })
+                                                    // }} value={userData.username}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="row centered">
+                                            <button className="button-flat blue text-white">
+                                                Add reference
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div className="chip white text-dark border-thin">
-                                        <button className="chip-button">
-                                            <FontAwesomeIcon icon={fa.faCircleXmark} />
+                                </div>
+                                <div>
+                                    <span className="group-title">Technologies</span>
+                                    <div className="chip-section">
+                                        {challenge.checkpoints && challenge.checkpoints[index]?.technologies?.map((technology, tIndex) => (
+                                            <div className="chip white text-dark border-thin" key={tIndex}>
+                                                <button className="chip-button">
+                                                    <FontAwesomeIcon icon={fa.faCircleXmark} className="pointer"
+                                                        onClick={() => {
+                                                            let technologiesList = [...challenge.checkpoints[index].technologies]
+                                                            technologiesList.splice(tIndex, 1)
+                                                            let checkpointList = [...challenge.checkpoints]
+                                                            checkpointList[index].technologies = technologiesList
+                                                            setChallenge({ ...challenge, checkpoints: checkpointList })
+                                                        }} />
+                                                </button>
+                                                <span>{technology}</span>
+                                            </div>
+                                        ))}
+                                        <button className="add-button"
+                                            onClick={() => {
+                                                let technologiesList = [...(challenge.checkpoints[index].technologies || [])]
+                                                technologiesList.push("Test")
+                                                let checkpointList = [...challenge.checkpoints]
+                                                checkpointList[index].technologies = technologiesList
+                                                setChallenge({ ...challenge, checkpoints: checkpointList })
+                                            }}
+                                        >
+                                            <FontAwesomeIcon icon={fa.faPlus} />
+                                            <span>Add technology</span>
                                         </button>
-                                        <span>React</span>
                                     </div>
-                                    <button className="add-button">
-                                        <FontAwesomeIcon icon={fa.faPlus} />
-                                        <span>Add technology</span>
-                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                ))}
+                <div className="row centered">
+                    <button className="button-flat blue text-white"
+                        onClick={() => {
+                            setChallenge({ ...challenge, checkpoints: [...challenge.checkpoints, {}] })
+                        }}>
+                        Add Checkpoint
+                    </button>
                 </div>
                 <div className="row justify-right gap-25">
                     <NavLink to="/challenges" className='button-rounded gray text-white'>
