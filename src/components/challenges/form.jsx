@@ -15,7 +15,7 @@ function ChallengeForm() {
         title: null,
         brief: null,
         description: null,
-        Icon: null
+        icon: null
     })
     const [categories, setCategories] = useState([])
 
@@ -86,8 +86,8 @@ function ChallengeForm() {
                                 </span>
                             </div>
                         </div>
-                        <div className='col gap-15'>
-                            <div className="row gap-15">
+                        <div className='col gap-25'>
+                            <div className="row gap-35 vertical-bottom">
                                 <div className='input-group-50'>
                                     <label htmlFor="username">Icon search</label>
                                     <input type="text" className='input-field'
@@ -96,13 +96,19 @@ function ChallengeForm() {
                                         }} value={iconSearch}
                                     />
                                 </div>
+                                <div className='row gap-15 text-dark'>
+                                    <FontAwesomeIcon icon={fa[challenge.icon]} size="2x" />
+                                    <b className='text-huge'>{challenge.icon}</b>
+                                </div>
                             </div>
-                            <div className="row gap-35 wrap maxh-200 overflowy-scroll p-15">
+                            <div className="row gap-15 wrap maxh-200 overflowy-scroll p-15 filled-container rounded-15">
                                 {searchMatch(iconSearch, Object.keys(fa)).map((key, index) => (
-                                    <FontAwesomeIcon icon={fa[key]} size="2x" className={`${challenge.icon === key ? ' text-blue ' : ''} pointer`}
-                                        onClick={() => {
-                                            setChallenge({ ...challenge, icon: key })
-                                        }} />
+                                    <div className={`${challenge.icon === key ? ' blue text-white ' : ' white text-dark border-light '} pointer p-5 square-small centered vertical-center`}>
+                                        <FontAwesomeIcon icon={fa[key]} size="2x" 
+                                            onClick={() => {
+                                                setChallenge({ ...challenge, icon: key })
+                                            }} />
+                                    </div>
                                 ))}
                             </div>
                         </div>

@@ -15,6 +15,10 @@
 
 /* AUTH SCREENS */
 
+div {
+  box-sizing: border-box;
+}
+
 .login-input-area {
   display: flex;
   flex-direction: column;
@@ -479,6 +483,24 @@
   overflow: hidden;
 }
 
+.rounded-5 {
+  border-radius: 5px;
+}
+
+.rounded-10 {
+  border-radius: 10px;
+}
+
+.rounded-15 {
+  border-radius: 15px;
+}
+
+.square-small {
+  height: 55px;
+  width: 55px;
+  border-radius: 15px;
+}
+
 .radius-15 {
   border-radius: 15px;
 }
@@ -628,6 +650,10 @@
 
 .border-thin {
   border: 1px solid #8a8a8a;
+}
+
+.border-light {
+  border: 2px solid #e5e5e5;
 }
 
 .text-center {
