@@ -77,9 +77,9 @@ function ChallengeForm() {
                             <div className='input-group-50'>
                                 <label htmlFor="username">Brief</label>
                                 <input type="text" className='input-field'
-                                // onChange={(e) => {
-                                //     setUserData({ ...userData, username: e.target.value })
-                                // }} value={userData.username}
+                                    onChange={(e) => {
+                                        setChallenge({ ...challenge, brief: e.target.value })
+                                    }} value={challenge.brief}
                                 />
                                 <span className='input-description'>
                                     A small description to be displayed on hover
@@ -98,7 +98,7 @@ function ChallengeForm() {
                                 </div>
                             </div>
                             <div className="row gap-35 wrap maxh-200 overflowy-scroll p-15">
-                                {searchMatch(iconSearch, Object.keys(fa)).map((key, index) => (                 
+                                {searchMatch(iconSearch, Object.keys(fa)).map((key, index) => (
                                     <FontAwesomeIcon icon={fa[key]} size="2x" className={`${challenge.icon === key ? ' text-blue ' : ''} pointer`}
                                         onClick={() => {
                                             setChallenge({ ...challenge, icon: key })
@@ -110,9 +110,9 @@ function ChallengeForm() {
                             <div className='input-group'>
                                 <label htmlFor="username">Description</label>
                                 <textarea type="text" className='input-field textarea'
-                                // onChange={(e) => {
-                                //     setUserData({ ...userData, username: e.target.value })
-                                // }} value={userData.username}
+                                    onChange={(e) => {
+                                        setChallenge({ ...challenge, description: e.target.value })
+                                    }} value={challenge.description}
                                 />
                             </div>
                         </div>
