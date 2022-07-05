@@ -47,7 +47,7 @@ function OpponentView() {
                                 </div>
                             </div>
                         </div>
-                        <NavLink to="/opponent-form" className='edit-button long-card-br'>
+                        <NavLink to="/opponent-form" className='round-button yellow long-card-br'>
                             <FontAwesomeIcon icon={faPen} className="card-image" />
                         </NavLink>
                     </div>

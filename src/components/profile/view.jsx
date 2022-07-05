@@ -21,7 +21,7 @@ function ProfileView() {
                                 <p className='info-value'>+55 (11) 98886-7001</p>
                             </div>
                         </div>
-                        <a to="/job-form" className='edit-button long-card-br'>
+                        <a to="/job-form" className='round-button yellow long-card-br'>
                             <FontAwesomeIcon icon={faPen} className="card-image" />
                         </a>
                     </div>

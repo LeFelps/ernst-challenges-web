@@ -35,7 +35,7 @@ function JobList() {
                                 </div>
                             </div>
                         </div>
-                        <NavLink to="/job-form" className='edit-button long-card-br'>
+                        <NavLink to="/job-form" className='round-button yellow long-card-br'>
                             <FontAwesomeIcon icon={faPen} className="card-image" />
                         </NavLink>
                     </div>

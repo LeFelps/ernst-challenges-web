@@ -206,8 +206,8 @@ function ChallengeForm() {
                                     <span className="group-title">References</span>
                                     <div className="box-section">
                                         {checkpoint.references?.map((reference, rIndex) => (
-                                            <div className="radius-15 filled-container p-30">
-                                                <div className="row gap-35">
+                                            <div className="radius-15 filled-container">
+                                                <div className="row gap-35 p-20">
                                                     <div className='input-group-50'>
                                                         <label htmlFor="username">Title</label>
                                                         <input type="text" className='input-field'

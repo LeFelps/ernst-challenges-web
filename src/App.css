@@ -112,9 +112,8 @@ button:disabled {
 
 /* CARD LISTS */
 
-.edit-button {
+.round-button {
   color: #484848;
-  background-color: #E5D82A;
   height: 45px;
   width: 45px;
   border: none;
@@ -142,11 +141,6 @@ button:disabled {
   transform: translate(-25%, -25%);
 }
 
-.edit-button:hover {
-  background-color: hsl(56, 78%, 46%);
-  cursor: pointer;
-}
-
 .card {
   width: 120px;
   height: 120px;
@@ -161,7 +155,7 @@ button:disabled {
   align-items: center;
 }
 
-.card:hover .edit-button {
+.card:hover .round-button {
   height: 60px;
   width: 60px;
   transition: .3s;
@@ -453,6 +447,16 @@ button:disabled {
   width: 30%;
 }
 
+.p-10 {
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.p-20 {
+  padding: 20px;
+  box-sizing: border-box;
+}
+
 .p-15 {
   padding: 15px;
   box-sizing: border-box;
@@ -507,6 +511,15 @@ button:disabled {
   height: 40px;
   width: 40px;
   border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lcorner-icon {
+  height: 40px;
+  width: 40px;
+  border-radius: 0% 0% 0% 50%;
   display: flex;
   justify-content: center;
   align-items: center;
