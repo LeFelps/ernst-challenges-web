@@ -11,7 +11,7 @@ function OpponentForm() {
                     <div className="input-section">
                         <div className="row gap-35">
                             <div className='input-group-50'>
-                                <label htmlFor="username">Name</label>
+                                <label>Name</label>
                                 <input type="text" className='input-field'
                                 // onChange={(e) => {
                                 //     setUserData({ ...userData, username: e.target.value })
@@ -21,7 +21,7 @@ function OpponentForm() {
                         </div>
                         <div className="row gap-35">
                             <div className='input-group-50'>
-                                <label htmlFor="username">Difficulty</label>
+                                <label>Difficulty</label>
                                 <select className='input-field'
                                 // onChange={(e) => {
                                 //     setUserData({ ...userData, username: e.target.value })
@@ -31,7 +31,7 @@ function OpponentForm() {
                                 </select>
                             </div>
                             <div className='input-group-50'>
-                                <label htmlFor="username">Personality</label>
+                                <label>Personality</label>
                                 <select className='input-field'
                                 // onChange={(e) => {
                                 //     setUserData({ ...userData, username: e.target.value })
@@ -43,7 +43,7 @@ function OpponentForm() {
                         </div>
                         <div className="row gap-35">
                             <div className='input-group'>
-                                <label htmlFor="username">About</label>
+                                <label>About</label>
                                 <textarea type="text" className='input-field textarea'
                                 // onChange={(e) => {
                                 //     setUserData({ ...userData, username: e.target.value })

@@ -372,6 +372,10 @@ button:disabled {
   margin-top: 3px;
 }
 
+.input-field:disabled {
+  background-color: rgb(231, 231, 231);
+}
+
 .input-description {
   color: hsl(0, 0%, 50%);
   margin: 3px 0px 0px 5px;
@@ -445,6 +449,11 @@ button:disabled {
 
 .w-30 {
   width: 30%;
+}
+
+.p-5 {
+  padding: 5px;
+  box-sizing: border-box;
 }
 
 .p-10 {
@@ -670,7 +679,7 @@ button:disabled {
 }
 
 .button-rounded {
-  border-radius: 12px;
+  border-radius: 16px;
   border: none;
   font-size: 1rem;
   padding: 7px 12px 7px 12px;
@@ -804,6 +813,38 @@ button:disabled {
 
 .bg-dark {
   background-color: #484848;
+}
+
+.border-green {
+  border: 2px #7DD30F;
+}
+
+.border-orange {
+  border: 2px #D68D00;
+}
+
+.border-red {
+  border: 2px #D6000D;
+}
+
+.border-blue {
+  border: 2px #188EB9;
+}
+
+.border-pink {
+  border: 2px #E05263;
+}
+
+.border-white {
+  border: 2px white;
+}
+
+.border-light {
+  border: 2px #C4C4C4;
+}
+
+.border-dark {
+  border: 2px #484848;
 }
 
 .centered {
@@ -1258,8 +1299,46 @@ a {
 }
 
 .modal-content {
-  padding-top: 300px;
+  padding-top: 50px;
+  padding-bottom: 50px;
   width: 900px;
   display: flex;
   justify-content: center;
+  animation: .3s appearFromTop;
+}
+
+.color-box {
+  height: 30px;
+  width: 30px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FFF;
+  cursor: pointer;
+}
+
+.spinner {
+  animation: spin infinite .9s linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes appearFromTop {
+  0% {
+    transform: translateY(-20%);
+    opacity: 10%;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 100%;
+  }
 }

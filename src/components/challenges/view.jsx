@@ -58,7 +58,7 @@ function ChallengeView() {
                     </p>
                     <div className="row gap-35">
                         <div className='input-group-50'>
-                            <label htmlFor="username">Submission link</label>
+                            <label>Submission link</label>
                             <input type="text" className='input-field'
                             // onChange={(e) => {
                             //     setUserData({ ...userData, username: e.target.value })

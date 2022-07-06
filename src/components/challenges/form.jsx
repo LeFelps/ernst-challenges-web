@@ -26,6 +26,24 @@ function ChallengeForm() {
 
     const [showCategoryModal, setShowCategoryModal] = useState(false)
 
+    const [editCategory, setEditCategory] = useState({
+        title: null,
+        accentColor: null,
+    })
+
+    const accentColors = [
+        "#916932",
+        "#D48E29",
+        "#EC5A46",
+        "#E15263",
+        "#DF5193",
+        "#D59AC5",
+        "#8D55A2",
+        "#178EBA",
+        "#2B9446",
+        "#83C341",
+    ]
+
     function searchMatch(search, array) {
         const matches = array.filter(key => {
             var regexp = new RegExp(search, "gi")
@@ -48,8 +66,6 @@ function ChallengeForm() {
             })
     }, [])
 
-
-
     return (
         <div className="content">
             <div className="form-container">
@@ -60,7 +76,7 @@ function ChallengeForm() {
                     <div className="input-section">
                         <div className="row gap-35">
                             <div className='input-group-50'>
-                                <label htmlFor="username">Title</label>
+                                <label>Title</label>
                                 <input type="text" className='input-field'
                                     onChange={(e) => {
                                         setChallenge({ ...challenge, title: e.target.value })
@@ -68,7 +84,7 @@ function ChallengeForm() {
                                 />
                             </div>
                             <div className='input-group-50'>
-                                <label htmlFor="username">Category</label>
+                                <label>Category</label>
                                 <select className='input-field'
                                     onChange={(e) => {
                                         setChallenge({ ...challenge, category: categories.find(c => c.id === e.target.value) })
@@ -86,7 +102,7 @@ function ChallengeForm() {
                         </div>
                         <div className="row gap-35">
                             <div className='input-group-50'>
-                                <label htmlFor="username">Brief</label>
+                                <label>Brief</label>
                                 <input type="text" className='input-field'
                                     onChange={(e) => {
                                         setChallenge({ ...challenge, brief: e.target.value })
@@ -99,7 +115,7 @@ function ChallengeForm() {
                         </div>
                         <div className="row gap-35">
                             <div className='input-group'>
-                                <label htmlFor="username">Description</label>
+                                <label>Description</label>
                                 <textarea type="text" className='input-field textarea'
                                     onChange={(e) => {
                                         setChallenge({ ...challenge, description: e.target.value })
@@ -109,7 +125,7 @@ function ChallengeForm() {
                         </div>
                         <div className='col gap-15'>
                             <div className='input-group'>
-                                <label htmlFor="username">Icon</label>
+                                <label>Icon</label>
                                 <div className='row vertical-center gap-15 search-field'>
                                     <input type="text" className='search-input'
                                         placeholder='Search icon...'
@@ -205,7 +221,7 @@ function ChallengeForm() {
                             <div className="input-section">
                                 <div className="row gap-35">
                                     <div className='input-group'>
-                                        <label htmlFor="username">Description</label>
+                                        <label>Description</label>
                                         <textarea type="text" className='input-field textarea'
                                             onChange={(e) => {
                                                 let checkpointList = [...challenge.checkpoints]
@@ -221,7 +237,7 @@ function ChallengeForm() {
                                             <div className="radius-15 filled-container row">
                                                 <div className="row gap-35 p-20 w-100">
                                                     <div className='input-group-50'>
-                                                        <label htmlFor="username">Title</label>
+                                                        <label>Title</label>
                                                         <input type="text" className='input-field'
                                                             onChange={(e) => {
                                                                 let editReference = checkpoint.references[rIndex]
@@ -232,7 +248,7 @@ function ChallengeForm() {
                                                             }} value={reference.title} />
                                                     </div>
                                                     <div className='input-group-50'>
-                                                        <label htmlFor="username">Link</label>
+                                                        <label>Link</label>
                                                         <input type="text" className='input-field'
                                                             onChange={(e) => {
                                                                 let editReference = checkpoint.references[rIndex]
@@ -316,15 +332,55 @@ function ChallengeForm() {
                         Save
                     </button>
                 </div>
-                <Modal show={showCategoryModal} close={() => setShowCategoryModal()} >
-                    <div className='input-group-50'>
-                        <label htmlFor="username">Title</label>
-                        <input type="text" className='input-field'
-                            onChange={(e) => {
-                                setChallenge({ ...challenge, title: e.target.value })
-                            }} value={challenge.title}
-                        />
-                    </div>
+                <Modal show={showCategoryModal} close={() => setShowCategoryModal(false)} >
+                    <form className='col gap-25'
+                        onSubmit={(e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+
+
+                        }}>
+                        <div className="row w-100">
+                            <b className="text-huge">
+                                New Category
+                            </b>
+                            <div className="round-icon white text-light to-right text-bigger"
+                                onClick={() => setShowCategoryModal(false)}
+                            >
+                                <FontAwesomeIcon icon={fa.faTimes} />
+                            </div>
+                        </div>
+                        <div className='input-group-50'>
+                            <label>Title</label>
+                            <input type="text" className='input-field' required
+                                onChange={(e) => {
+                                    setEditCategory({ ...editCategory, title: e.target.value })
+                                }} value={editCategory.title}
+                            />
+                        </div>
+                        <div className='input-group-50'>
+                            <label>Accent Color</label>
+                            <input type="text" className='input-field' disabled required
+                                value={editCategory.accentColor}
+                            />
+                            <div className='row gap-10 p-10 wrap'>
+                                {accentColors.map((accentColor) => (
+                                    <div className="color-box" style={{ backgroundColor: accentColor }}
+                                        onClick={() => {
+                                            setEditCategory({ ...editCategory, accentColor: accentColor })
+                                        }}>
+                                        {editCategory.accentColor === accentColor ?
+                                            <FontAwesomeIcon icon={fa.faCheck} /> : null}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="row justify-right gap-25">
+                            <button className="button-rounded green text-white" type='submit'>
+                                Save
+                            </button>
+                        </div>
+                    </form>
                 </Modal>
             </div>
         </div>

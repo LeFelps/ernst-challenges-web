@@ -14,7 +14,7 @@ function JobForm() {
                     <div className="input-section">
                         <div className="row gap-35">
                             <div className='input-group-50'>
-                                <label htmlFor="username">Title</label>
+                                <label>Title</label>
                                 <input type="text" className='input-field'
                                 // onChange={(e) => {
                                 //     setUserData({ ...userData, username: e.target.value })
@@ -22,17 +22,7 @@ function JobForm() {
                                 />
                             </div>
                             <div className='input-group-50'>
-                                <label htmlFor="username">Level</label>
-                                <input type="text" className='input-field'
-                                // onChange={(e) => {
-                                //     setUserData({ ...userData, username: e.target.value })
-                                // }} value={userData.username}
-                                />
-                            </div>
-                        </div>
-                        <div className="row gap-35">
-                            <div className='input-group-50'>
-                                <label htmlFor="username">Salary</label>
+                                <label>Level</label>
                                 <input type="text" className='input-field'
                                 // onChange={(e) => {
                                 //     setUserData({ ...userData, username: e.target.value })
@@ -42,7 +32,17 @@ function JobForm() {
                         </div>
                         <div className="row gap-35">
                             <div className='input-group-50'>
-                                <label htmlFor="username">Location</label>
+                                <label>Salary</label>
+                                <input type="text" className='input-field'
+                                // onChange={(e) => {
+                                //     setUserData({ ...userData, username: e.target.value })
+                                // }} value={userData.username}
+                                />
+                            </div>
+                        </div>
+                        <div className="row gap-35">
+                            <div className='input-group-50'>
+                                <label>Location</label>
                                 <input type="text" className='input-field'
                                 // onChange={(e) => {
                                 //     setUserData({ ...userData, username: e.target.value })
@@ -56,7 +56,7 @@ function JobForm() {
                         </div>
                         <div className="row gap-35">
                             <div className='input-group'>
-                                <label htmlFor="username">Description</label>
+                                <label>Description</label>
                                 <textarea type="text" className='input-field textarea'
                                 // onChange={(e) => {
                                 //     setUserData({ ...userData, username: e.target.value })
@@ -73,7 +73,7 @@ function JobForm() {
                             <div className="input-section">
                                 <div className="row gap-35">
                                     <div className='input-group'>
-                                        <label htmlFor="username">Description</label>
+                                        <label>Description</label>
                                         <input type="text" className='input-field'
                                         // onChange={(e) => {
                                         //     setUserData({ ...userData, username: e.target.value })
@@ -83,7 +83,7 @@ function JobForm() {
                                 </div>
                                 <div className="row gap-35">
                                     <div className='input-group'>
-                                        <label htmlFor="username">Description</label>
+                                        <label>Description</label>
                                         <input type="text" className='input-field'
                                         // onChange={(e) => {
                                         //     setUserData({ ...userData, username: e.target.value })
@@ -107,7 +107,7 @@ function JobForm() {
                             <div className="input-section">
                                 <div className="row gap-35">
                                     <div className='input-group'>
-                                        <label htmlFor="username">Description</label>
+                                        <label>Description</label>
                                         <input type="text" className='input-field'
                                         // onChange={(e) => {
                                         //     setUserData({ ...userData, username: e.target.value })
@@ -117,7 +117,7 @@ function JobForm() {
                                 </div>
                                 <div className="row gap-35">
                                     <div className='input-group'>
-                                        <label htmlFor="username">Description</label>
+                                        <label>Description</label>
                                         <input type="text" className='input-field'
                                         // onChange={(e) => {
                                         //     setUserData({ ...userData, username: e.target.value })
