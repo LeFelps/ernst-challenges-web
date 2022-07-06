@@ -3,19 +3,19 @@ import { NavLink, BrowserRouter, Route, Routes } from 'react-router-dom'
 import logo from '../../logo.svg';
 
 // Pages
-import ChallengeList from '../challenges/list';
-import ChallengeForm from '../challenges/form';
-import ChallengeView from '../challenges/view';
-import JobList from '../jobs/list';
-import JobForm from '../jobs/form';
-import JobView from '../jobs/view';
-import ProfileList from '../profile/list';
-import ProfileForm from '../profile/form';
-import ProfileView from '../profile/view';
-import DungeonList from '../dungeon/list';
-import DungeonForm from '../dungeon/form';
-import DungeonView from '../dungeon/view';
-import QuizView from '../quiz/view'
+import ChallengeList from '../challenges/List';
+import ChallengeForm from '../challenges/Form';
+import ChallengeView from '../challenges/View';
+import JobList from '../jobs/List';
+import JobForm from '../jobs/Form';
+import JobView from '../jobs/View';
+import ProfileList from '../profile/List';
+import ProfileForm from '../profile/Form';
+import ProfileView from '../profile/View';
+import DungeonList from '../dungeon/List';
+import DungeonForm from '../dungeon/Form';
+import DungeonView from '../dungeon/View';
+import QuizView from '../quiz/View'
 
 
 function Dashboard() {

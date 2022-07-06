@@ -4,6 +4,7 @@ import * as fa from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import consts from '../../consts.js'
+import Modal from '../../components/utilities/modals/Modal.jsx'
 
 function ChallengeForm() {
 
@@ -21,8 +22,9 @@ function ChallengeForm() {
     const [categories, setCategories] = useState([])
 
     const [iconSearch, setIconSearch] = useState("")
-
     const [iconMaxValues, setIconMaxValues] = useState(60)
+
+    const [showCategoryModal, setShowCategoryModal] = useState(false)
 
     function searchMatch(search, array) {
         const matches = array.filter(key => {
@@ -77,7 +79,7 @@ function ChallengeForm() {
                                         <option value={category.id}>{category.name}</option>
                                     ))}
                                 </select>
-                                <span className='input-link'>
+                                <span className='input-link' onClick={() => setShowCategoryModal(true)}>
                                     New category
                                 </span>
                             </div>
@@ -140,7 +142,14 @@ function ChallengeForm() {
                                 </div>
                                 <div className="row to-right gap-15">
                                     <b>Showing</b>
-                                    <input type="number" className='text-blue naked w-75px text-center text-big' value={iconMaxValues} onChange={(e) => setIconMaxValues(e.target.value)} />
+                                    <input type="number" className='text-blue naked w-75px text-center text-big'
+                                        onChange={(e) => {
+                                            if (parseInt(e.target.value) > Object.keys(fa).length)
+                                                setIconMaxValues(Object.keys(fa).length)
+                                            else
+                                                setIconMaxValues(e.target.value)
+                                        }}
+                                        value={iconMaxValues} />
                                     <b>Results</b>
                                 </div>
                             </div>
@@ -186,8 +195,11 @@ function ChallengeForm() {
                 </div>
                 {challenge.checkpoints?.map((checkpoint, index) => (
                     <div key={index}>
-                        <span className="section-title">
+                        <span className="section-title row w-100 vertical-bottom">
                             Checkpoint {index + 1}
+                            <div className="round-icon white pointer to-right text-center">
+                                <FontAwesomeIcon icon={fa.faTrashAlt} className="text-red text-bigger" />
+                            </div>
                         </span>
                         <div className="radius-15 outlined-container p-30">
                             <div className="input-section">
@@ -206,13 +218,14 @@ function ChallengeForm() {
                                     <span className="group-title">References</span>
                                     <div className="box-section">
                                         {checkpoint.references?.map((reference, rIndex) => (
-                                            <div className="radius-15 filled-container">
-                                                <div className="row gap-35 p-20">
+                                            <div className="radius-15 filled-container row">
+                                                <div className="row gap-35 p-20 w-100">
                                                     <div className='input-group-50'>
                                                         <label htmlFor="username">Title</label>
                                                         <input type="text" className='input-field'
                                                             onChange={(e) => {
                                                                 let editReference = checkpoint.references[rIndex]
+                                                                editReference.title = e.target.value
                                                                 let checkpointList = [...challenge.checkpoints]
                                                                 checkpointList[index].references[rIndex] = editReference
                                                                 setChallenge({ ...challenge, checkpoints: checkpointList })
@@ -223,11 +236,22 @@ function ChallengeForm() {
                                                         <input type="text" className='input-field'
                                                             onChange={(e) => {
                                                                 let editReference = checkpoint.references[rIndex]
+                                                                editReference.link = e.target.value
                                                                 let checkpointList = [...challenge.checkpoints]
                                                                 checkpointList[index].references[rIndex] = editReference
                                                                 setChallenge({ ...challenge, checkpoints: checkpointList })
                                                             }} value={reference.link} />
                                                     </div>
+                                                </div>
+                                                <div className='p-10 red flex vertical-center text-white text-bigger pointer'
+                                                    onClick={() => {
+                                                        let checkpointList = [...challenge.checkpoints]
+                                                        let referenceList = [...checkpoint.references]
+                                                        referenceList.splice(rIndex, 1)
+                                                        checkpointList[index].references = referenceList
+                                                        setChallenge({ ...challenge, checkpoints: checkpointList })
+                                                    }}>
+                                                    <FontAwesomeIcon icon={fa.faTrashAlt} />
                                                 </div>
                                             </div>
                                         ))}
@@ -292,6 +316,16 @@ function ChallengeForm() {
                         Save
                     </button>
                 </div>
+                <Modal show={showCategoryModal} close={() => setShowCategoryModal()} >
+                    <div className='input-group-50'>
+                        <label htmlFor="username">Title</label>
+                        <input type="text" className='input-field'
+                            onChange={(e) => {
+                                setChallenge({ ...challenge, title: e.target.value })
+                            }} value={challenge.title}
+                        />
+                    </div>
+                </Modal>
             </div>
         </div>
     );

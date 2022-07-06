@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 
-import Dashboard from './components/navigation/dashboard';
-import Auth from './components/auth/auth';
+import Dashboard from './components/navigation/Dashboard';
+import Auth from './components/auth/Auth';
 
 
 const user = localStorage.getItem('user');

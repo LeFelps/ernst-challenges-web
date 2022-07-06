@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React from 'react';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
-import Login from './login'
-import Signup from './signup'
+import Login from './Login'
+import Signup from './Signup'
 import logo from '../../logo.svg'
 
 function saveLogin() {
