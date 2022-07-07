@@ -26,16 +26,26 @@ function ChallengeForm() {
     const [iconMaxValues, setIconMaxValues] = useState(60)
 
     const [showCategoryModal, setShowCategoryModal] = useState(false)
+    const [showQuestionsModal, setShowQuestionsModal] = useState(false)
 
     const initialCategory = {
         id: null,
         title: null,
         accentColor: null,
     }
+
+    const initialQuestion = {
+        id: null,
+        title: null,
+        level: null,
+        type: null
+    }
+
     const [editCategory, setEditCategory] = useState(initialCategory)
+    const [editQuestion, setEditQuestion] = useState(initialCategory)
 
     const [loadingCategoryChanges, setLoadingCategoryChanges] = useState(false)
-
+    const [loadingQuestionChanges, setLoadingQuestionChanges] = useState(false)
 
     const accentColors = [
         "#916932",
@@ -68,6 +78,10 @@ function ChallengeForm() {
         setEditCategory(initialCategory)
     }
 
+    const closeQuestionsModal = () => {
+        setShowQuestionsModal(false)
+    }
+
     useEffect(() => {
         axios.get(`${consts.LOCAL_API}/challenges/categories?min=true`)
             .then(res => {
@@ -81,282 +95,314 @@ function ChallengeForm() {
     return (
         <div className="content">
             <div className="form-container">
-                <div>
-                    <div className="form-title">
-                        {challenge.id ? "Edit Challenge" : "New Challenge"}
-                    </div>
-                    <div className="input-section">
-                        <div className="row gap-35">
-                            <div className='input-group-50'>
-                                <label>Title</label>
-                                <input type="text" className='input-field'
-                                    onChange={(e) => {
-                                        setChallenge({ ...challenge, title: e.target.value })
-                                    }} value={challenge?.title || ""}
-                                />
-                            </div>
-                            <div className='input-group-50'>
-                                <label>Category</label>
-                                <div className="row w-100 gap-15 vertical-center">
-                                    <select className='input-field'
+                <form className="form-container" onSubmit={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+
+                    let type = "post"
+
+                    let challengeData = { ...challenge }
+
+                    if (challenge.icon === null) {
+
+                    } else {
+                        if (challenge.id)
+                            type = "put"
+
+                        axios[type](`${consts.LOCAL_API}/challenges`, challengeData)
+                            .then((response) => {
+                                setChallenge(response.data || {})
+                            })
+                            .catch(() => {
+
+                            })
+                            .then(() => {
+
+                            })
+                    }
+                }}>
+                    <div>
+                        <div className="form-title">
+                            {challenge.id ? "Edit Challenge" : "New Challenge"}
+                        </div>
+                        <div className="input-section">
+                            <div className="row">
+                                <div className='input-group-50'>
+                                    <label>Title</label>
+                                    <input type="text" className='input-field' required
                                         onChange={(e) => {
-                                            setChallenge({ ...challenge, category: categories.find(c => c.id === e.target.value) })
-                                        }} value={challenge.category?.id || ""}
-                                    >
-                                        <option value="">Select...</option>
-                                        {categories.map(category => (
-                                            <option value={category.id}>{category.name}</option>
-                                        ))}
-                                    </select>
-                                    {challenge.category?.id ?
-                                        <div>
-                                            <div className="round-icon yellow pointer"
-                                                onClick={() => {
-                                                    setShowCategoryModal(true)
-                                                    setEditCategory({ ...challenge.category })
-                                                }}>
-                                                <FontAwesomeIcon icon={fa.faPen} />
-                                            </div>
-                                        </div>
-                                        : null}
-                                </div>
-                                <span className='input-link' onClick={() => setShowCategoryModal(true)}>
-                                    New category
-                                </span>
-                            </div>
-                        </div>
-                        <div className="row gap-35">
-                            <div className='input-group-50'>
-                                <label>Brief</label>
-                                <input type="text" className='input-field'
-                                    onChange={(e) => {
-                                        setChallenge({ ...challenge, brief: e.target.value })
-                                    }} value={challenge?.brief || ""}
-                                />
-                                <span className='input-description'>
-                                    A small description to be displayed on hover
-                                </span>
-                            </div>
-                        </div>
-                        <div className="row gap-35">
-                            <div className='input-group'>
-                                <label>Description</label>
-                                <textarea type="text" className='input-field textarea'
-                                    onChange={(e) => {
-                                        setChallenge({ ...challenge, description: e.target.value })
-                                    }} value={challenge?.description || ""}
-                                />
-                            </div>
-                        </div>
-                        <div className='col gap-15'>
-                            <div className='input-group'>
-                                <label>Icon</label>
-                                <div className='row vertical-center gap-15 search-field'>
-                                    <input type="text" className='search-input'
-                                        placeholder='Search icon...'
-                                        onChange={(e) => {
-                                            setIconSearch(e.target.value)
-                                        }} value={iconSearch}
+                                            setChallenge({ ...challenge, title: e.target.value })
+                                        }} value={challenge?.title || ""}
                                     />
-                                    <FontAwesomeIcon className="text-light text-huge to-right" icon={fa.faMagnifyingGlass} />
                                 </div>
-                            </div>
-                            <div className="row gap-15 wrap maxh-200 minh-20 overflowy-scroll p-15 filled-container rounded-15">
-                                {searchMatch(iconSearch, Object.keys(fa).filter(i => i !== 'fas' && i !== 'prefix')).map((key, index) => (
-                                    <button key={index} className={`${challenge.icon === key ? ' blue text-white ' : ' white text-dark border-light '} flex pointer p-5 square-small centered vertical-center text-small`}
-                                        onClick={() => {
-                                            setChallenge({ ...challenge, icon: key })
-                                        }}>
-                                        <FontAwesomeIcon icon={fa[key]} size="2x" />
-                                    </button>
-                                ))}
+                                <div className='input-group-50'>
+                                    <label>Category</label>
+                                    <div className="row w-100 gap-15 vertical-center">
+                                        <select className='input-field' required
+                                            onChange={(e) => {
+                                                setChallenge({ ...challenge, category: categories.find(c => c.id === e.target.value) })
+                                            }} value={challenge.category?.id || ""}
+                                        >
+                                            <option value="">Select...</option>
+                                            {categories.map(category => (
+                                                <option value={category.id}>{category.name}</option>
+                                            ))}
+                                        </select>
+                                        {challenge.category?.id ?
+                                            <div>
+                                                <div className="round-icon yellow pointer"
+                                                    onClick={() => {
+                                                        setShowCategoryModal(true)
+                                                        setEditCategory({ ...challenge.category })
+                                                    }}>
+                                                    <FontAwesomeIcon icon={fa.faPen} />
+                                                </div>
+                                            </div>
+                                            : null}
+                                    </div>
+                                    <span className='input-link' onClick={() => setShowCategoryModal(true)}>
+                                        New category
+                                    </span>
+                                </div>
                             </div>
                             <div className="row">
-                                <div className='row gap-10 text-dark vertical-center'>
-                                    <b>Selected Icon:</b>
-                                    {challenge.icon ?
-                                        <>
-                                            <FontAwesomeIcon icon={fa[challenge.icon]} />
-                                            <b>{challenge.icon}</b>
-                                        </>
-                                        : <span>None</span>}
-                                </div>
-                                <div className="row to-right gap-15">
-                                    <b>Showing</b>
-                                    <input type="number" className='text-blue naked w-75px text-center text-big'
+                                <div className='input-group-50'>
+                                    <label>Brief</label>
+                                    <input type="text" className='input-field' required
                                         onChange={(e) => {
-                                            if (parseInt(e.target.value) > Object.keys(fa).length)
-                                                setIconMaxValues(Object.keys(fa).length)
-                                            else
-                                                setIconMaxValues(e.target.value)
-                                        }}
-                                        value={iconMaxValues} />
-                                    <b>Results</b>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <span className="section-title">
-                        Quizz questions
-                    </span>
-                    <div className="radius-15 filled-container p-30">
-                        <div className="input-section">
-                            <div className='row space-between'>
-                                <div className="round-card w-30">
-                                    <span className="card-title">
-                                        Easy
+                                            setChallenge({ ...challenge, brief: e.target.value })
+                                        }} value={challenge?.brief || ""}
+                                    />
+                                    <span className='input-description'>
+                                        A small description to be displayed on hover
                                     </span>
-                                    <span className='card-value green to-right'>{challenge.questions?.filter(q => q.dificulty === "EASY")?.length || 0}</span>
-                                </div>
-                                <div className="round-card w-30">
-                                    <span className="card-title">
-                                        Medium
-                                    </span>
-                                    <span className='card-value orange to-right'>{challenge.questions?.filter(q => q.dificulty === "MEDIUM")?.length || 0}</span>
-                                </div>
-                                <div className="round-card w-30">
-                                    <span className="card-title">
-                                        Hard
-                                    </span>
-                                    <span className='card-value red to-right'>{challenge.questions?.filter(q => q.dificulty === "HARD")?.length || 0}</span>
                                 </div>
                             </div>
-                            <div className="row centered gap-25">
-                                <button className="button-flat white text-dark border-thin">
-                                    Question List
-                                </button>
-                                <button className="button-flat blue text-white">
-                                    Add Question
-                                </button>
+                            <div className="row gap-35">
+                                <div className='input-group'>
+                                    <label>Description</label>
+                                    <textarea type="text" className='input-field textarea' required
+                                        onChange={(e) => {
+                                            setChallenge({ ...challenge, description: e.target.value })
+                                        }} value={challenge?.description || ""}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                {challenge.checkpoints?.map((checkpoint, index) => (
-                    <div key={index}>
-                        <span className="section-title row w-100 vertical-bottom">
-                            Checkpoint {index + 1}
-                            <div className="round-icon white pointer to-right text-center">
-                                <FontAwesomeIcon icon={fa.faTrashAlt} className="text-red text-bigger" />
-                            </div>
-                        </span>
-                        <div className="radius-15 outlined-container p-30">
-                            <div className="input-section">
-                                <div className="row gap-35">
-                                    <div className='input-group'>
-                                        <label>Description</label>
-                                        <textarea type="text" className='input-field textarea'
+                            <div className='col gap-15'>
+                                <div className='input-group'>
+                                    <label>Icon</label>
+                                    <div className='row vertical-center gap-15 search-field'>
+                                        <input type="text" className='search-input'
+                                            placeholder='Search icon...'
                                             onChange={(e) => {
-                                                let checkpointList = [...challenge.checkpoints]
-                                                checkpointList[index].description = e.target.value
-                                                setChallenge({ ...challenge, checkpoints: checkpointList })
-                                            }} value={checkpoint?.description || ""} />
+                                                setIconSearch(e.target.value)
+                                            }} value={iconSearch}
+                                        />
+                                        <FontAwesomeIcon className="text-light text-huge to-right" icon={fa.faMagnifyingGlass} />
                                     </div>
                                 </div>
-                                <div>
-                                    <span className="group-title">References</span>
-                                    <div className="box-section">
-                                        {checkpoint.references?.map((reference, rIndex) => (
-                                            <div className="radius-15 filled-container row">
-                                                <div className="row gap-35 p-20 w-100">
-                                                    <div className='input-group-50'>
-                                                        <label>Title</label>
-                                                        <input type="text" className='input-field'
-                                                            onChange={(e) => {
-                                                                let editReference = checkpoint.references[rIndex]
-                                                                editReference.title = e.target.value
-                                                                let checkpointList = [...challenge.checkpoints]
-                                                                checkpointList[index].references[rIndex] = editReference
-                                                                setChallenge({ ...challenge, checkpoints: checkpointList })
-                                                            }} value={reference?.title || ""} />
+                                <div className="row gap-15 wrap maxh-200 minh-20 overflowy-scroll p-15 filled-container rounded-15">
+                                    {searchMatch(iconSearch, Object.keys(fa).filter(i => i !== 'fas' && i !== 'prefix')).map((key, index) => (
+                                        <button type="button" key={index} className={`${challenge.icon === key ? ' blue text-white ' : ' white text-dark border-light '} flex pointer p-5 square-small centered vertical-center text-small`}
+                                            onClick={() => {
+                                                setChallenge({ ...challenge, icon: key })
+                                            }}>
+                                            <FontAwesomeIcon icon={fa[key]} size="2x" />
+                                        </button>
+                                    ))}
+                                </div>
+                                <div className="row">
+                                    <div className='row gap-10 text-dark vertical-center'>
+                                        <b>Selected Icon:</b>
+                                        {challenge.icon ?
+                                            <>
+                                                <FontAwesomeIcon icon={fa[challenge.icon]} />
+                                                <b>{challenge.icon}</b>
+                                            </>
+                                            : <span>None</span>}
+                                    </div>
+                                    <div className="row to-right gap-15">
+                                        <b>Showing</b>
+                                        <input type="number" className='text-blue naked w-75px text-center text-big'
+                                            onChange={(e) => {
+                                                if (parseInt(e.target.value) > Object.keys(fa).length)
+                                                    setIconMaxValues(Object.keys(fa).length)
+                                                else
+                                                    setIconMaxValues(e.target.value)
+                                            }}
+                                            value={iconMaxValues} />
+                                        <b>Results</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <span className="section-title">
+                            Quizz questions
+                        </span>
+                        <div className="radius-15 filled-container p-30">
+                            <div className="input-section">
+                                <div className='row space-between'>
+                                    <div className="round-card w-30">
+                                        <span className="card-title">
+                                            Easy
+                                        </span>
+                                        <span className='card-value green to-right'>{challenge.questions?.filter(q => q.dificulty === "EASY")?.length || 0}</span>
+                                    </div>
+                                    <div className="round-card w-30">
+                                        <span className="card-title">
+                                            Medium
+                                        </span>
+                                        <span className='card-value orange to-right'>{challenge.questions?.filter(q => q.dificulty === "MEDIUM")?.length || 0}</span>
+                                    </div>
+                                    <div className="round-card w-30">
+                                        <span className="card-title">
+                                            Hard
+                                        </span>
+                                        <span className='card-value red to-right'>{challenge.questions?.filter(q => q.dificulty === "HARD")?.length || 0}</span>
+                                    </div>
+                                </div>
+                                <div className="row centered gap-25">
+                                    <button type="button" className="button-flat white text-dark border-thin"
+                                        onClick={() => {
+                                            setShowQuestionsModal(true)
+                                        }}>
+                                        Manage List
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {challenge.checkpoints?.map((checkpoint, index) => (
+                        <div key={index}>
+                            <span className="section-title row w-100 vertical-bottom">
+                                Checkpoint {index + 1}
+                                <button type="button" className="round-icon white pointer to-right text-center"
+                                    onClick={() => {
+                                        let checkpoints = [...challenge.checkpoints]
+                                        checkpoints.splice(index, 1)
+                                        setChallenge({ ...challenge, checkpoints: checkpoints })
+                                    }}>
+                                    <FontAwesomeIcon icon={fa.faTrashAlt} className="text-red text-bigger" />
+                                </button>
+                            </span>
+                            <div className="radius-15 outlined-container p-30">
+                                <div className="input-section">
+                                    <div className="row gap-35">
+                                        <div className='input-group'>
+                                            <label>Description</label>
+                                            <textarea type="text" className='input-field textarea' required
+                                                onChange={(e) => {
+                                                    let checkpointList = [...challenge.checkpoints]
+                                                    checkpointList[index].description = e.target.value
+                                                    setChallenge({ ...challenge, checkpoints: checkpointList })
+                                                }} value={checkpoint?.description || ""} />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span className="group-title">References</span>
+                                        <div className="box-section">
+                                            {checkpoint.references?.map((reference, rIndex) => (
+                                                <div className="radius-15 filled-container row">
+                                                    <div className="row p-20 w-100">
+                                                        <div className='input-group-50'>
+                                                            <label>Title</label>
+                                                            <input type="text" className='input-field' required
+                                                                onChange={(e) => {
+                                                                    let editReference = checkpoint.references[rIndex]
+                                                                    editReference.title = e.target.value
+                                                                    let checkpointList = [...challenge.checkpoints]
+                                                                    checkpointList[index].references[rIndex] = editReference
+                                                                    setChallenge({ ...challenge, checkpoints: checkpointList })
+                                                                }} value={reference?.title || ""} />
+                                                        </div>
+                                                        <div className='input-group-50'>
+                                                            <label>Link</label>
+                                                            <input type="text" className='input-field' required
+                                                                onChange={(e) => {
+                                                                    let editReference = checkpoint.references[rIndex]
+                                                                    editReference.link = e.target.value
+                                                                    let checkpointList = [...challenge.checkpoints]
+                                                                    checkpointList[index].references[rIndex] = editReference
+                                                                    setChallenge({ ...challenge, checkpoints: checkpointList })
+                                                                }} value={reference?.link || ""} />
+                                                        </div>
                                                     </div>
-                                                    <div className='input-group-50'>
-                                                        <label>Link</label>
-                                                        <input type="text" className='input-field'
-                                                            onChange={(e) => {
-                                                                let editReference = checkpoint.references[rIndex]
-                                                                editReference.link = e.target.value
-                                                                let checkpointList = [...challenge.checkpoints]
-                                                                checkpointList[index].references[rIndex] = editReference
-                                                                setChallenge({ ...challenge, checkpoints: checkpointList })
-                                                            }} value={reference?.link || ""} />
+                                                    <div className='p-10 red flex vertical-center text-white text-bigger pointer'
+                                                        onClick={() => {
+                                                            let checkpointList = [...challenge.checkpoints]
+                                                            let referenceList = [...checkpoint.references]
+                                                            referenceList.splice(rIndex, 1)
+                                                            checkpointList[index].references = referenceList
+                                                            setChallenge({ ...challenge, checkpoints: checkpointList })
+                                                        }}>
+                                                        <FontAwesomeIcon icon={fa.faTrashAlt} />
                                                     </div>
                                                 </div>
-                                                <div className='p-10 red flex vertical-center text-white text-bigger pointer'
+                                            ))}
+                                            <div className="row centered">
+                                                <button type="button" className="button-flat blue text-white"
                                                     onClick={() => {
                                                         let checkpointList = [...challenge.checkpoints]
-                                                        let referenceList = [...checkpoint.references]
-                                                        referenceList.splice(rIndex, 1)
-                                                        checkpointList[index].references = referenceList
+                                                        checkpointList[index].references = [...(checkpoint.references || []), { title: null, link: null }]
                                                         setChallenge({ ...challenge, checkpoints: checkpointList })
                                                     }}>
-                                                    <FontAwesomeIcon icon={fa.faTrashAlt} />
-                                                </div>
+                                                    Add reference
+                                                </button>
                                             </div>
-                                        ))}
-                                        <div className="row centered">
-                                            <button className="button-flat blue text-white"
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span className="group-title">Technologies</span>
+                                        <div className="chip-section">
+                                            {challenge.checkpoints && challenge.checkpoints[index]?.technologies?.map((technology, tIndex) => (
+                                                <div className="chip white text-dark border-thin" key={tIndex}>
+                                                    <button type="button" className="chip-button">
+                                                        <FontAwesomeIcon icon={fa.faCircleXmark} className="pointer"
+                                                            onClick={() => {
+                                                                let technologiesList = [...challenge.checkpoints[index].technologies]
+                                                                technologiesList.splice(tIndex, 1)
+                                                                let checkpointList = [...challenge.checkpoints]
+                                                                checkpointList[index].technologies = technologiesList
+                                                                setChallenge({ ...challenge, checkpoints: checkpointList })
+                                                            }} />
+                                                    </button>
+                                                    <span>{technology}</span>
+                                                </div>
+                                            ))}
+                                            <button type="button" className="add-button"
                                                 onClick={() => {
                                                     let checkpointList = [...challenge.checkpoints]
-                                                    checkpointList[index].references = [...(checkpoint.references || []), { title: null, link: null }]
+                                                    checkpointList[index].technologies = [...(checkpoint.technologies || []), "Test"]
                                                     setChallenge({ ...challenge, checkpoints: checkpointList })
                                                 }}>
-                                                Add reference
+                                                <FontAwesomeIcon icon={fa.faPlus} />
+                                                <span>Add technology</span>
                                             </button>
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <span className="group-title">Technologies</span>
-                                    <div className="chip-section">
-                                        {challenge.checkpoints && challenge.checkpoints[index]?.technologies?.map((technology, tIndex) => (
-                                            <div className="chip white text-dark border-thin" key={tIndex}>
-                                                <button className="chip-button">
-                                                    <FontAwesomeIcon icon={fa.faCircleXmark} className="pointer"
-                                                        onClick={() => {
-                                                            let technologiesList = [...challenge.checkpoints[index].technologies]
-                                                            technologiesList.splice(tIndex, 1)
-                                                            let checkpointList = [...challenge.checkpoints]
-                                                            checkpointList[index].technologies = technologiesList
-                                                            setChallenge({ ...challenge, checkpoints: checkpointList })
-                                                        }} />
-                                                </button>
-                                                <span>{technology}</span>
-                                            </div>
-                                        ))}
-                                        <button className="add-button"
-                                            onClick={() => {
-                                                let checkpointList = [...challenge.checkpoints]
-                                                checkpointList[index].technologies = [...(checkpoint.technologies || []), "Test"]
-                                                setChallenge({ ...challenge, checkpoints: checkpointList })
-                                            }}>
-                                            <FontAwesomeIcon icon={fa.faPlus} />
-                                            <span>Add technology</span>
-                                        </button>
-                                    </div>
-                                </div>
                             </div>
                         </div>
+                    ))}
+                    <div className="row centered">
+                        <button type="button" className="button-flat blue text-white"
+                            onClick={() => {
+                                setChallenge({ ...challenge, checkpoints: [...challenge.checkpoints, {}] })
+                            }}>
+                            Add Checkpoint
+                        </button>
                     </div>
-                ))}
-                <div className="row centered">
-                    <button className="button-flat blue text-white"
-                        onClick={() => {
-                            setChallenge({ ...challenge, checkpoints: [...challenge.checkpoints, {}] })
-                        }}>
-                        Add Checkpoint
-                    </button>
-                </div>
-                <div className="row justify-right gap-25">
-                    <NavLink to="/challenges" className='button-rounded gray text-white'>
-                        Cancel
-                    </NavLink>
-                    <button className="button-rounded green text-white ">
-                        Save
-                    </button>
-                </div>
+                    <div className="row justify-right gap-25">
+                        <NavLink to="/challenges" className='button-rounded gray text-white'>
+                            Cancel
+                        </NavLink>
+                        <button type="submit" className="button-rounded green text-white ">
+                            Save
+                        </button>
+                    </div>
+                </form>
                 <Modal show={showCategoryModal} close={() => closeCategoryModal()} >
                     <form className='col gap-25'
                         onSubmit={(e) => {
@@ -380,8 +426,6 @@ function ChallengeForm() {
                                     setLoadingCategoryChanges(false)
                                     closeCategoryModal()
                                 })
-
-
                         }}>
                         <div className="row w-100">
                             <b className="text-huge">
@@ -425,9 +469,84 @@ function ChallengeForm() {
                         <div className="row justify-right vertical-center gap-25">
                             {loadingCategoryChanges ?
                                 <Spinner size="sm" color='dark' /> : null}
-                            <button className="button-rounded green text-white flex align-center gap-10 centered" type='submit' disabled={loadingCategoryChanges}>
+                            <button className="button-rounded green text-white" type='submit' disabled={loadingCategoryChanges}>
                                 Save
                             </button>
+                        </div>
+                    </form>
+                </Modal>
+
+                <Modal show={showQuestionsModal} close={() => closeQuestionsModal()} >
+                    <form className='col gap-25'>
+                        <div className="row w-100">
+                            <b className="text-huge">
+                                Add Question
+                            </b>
+                            <div className="round-icon white text-light to-right text-bigger pointer"
+                                onClick={() => closeQuestionsModal()}
+                            >
+                                <FontAwesomeIcon icon={fa.faTimes} />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className='input-group-50'>
+                                <label>Title</label>
+                                <input type="text" className='input-field' required disabled={loadingQuestionChanges}
+                                    onChange={(e) => {
+                                        setEditQuestion({ ...editQuestion, title: e.target.value })
+                                    }} value={editCategory?.title || ""}
+                                />
+                            </div>
+                            <div className='input-group-50'>
+                                <label>Level</label>
+                                <select className='input-field' required
+                                    onChange={(e) => {
+                                        setEditQuestion({ ...editQuestion, level: e.target.value })
+                                    }} value={challenge.category?.id || ""}
+                                >
+                                    <option value="">Select...</option>
+                                    <option value="EASY">Easy</option>
+                                    <option value="MEDIUM">Medium</option>
+                                    <option value="HARD">Hard</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className='input-group-50'>
+                                <label>Type</label>
+                                <select className='input-field' required
+                                    onChange={(e) => {
+                                        setEditQuestion({ ...editQuestion, type: e.target.value })
+                                    }} value={challenge.category?.id || ""}
+                                >
+                                    <option value="">Select...</option>
+                                    <option value="PRACTICAL">Practical</option>
+                                    <option value="THEORICAL">Theorical</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="row justify-right vertical-center gap-25">
+                            {loadingQuestionChanges ?
+                                <Spinner size="sm" color='dark' /> : null}
+                            <button className="button-rounded green text-white" type='submit' disabled={loadingQuestionChanges}>
+                                Add
+                            </button>
+                        </div>
+                        <div className="col w-100">
+                            <b className="text-huge">
+                                Question List
+                            </b>
+                            <div className="p-15 w-100">
+                                {challenge.questions?.length > 0 ?
+                                    challenge.questions.map((question, index) => {
+
+                                    })
+                                    :
+                                    <div className="row centered w-100">
+                                        <span className="text-gray text-bigger">No questions</span>
+                                    </div>
+                                }
+                            </div>
                         </div>
                     </form>
                 </Modal>

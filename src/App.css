@@ -322,12 +322,20 @@ button:disabled {
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding: 0px 10px 0px 10px;
+  box-sizing: border-box;
 }
 
 .input-group-50 {
   display: flex;
   flex-direction: column;
   width: 50%;
+  padding: 0px 10px 0px 10px;
+  box-sizing: border-box;
+}
+
+option {
+  font-family: 'M PLUS Rounded 1c';
 }
 
 .input-link {
@@ -792,6 +800,10 @@ button:disabled {
 
 .text-light {
   color: #C4C4C4;
+}
+
+.text-gray {
+  color: #B1B1B1;
 }
 
 .text-dark {
