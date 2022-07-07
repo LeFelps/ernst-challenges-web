@@ -92,7 +92,7 @@ function ChallengeForm() {
                                 <input type="text" className='input-field'
                                     onChange={(e) => {
                                         setChallenge({ ...challenge, title: e.target.value })
-                                    }} value={challenge.title}
+                                    }} value={challenge?.title || ""}
                                 />
                             </div>
                             <div className='input-group-50'>
@@ -101,7 +101,7 @@ function ChallengeForm() {
                                     <select className='input-field'
                                         onChange={(e) => {
                                             setChallenge({ ...challenge, category: categories.find(c => c.id === e.target.value) })
-                                        }} value={challenge.category?.id}
+                                        }} value={challenge.category?.id || ""}
                                     >
                                         <option value="">Select...</option>
                                         {categories.map(category => (
@@ -131,7 +131,7 @@ function ChallengeForm() {
                                 <input type="text" className='input-field'
                                     onChange={(e) => {
                                         setChallenge({ ...challenge, brief: e.target.value })
-                                    }} value={challenge.brief}
+                                    }} value={challenge?.brief || ""}
                                 />
                                 <span className='input-description'>
                                     A small description to be displayed on hover
@@ -144,7 +144,7 @@ function ChallengeForm() {
                                 <textarea type="text" className='input-field textarea'
                                     onChange={(e) => {
                                         setChallenge({ ...challenge, description: e.target.value })
-                                    }} value={challenge.description}
+                                    }} value={challenge?.description || ""}
                                 />
                             </div>
                         </div>
@@ -252,7 +252,7 @@ function ChallengeForm() {
                                                 let checkpointList = [...challenge.checkpoints]
                                                 checkpointList[index].description = e.target.value
                                                 setChallenge({ ...challenge, checkpoints: checkpointList })
-                                            }} value={checkpoint.description} />
+                                            }} value={checkpoint?.description || ""} />
                                     </div>
                                 </div>
                                 <div>
@@ -270,7 +270,7 @@ function ChallengeForm() {
                                                                 let checkpointList = [...challenge.checkpoints]
                                                                 checkpointList[index].references[rIndex] = editReference
                                                                 setChallenge({ ...challenge, checkpoints: checkpointList })
-                                                            }} value={reference.title} />
+                                                            }} value={reference?.title || ""} />
                                                     </div>
                                                     <div className='input-group-50'>
                                                         <label>Link</label>
@@ -281,7 +281,7 @@ function ChallengeForm() {
                                                                 let checkpointList = [...challenge.checkpoints]
                                                                 checkpointList[index].references[rIndex] = editReference
                                                                 setChallenge({ ...challenge, checkpoints: checkpointList })
-                                                            }} value={reference.link} />
+                                                            }} value={reference?.link || ""} />
                                                     </div>
                                                 </div>
                                                 <div className='p-10 red flex vertical-center text-white text-bigger pointer'
@@ -398,7 +398,7 @@ function ChallengeForm() {
                             <input type="text" className='input-field' required disabled={loadingCategoryChanges}
                                 onChange={(e) => {
                                     setEditCategory({ ...editCategory, title: e.target.value })
-                                }} value={editCategory.title}
+                                }} value={editCategory?.title || ""}
                             />
                         </div>
                         <div className='input-group-50 flex gap-10'>
@@ -406,9 +406,7 @@ function ChallengeForm() {
                                 <label>Accent Color</label>
                                 <input type="text" className='input-field text-thick' style={{ color: editCategory.accentColor || '' }} required
                                     placeholder='Color Preview'
-                                    value={
-                                        editCategory.accentColor ? editCategory.title : ""
-                                    }
+                                    value={editCategory.accentColor ? editCategory.title : ""}
                                 />
                             </div>
                             <div className='row gap-10 wrap'>
