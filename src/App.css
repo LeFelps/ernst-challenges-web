@@ -370,11 +370,18 @@ button:disabled {
   min-width: 250px;
   font-size: 1rem;
   margin-top: 3px;
+  font-family: 'M PLUS Rounded 1c';
 }
 
 .input-field:disabled {
   background-color: rgb(231, 231, 231);
 }
+
+button:disabled {
+  box-shadow: 0px 0px 0px 100px rgba(0, 0, 0, 0.5) inset;
+  cursor: default;
+}
+
 
 .input-description {
   color: hsl(0, 0%, 50%);
@@ -415,6 +422,14 @@ button:disabled {
 
 .text-huge {
   font-size: 1.5rem;
+}
+
+.text-thick {
+  font-weight: 600;
+}
+
+.text-thicker {
+  font-weight: 700;
 }
 
 .round-card {
@@ -855,8 +870,10 @@ button:disabled {
   justify-content: end;
 }
 
+
 .yellow {
   background-color: #E5D82A;
+  fill: #E5D82A;
 }
 
 .yellow:hover {
@@ -865,6 +882,7 @@ button:disabled {
 
 .blue {
   background-color: #0F9FD3;
+  fill: #0F9FD3;
 }
 
 .blue:hover {
@@ -873,6 +891,7 @@ button:disabled {
 
 .white {
   background-color: white;
+  fill: white;
 }
 
 .white:hover {
@@ -881,6 +900,7 @@ button:disabled {
 
 .green {
   background-color: #7DD30F;
+  fill: #7DD30F;
 }
 
 .green:hover {
@@ -889,6 +909,7 @@ button:disabled {
 
 .red {
   background-color: #D6000D;
+  fill: #D6000D;
 }
 
 .red:hover {
@@ -897,6 +918,7 @@ button:disabled {
 
 .purple {
   background-color: #9006B3;
+  fill: #9006B3;
 }
 
 .purple:hover {
@@ -905,6 +927,7 @@ button:disabled {
 
 .gray {
   background-color: #B1B1B1;
+  fill: #B1B1B1;
 }
 
 .gray:hover {
@@ -913,6 +936,7 @@ button:disabled {
 
 .orange {
   background-color: #D68D00;
+  fill: #D68D00;
 }
 
 .orange:hover {
@@ -921,6 +945,7 @@ button:disabled {
 
 .dark {
   background-color: #414141;
+  fill: #414141;
 }
 
 .dark:hover {
@@ -929,6 +954,7 @@ button:disabled {
 
 .lightgray {
   background-color: #dfdfdf;
+  fill: #dfdfdf;
 }
 
 .lightgray:hover {
@@ -970,7 +996,6 @@ button:disabled {
   align-items: center;
   justify-content: center;
 }
-
 
 /* UNSORTED */
 
@@ -1326,6 +1351,7 @@ a {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

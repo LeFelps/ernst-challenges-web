@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import consts from '../../consts.js'
 import Modal from '../../components/utilities/modals/Modal.jsx'
+import Spinner from '../../components/utilities/loading/Spinner'
 
 function ChallengeForm() {
 
@@ -26,10 +27,15 @@ function ChallengeForm() {
 
     const [showCategoryModal, setShowCategoryModal] = useState(false)
 
-    const [editCategory, setEditCategory] = useState({
+    const initialCategory = {
+        id: null,
         title: null,
         accentColor: null,
-    })
+    }
+    const [editCategory, setEditCategory] = useState(initialCategory)
+
+    const [loadingCategoryChanges, setLoadingCategoryChanges] = useState(false)
+
 
     const accentColors = [
         "#916932",
@@ -39,9 +45,10 @@ function ChallengeForm() {
         "#DF5193",
         "#D59AC5",
         "#8D55A2",
-        "#178EBA",
+        "#18A2C6",
+        "#0288AD",
         "#2B9446",
-        "#83C341",
+        "#83C341"
     ]
 
     function searchMatch(search, array) {
@@ -54,6 +61,11 @@ function ChallengeForm() {
         if (matches.length > iconMaxValues) { maxValues = iconMaxValues } else { maxValues = matches.length }
         let arrayValues = matches.slice(0, maxValues)
         return arrayValues
+    }
+
+    const closeCategoryModal = () => {
+        setShowCategoryModal(false)
+        setEditCategory(initialCategory)
     }
 
     useEffect(() => {
@@ -85,16 +97,29 @@ function ChallengeForm() {
                             </div>
                             <div className='input-group-50'>
                                 <label>Category</label>
-                                <select className='input-field'
-                                    onChange={(e) => {
-                                        setChallenge({ ...challenge, category: categories.find(c => c.id === e.target.value) })
-                                    }} value={challenge.category?.id}
-                                >
-                                    <option value="">Select...</option>
-                                    {categories.map(category => (
-                                        <option value={category.id}>{category.name}</option>
-                                    ))}
-                                </select>
+                                <div className="row w-100 gap-15 vertical-center">
+                                    <select className='input-field'
+                                        onChange={(e) => {
+                                            setChallenge({ ...challenge, category: categories.find(c => c.id === e.target.value) })
+                                        }} value={challenge.category?.id}
+                                    >
+                                        <option value="">Select...</option>
+                                        {categories.map(category => (
+                                            <option value={category.id}>{category.name}</option>
+                                        ))}
+                                    </select>
+                                    {challenge.category?.id ?
+                                        <div>
+                                            <div className="round-icon yellow pointer"
+                                                onClick={() => {
+                                                    setShowCategoryModal(true)
+                                                    setEditCategory({ ...challenge.category })
+                                                }}>
+                                                <FontAwesomeIcon icon={fa.faPen} />
+                                            </div>
+                                        </div>
+                                        : null}
+                                </div>
                                 <span className='input-link' onClick={() => setShowCategoryModal(true)}>
                                     New category
                                 </span>
@@ -332,11 +357,29 @@ function ChallengeForm() {
                         Save
                     </button>
                 </div>
-                <Modal show={showCategoryModal} close={() => setShowCategoryModal(false)} >
+                <Modal show={showCategoryModal} close={() => closeCategoryModal()} >
                     <form className='col gap-25'
                         onSubmit={(e) => {
                             e.preventDefault()
                             e.stopPropagation()
+
+                            let categoryData = { ...editCategory }
+
+                            let type = "post"
+
+                            if (categoryData.id)
+                                type = "put"
+
+                            setLoadingCategoryChanges(true)
+                            axios[type](`${consts.LOCAL_API}/challenges/category`, categoryData)
+                                .then((res) => {
+                                })
+                                .catch(() => {
+                                })
+                                .then(() => {
+                                    setLoadingCategoryChanges(false)
+                                    closeCategoryModal()
+                                })
 
 
                         }}>
@@ -344,30 +387,36 @@ function ChallengeForm() {
                             <b className="text-huge">
                                 New Category
                             </b>
-                            <div className="round-icon white text-light to-right text-bigger"
-                                onClick={() => setShowCategoryModal(false)}
+                            <div className="round-icon white text-light to-right text-bigger pointer"
+                                onClick={() => closeCategoryModal()}
                             >
                                 <FontAwesomeIcon icon={fa.faTimes} />
                             </div>
                         </div>
                         <div className='input-group-50'>
                             <label>Title</label>
-                            <input type="text" className='input-field' required
+                            <input type="text" className='input-field' required disabled={loadingCategoryChanges}
                                 onChange={(e) => {
                                     setEditCategory({ ...editCategory, title: e.target.value })
                                 }} value={editCategory.title}
                             />
                         </div>
-                        <div className='input-group-50'>
-                            <label>Accent Color</label>
-                            <input type="text" className='input-field' disabled required
-                                value={editCategory.accentColor}
-                            />
-                            <div className='row gap-10 p-10 wrap'>
+                        <div className='input-group-50 flex gap-10'>
+                            <div>
+                                <label>Accent Color</label>
+                                <input type="text" className='input-field text-thick' style={{ color: editCategory.accentColor || '' }} required
+                                    placeholder='Color Preview'
+                                    value={
+                                        editCategory.accentColor ? editCategory.title : ""
+                                    }
+                                />
+                            </div>
+                            <div className='row gap-10 wrap'>
                                 {accentColors.map((accentColor) => (
                                     <div className="color-box" style={{ backgroundColor: accentColor }}
                                         onClick={() => {
-                                            setEditCategory({ ...editCategory, accentColor: accentColor })
+                                            if (!loadingCategoryChanges)
+                                                setEditCategory({ ...editCategory, accentColor: accentColor })
                                         }}>
                                         {editCategory.accentColor === accentColor ?
                                             <FontAwesomeIcon icon={fa.faCheck} /> : null}
@@ -375,8 +424,10 @@ function ChallengeForm() {
                                 ))}
                             </div>
                         </div>
-                        <div className="row justify-right gap-25">
-                            <button className="button-rounded green text-white" type='submit'>
+                        <div className="row justify-right vertical-center gap-25">
+                            {loadingCategoryChanges ?
+                                <Spinner size="sm" color='dark' /> : null}
+                            <button className="button-rounded green text-white flex align-center gap-10 centered" type='submit' disabled={loadingCategoryChanges}>
                                 Save
                             </button>
                         </div>

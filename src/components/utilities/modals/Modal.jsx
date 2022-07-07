@@ -6,7 +6,6 @@ function Modal({ show, close, ...props }) {
     useEffect(() => {
         if (show) {
             document.body.style.overflow = 'hidden';
-            console.log(show)
         }
         return function cleanup() {
             document.body.style.overflow = 'auto';
