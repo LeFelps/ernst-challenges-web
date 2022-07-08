@@ -38,14 +38,15 @@ function ChallengeForm() {
         id: null,
         title: null,
         level: null,
-        type: null
+        type: null,
+        answerType: null,
+        answers: []
     }
 
     const [editCategory, setEditCategory] = useState(initialCategory)
     const [editQuestion, setEditQuestion] = useState(initialCategory)
 
     const [loadingCategoryChanges, setLoadingCategoryChanges] = useState(false)
-    const [loadingQuestionChanges, setLoadingQuestionChanges] = useState(false)
 
     const accentColors = [
         "#916932",
@@ -60,6 +61,17 @@ function ChallengeForm() {
         "#2B9446",
         "#83C341"
     ]
+
+    const questionLevel = {
+        EASY: "Easy",
+        MEDIUM: "Medium",
+        HARD: "Hard"
+    }
+
+    const questionType = {
+        PRACTICAL: "Practical",
+        THEORICAL: "Theorical"
+    }
 
     function searchMatch(search, array) {
         const matches = array.filter(key => {
@@ -246,21 +258,21 @@ function ChallengeForm() {
                                 <div className='row space-between'>
                                     <div className="round-card w-30">
                                         <span className="card-title">
-                                            Easy
+                                            {questionLevel["EASY"]}
                                         </span>
-                                        <span className='card-value green to-right'>{challenge.questions?.filter(q => q.dificulty === "EASY")?.length || 0}</span>
+                                        <span className='card-value green to-right'>{challenge.questions?.filter(q => q.level === "EASY")?.length || 0}</span>
                                     </div>
                                     <div className="round-card w-30">
                                         <span className="card-title">
-                                            Medium
+                                            {questionLevel["MEDIUM"]}
                                         </span>
-                                        <span className='card-value orange to-right'>{challenge.questions?.filter(q => q.dificulty === "MEDIUM")?.length || 0}</span>
+                                        <span className='card-value orange to-right'>{challenge.questions?.filter(q => q.level === "MEDIUM")?.length || 0}</span>
                                     </div>
                                     <div className="round-card w-30">
                                         <span className="card-title">
-                                            Hard
+                                            {questionLevel["HARD"]}
                                         </span>
-                                        <span className='card-value red to-right'>{challenge.questions?.filter(q => q.dificulty === "HARD")?.length || 0}</span>
+                                        <span className='card-value red to-right'>{challenge.questions?.filter(q => q.level === "HARD")?.length || 0}</span>
                                     </div>
                                 </div>
                                 <div className="row centered gap-25">
@@ -477,7 +489,15 @@ function ChallengeForm() {
                 </Modal>
 
                 <Modal show={showQuestionsModal} close={() => closeQuestionsModal()} >
-                    <form className='col gap-25'>
+                    <form className='col gap-25' onSubmit={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+
+                        let questionData = { ...editQuestion }
+
+                        setChallenge({ ...challenge, questions: [...(challenge.questions || []), questionData] })
+                        setEditQuestion({ ...initialQuestion })
+                    }}>
                         <div className="row w-100">
                             <b className="text-huge">
                                 Add Question
@@ -491,10 +511,10 @@ function ChallengeForm() {
                         <div className="row">
                             <div className='input-group-50'>
                                 <label>Title</label>
-                                <input type="text" className='input-field' required disabled={loadingQuestionChanges}
+                                <input type="text" className='input-field' required
                                     onChange={(e) => {
                                         setEditQuestion({ ...editQuestion, title: e.target.value })
-                                    }} value={editCategory?.title || ""}
+                                    }} value={editQuestion?.title || ""}
                                 />
                             </div>
                             <div className='input-group-50'>
@@ -502,12 +522,12 @@ function ChallengeForm() {
                                 <select className='input-field' required
                                     onChange={(e) => {
                                         setEditQuestion({ ...editQuestion, level: e.target.value })
-                                    }} value={challenge.category?.id || ""}
+                                    }} value={editQuestion.level || ""}
                                 >
                                     <option value="">Select...</option>
-                                    <option value="EASY">Easy</option>
-                                    <option value="MEDIUM">Medium</option>
-                                    <option value="HARD">Hard</option>
+                                    <option value="EASY">{questionLevel["EASY"]}</option>
+                                    <option value="MEDIUM">{questionLevel["MEDIUM"]}</option>
+                                    <option value="HARD">{questionLevel["HARD"]}</option>
                                 </select>
                             </div>
                         </div>
@@ -517,18 +537,16 @@ function ChallengeForm() {
                                 <select className='input-field' required
                                     onChange={(e) => {
                                         setEditQuestion({ ...editQuestion, type: e.target.value })
-                                    }} value={challenge.category?.id || ""}
+                                    }} value={editQuestion.type || ""}
                                 >
                                     <option value="">Select...</option>
-                                    <option value="PRACTICAL">Practical</option>
-                                    <option value="THEORICAL">Theorical</option>
+                                    <option value="PRACTICAL">{questionType["PRACTICAL"]}</option>
+                                    <option value="THEORICAL">{questionType["THEORICAL"]}</option>
                                 </select>
                             </div>
                         </div>
                         <div className="row justify-right vertical-center gap-25">
-                            {loadingQuestionChanges ?
-                                <Spinner size="sm" color='dark' /> : null}
-                            <button className="button-rounded green text-white" type='submit' disabled={loadingQuestionChanges}>
+                            <button className="button-rounded green text-white" type='submit'>
                                 Add
                             </button>
                         </div>
@@ -538,9 +556,45 @@ function ChallengeForm() {
                             </b>
                             <div className="p-15 w-100">
                                 {challenge.questions?.length > 0 ?
-                                    challenge.questions.map((question, index) => {
-
-                                    })
+                                    <>
+                                        <table className='text-big w-100'>
+                                            <tr>
+                                                <th className='text-center'>
+                                                    <b>Title</b>
+                                                </th>
+                                                <th className='text-center'>
+                                                    <b>Level</b>
+                                                </th>
+                                                <th className='text-center'>
+                                                    <b>Type</b>
+                                                </th>
+                                                <th></th>
+                                            </tr>
+                                            {challenge.questions.map((question, index) => (
+                                                <tr className={`${index % 2 === 0 ? 'bg-lighter' : ''}`}>
+                                                    <td className='w-100 p-10'>
+                                                        {question.title}
+                                                    </td>
+                                                    <td className='p-10 text-center'>
+                                                        {questionType[question.type]}
+                                                    </td>
+                                                    <td className='p-10 text-center'>
+                                                        {questionLevel[question.level]}
+                                                    </td>
+                                                    <td className='p-10'>
+                                                        <button className="round-icon text-bigger pointer" type="button"
+                                                            onClick={() => {
+                                                                let questions = [...(challenge.questions || [])]
+                                                                questions.splice(index, 1)
+                                                                setChallenge({ ...challenge, questions: questions })
+                                                            }}>
+                                                            <FontAwesomeIcon icon={fa.faTrashAlt} className="text-red" />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </table>
+                                    </>
                                     :
                                     <div className="row centered w-100">
                                         <span className="text-gray text-bigger">No questions</span>

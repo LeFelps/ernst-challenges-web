@@ -122,6 +122,7 @@ button:disabled {
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 
 .card-br {
@@ -621,6 +622,10 @@ button:disabled {
   gap: 40px;
 }
 
+.no-overflow {
+  overflow: hidden;
+}
+
 .box-section {
   display: flex;
   flex-direction: column;
@@ -838,6 +843,10 @@ button:disabled {
   background-color: #C4C4C4;
 }
 
+.bg-lighter {
+  background-color: #eeeeee;
+}
+
 .bg-dark {
   background-color: #484848;
 }
@@ -1022,6 +1031,7 @@ button:disabled {
 
 button {
   font-family: 'M PLUS Rounded 1c';
+  background-color: inherit;
 }
 
 .justify-center {
