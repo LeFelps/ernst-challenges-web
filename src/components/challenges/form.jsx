@@ -28,24 +28,6 @@ function ChallengeForm() {
     const [showCategoryModal, setShowCategoryModal] = useState(false)
     const [showQuestionsModal, setShowQuestionsModal] = useState(false)
 
-    const initialCategory = {
-        id: null,
-        title: null,
-        accentColor: null,
-    }
-
-    const initialQuestion = {
-        id: null,
-        title: null,
-        level: null,
-        type: null,
-        answerType: null,
-        answers: []
-    }
-
-    const [editCategory, setEditCategory] = useState(initialCategory)
-    const [editQuestion, setEditQuestion] = useState(initialCategory)
-
     const [loadingCategoryChanges, setLoadingCategoryChanges] = useState(false)
 
     const accentColors = [
@@ -72,6 +54,26 @@ function ChallengeForm() {
         PRACTICAL: "Practical",
         THEORICAL: "Theorical"
     }
+
+    const initialCategory = {
+        id: null,
+        title: null,
+        accentColor: accentColors[0],
+    }
+
+    const initialQuestion = {
+        id: null,
+        title: null,
+        level: null,
+        type: null,
+        answerType: null,
+        answers: []
+    }
+
+    const [editCategory, setEditCategory] = useState(initialCategory)
+    const [editQuestion, setEditQuestion] = useState(initialCategory)
+
+    const [newQuestionOption, setNewQuestionOption] = useState("")
 
     function searchMatch(search, array) {
         const matches = array.filter(key => {
@@ -449,25 +451,26 @@ function ChallengeForm() {
                                 <FontAwesomeIcon icon={fa.faTimes} />
                             </div>
                         </div>
-                        <div className='input-group-50'>
-                            <label>Title</label>
-                            <input type="text" className='input-field' required disabled={loadingCategoryChanges}
-                                onChange={(e) => {
-                                    setEditCategory({ ...editCategory, title: e.target.value })
-                                }} value={editCategory?.title || ""}
-                            />
+                        <div className="row w-100 vertical-bottom">
+                            <div className='input-group-50'>
+                                <label>Title</label>
+                                <input type="text" className='input-field' required disabled={loadingCategoryChanges}
+                                    onChange={(e) => {
+                                        setEditCategory({ ...editCategory, title: e.target.value })
+                                    }} value={editCategory?.title || ""}
+                                />
+                            </div>
+                            <b className="text-bigger w-50 text-center p-5" style={{ color: editCategory.accentColor }}>
+                                {editCategory?.title || "Text Preview"}
+                            </b>
                         </div>
                         <div className='input-group-50 flex gap-10'>
                             <div>
                                 <label>Accent Color</label>
-                                <input type="text" className='input-field text-thick' style={{ color: editCategory.accentColor || '' }} required
-                                    placeholder='Color Preview'
-                                    value={editCategory.accentColor ? editCategory.title : ""}
-                                />
                             </div>
                             <div className='row gap-10 wrap'>
                                 {accentColors.map((accentColor) => (
-                                    <div className="color-box" style={{ backgroundColor: accentColor }}
+                                    <div type="checkbox" className="color-box" style={{ backgroundColor: accentColor }}
                                         onClick={() => {
                                             if (!loadingCategoryChanges)
                                                 setEditCategory({ ...editCategory, accentColor: accentColor })
@@ -545,6 +548,54 @@ function ChallengeForm() {
                                 </select>
                             </div>
                         </div>
+                        <div className="row">
+                            <div className='input-group-50'>
+                                <label>New Option</label>
+                                <div className="row w-100 gap-15 vertical-center">
+                                    <input type="text" className='input-field' required
+                                        onChange={(e) => {
+                                            setNewQuestionOption(e.target.value)
+                                        }} value={newQuestionOption || ""}
+                                    />
+                                    <div>
+                                        <div className="round-icon green text-white pointer text-bigger"
+                                            onClick={() => {
+                                                setEditQuestion({ ...editQuestion, options: [...(editQuestion.options || []), { value: (newQuestionOption || ""), correctAnswer: false }] })
+                                                setNewQuestionOption("")
+                                            }}>
+                                            <FontAwesomeIcon icon={fa.faPlus} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="w-100 col p-10 gap-10">
+                            <span className='text-big text-thick'>Answer Options</span>
+                            {editQuestion.options?.length > 0 ?
+                                <div className='row gap-10 wrap p-5'>
+                                    {editQuestion.options?.map((option, index) => (
+                                        <div className="col">
+                                            <div className="button-flat dark text-white">
+                                                {option.value}
+                                            </div>
+                                            <div className='row'>
+                                                <input type="checkbox" name={`check-${index}`} id={`check-${index}`} />
+                                                <label className="check-label" for={`check-${index}`}>Correct answer</label>
+                                                <FontAwesomeIcon icon={fa.faTrashAlt} className="to-right text-red p-5 pointer"
+                                                    onClick={() => {
+                                                        let optionList = [...editQuestion.options]
+                                                        optionList.splice(index, 1)
+                                                        setEditQuestion({ ...editQuestion, options: optionList })
+                                                    }} />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                :
+                                <div className="row centered w-100">
+                                    <span className="text-gray text-big">No Options</span>
+                                </div>}
+                        </div>
                         <div className="row justify-right vertical-center gap-25">
                             <button className="button-rounded green text-white" type='submit'>
                                 Add
@@ -568,6 +619,9 @@ function ChallengeForm() {
                                                 <th className='text-center'>
                                                     <b>Type</b>
                                                 </th>
+                                                <th className='text-center'>
+                                                    <b>Options</b>
+                                                </th>
                                                 <th></th>
                                             </tr>
                                             {challenge.questions.map((question, index) => (
@@ -580,6 +634,9 @@ function ChallengeForm() {
                                                     </td>
                                                     <td className='p-10 text-center'>
                                                         {questionLevel[question.level]}
+                                                    </td>
+                                                    <td className='p-10 text-center'>
+                                                        {question.options.length}
                                                     </td>
                                                     <td className='p-10 row'>
                                                         <button className="round-icon text-bigger pointer" type="button"
