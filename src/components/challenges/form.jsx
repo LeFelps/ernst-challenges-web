@@ -581,7 +581,7 @@ function ChallengeForm() {
                                                     <td className='p-10 text-center'>
                                                         {questionLevel[question.level]}
                                                     </td>
-                                                    <td className='p-10'>
+                                                    <td className='p-10 row'>
                                                         <button className="round-icon text-bigger pointer" type="button"
                                                             onClick={() => {
                                                                 let questions = [...(challenge.questions || [])]
@@ -589,6 +589,12 @@ function ChallengeForm() {
                                                                 setChallenge({ ...challenge, questions: questions })
                                                             }}>
                                                             <FontAwesomeIcon icon={fa.faTrashAlt} className="text-red" />
+                                                        </button>
+                                                        <button className="round-icon text-bigger pointer" type="button"
+                                                            onClick={() => {
+
+                                                            }}>
+                                                            <FontAwesomeIcon icon={fa.faPen} className="text-dark" />
                                                         </button>
                                                     </td>
                                                 </tr>
