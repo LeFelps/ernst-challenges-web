@@ -433,6 +433,16 @@ function ChallengeForm() {
                             setLoadingCategoryChanges(true)
                             axios[type](`${consts.LOCAL_API}/challenges/category`, categoryData)
                                 .then((res) => {
+                                    let categoryList = [...categories]
+                                    let category = categoryList.find(c => c.id === res.id)
+                                    let newCategoty = { ...res }
+                                    if (category !== undefined) {
+                                        categoryList[categoryList.indexOf(category)] = newCategoty
+                                    } else {
+                                        categoryList.push(newCategoty)
+                                    }
+                                    setChallenge({ ...challenge, category: newCategoty })
+                                    setCategories([...categoryList])
                                 })
                                 .catch(() => {
                                 })
