@@ -492,15 +492,7 @@ function ChallengeForm() {
                 </Modal>
 
                 <Modal show={showQuestionsModal} close={() => closeQuestionsModal()} >
-                    <form className='col gap-25' onSubmit={(e) => {
-                        e.preventDefault()
-                        e.stopPropagation()
-
-                        let questionData = { ...editQuestion }
-
-                        setChallenge({ ...challenge, questions: [...(challenge.questions || []), questionData] })
-                        setEditQuestion({ ...initialQuestion })
-                    }}>
+                    <div className='col gap-25'>
                         <div className="row w-100">
                             <b className="text-huge">
                                 Add Question
@@ -551,8 +543,8 @@ function ChallengeForm() {
                         <div className="row">
                             <div className='input-group-50'>
                                 <label>New Option</label>
-                                <div className="row w-100 gap-15 vertical-center">
-                                    <input type="text" className='input-field' required
+                                <div className="row w-100 gap-10 vertical-center">
+                                    <input type="text" className='input-field'
                                         onChange={(e) => {
                                             setNewQuestionOption(e.target.value)
                                         }} value={newQuestionOption || ""}
@@ -593,19 +585,41 @@ function ChallengeForm() {
                                 </div>
                                 :
                                 <div className="row centered w-100">
-                                    <span className="text-gray text-big">No Options</span>
+                                    <span className="text-gray text-big">No Options...</span>
                                 </div>}
                         </div>
                         <div className="row justify-right vertical-center gap-25">
-                            <button className="button-rounded green text-white" type='submit'>
-                                Add
-                            </button>
+                            {editQuestion.tempIndex === undefined ?
+                                <button className="button-rounded green text-white" type="button" onClick={() => {
+                                    let questionData = { ...editQuestion }
+                                    setChallenge({ ...challenge, questions: [...(challenge.questions || []), questionData] })
+                                    setEditQuestion({ ...initialQuestion })
+                                }}>
+                                    Add
+                                </button>
+                                :
+                                <>
+                                    <button className="button-rounded gray text-white" type="button" onClick={() => {
+                                        setEditQuestion({ ...initialQuestion })
+                                    }}>
+                                        Cancel
+                                    </button>
+                                    <button className="button-rounded green text-white" type="button" onClick={() => {
+                                        let questionList = [...challenge.questions]
+                                        questionList[editQuestion.tempIndex] = { ...editQuestion }
+                                        setChallenge({ ...challenge, questions: questionList })
+                                        setEditQuestion({ ...initialQuestion })
+                                    }}>
+                                        Save
+                                    </button>
+                                </>
+                            }
                         </div>
                         <div className="col w-100">
                             <b className="text-huge">
                                 Question List
                             </b>
-                            <div className="p-15 w-100">
+                            <div className="p-15 w-100 filled-container radius-15">
                                 {challenge.questions?.length > 0 ?
                                     <>
                                         <table className='text-big w-100'>
@@ -625,7 +639,7 @@ function ChallengeForm() {
                                                 <th></th>
                                             </tr>
                                             {challenge.questions.map((question, index) => (
-                                                <tr className={`${index % 2 === 0 ? 'bg-lighter' : ''}`}>
+                                                <tr className={`${index % 2 === 0 ? 'bg-white' : ''}`}>
                                                     <td className='w-100 p-10'>
                                                         {question.title}
                                                     </td>
@@ -636,7 +650,7 @@ function ChallengeForm() {
                                                         {questionLevel[question.level]}
                                                     </td>
                                                     <td className='p-10 text-center'>
-                                                        {question.options.length}
+                                                        {question.options?.length || 0}
                                                     </td>
                                                     <td className='p-10 row'>
                                                         <button className="round-icon text-bigger pointer" type="button"
@@ -647,12 +661,16 @@ function ChallengeForm() {
                                                             }}>
                                                             <FontAwesomeIcon icon={fa.faTrashAlt} className="text-red" />
                                                         </button>
-                                                        <button className="round-icon text-bigger pointer" type="button"
-                                                            onClick={() => {
-
-                                                            }}>
-                                                            <FontAwesomeIcon icon={fa.faPen} className="text-dark" />
-                                                        </button>
+                                                        {editQuestion.tempIndex === undefined &&
+                                                            < button className="round-icon text-bigger pointer" type="button"
+                                                                onClick={() => {
+                                                                    let newEditQuestion = { ...question }
+                                                                    newEditQuestion.tempIndex = index
+                                                                    setEditQuestion({ ...newEditQuestion })
+                                                                }}>
+                                                                <FontAwesomeIcon icon={fa.faPen} className="text-dark" />
+                                                            </button>
+                                                        }
                                                     </td>
                                                 </tr>
                                             ))}
@@ -660,15 +678,15 @@ function ChallengeForm() {
                                     </>
                                     :
                                     <div className="row centered w-100">
-                                        <span className="text-gray text-bigger">No questions</span>
+                                        <span className="text-gray text-bigger">No Questions...</span>
                                     </div>
                                 }
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </Modal>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }
 
