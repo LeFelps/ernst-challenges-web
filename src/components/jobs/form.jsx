@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as fa from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
+import consts from '../../consts';
+import axios from 'axios';
+import { useEffect } from 'react';
 
-function JobForm() {
+function JobForm({ editJob, ...props }) {
 
     const [job, setJob] = useState({
         id: undefined,
@@ -17,6 +20,8 @@ function JobForm() {
         requirements: []
     })
 
+    const [loadingJob, setLoadingJob] = useState(false)
+
     const jobLevels = {
         INTERNSHIP: "Internship",
         ENTRY: "Entry",
@@ -24,9 +29,37 @@ function JobForm() {
         SENIOR: "Senior"
     }
 
+    const [showRequirementModal, setShowRequirementModal] = useState(false)
+    const [editRequirement, setEditRequirement] = useState("")
+
+    const closeRequirementModal = () => {
+        setShowRequirementModal(false)
+        setEditRequirement("")
+    }
+
+    useEffect(() => {
+
+    }, [editJob])
+
     return (
         <div className="content">
-            <div className="form-container">
+            <form className="form-container" onSubmit={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+
+                let type = "post"
+
+                if (job.id)
+                    type = "put"
+
+                axios[type](`${consts.LOCAL_API}/jobs`)
+                    .then(() => {
+                    })
+                    .catch(() => {
+                    })
+                    .then(() => {
+                    })
+            }}>
                 <div>
                     <div className="form-title">New Job</div>
                     <div className="input-section">
@@ -154,7 +187,10 @@ function JobForm() {
                                     <span>{requirement}</span>
                                 </div>
                             ))}
-                            <button className="add-button">
+                            <button className="add-button" type='button' onClick={() => {
+                                setEditRequirement("")
+                                setShowRequirementModal(true)
+                            }}>
                                 <FontAwesomeIcon icon={fa.faPlus} />
                                 <span>Add Requirement</span>
                             </button>
@@ -169,7 +205,41 @@ function JobForm() {
                         Save
                     </button>
                 </div>
-            </div>
+            </form>
+            <Modal show={showRequirementModal} close={() => closeRequirementModal()} >
+                <div className='col gap-25'>
+                    <div className="row w-100">
+                        <b className="text-huge">
+                            Add Requirement
+                        </b>
+                        <div className="round-icon white text-light to-right text-bigger pointer"
+                            onClick={() => closeRequirementModal()}
+                        >
+                            <FontAwesomeIcon icon={fa.faTimes} />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className='input-group-50'>
+                            <label>Name</label>
+                            <input type="text" className='input-field' required
+                                onChange={(e) => {
+                                    setEditRequirement(e.target.value)
+                                }} value={editRequirement || ""}
+                            />
+                        </div>
+                    </div>
+                    <div className="row justify-right vertical-center gap-25">
+                        <button className="button-rounded green text-white" type="button" onClick={() => {
+                            let reqList = [...job.requirements]
+                            reqList = [...reqList, editRequirement]
+                            setJob({ ...job, requirements: reqList })
+                            setEditRequirement("")
+                        }}>
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 }

@@ -7,7 +7,7 @@ import consts from '../../consts.js'
 import Modal from '../../components/utilities/modals/Modal.jsx'
 import Spinner from '../../components/utilities/loading/Spinner'
 
-function ChallengeForm() {
+function ChallengeForm({ editChallenge, ...props }) {
 
     const [challenge, setChallenge] = useState({
         id: undefined,
@@ -21,6 +21,8 @@ function ChallengeForm() {
         checkpoints: []
     })
     const [categories, setCategories] = useState([])
+
+    const [loadingChallenge, setLoadingChallenge] = useState(false)
 
     const [iconSearch, setIconSearch] = useState("")
     const [iconMaxValues, setIconMaxValues] = useState(60)
@@ -120,9 +122,29 @@ function ChallengeForm() {
             })
     }, [])
 
+    useEffect(() => {
+
+        if (editChallenge.id) {
+            axios.get(`${consts.LOCAL_API}/challenges/id`)
+                .then((resp) => {
+                    let challenge = resp.data
+                    if (challenge.checkpoints?.length > 0) {
+                        challenge.checkpoints.map((checkpoint, index) => {
+                            if (checkpoint.technologies)
+                                challenge.checkpoints[index].technologies = checkpoint.technologies.split(";")
+                        })
+                    }
+                })
+                .catch(() => {
+
+                })
+        }
+
+    }, [editChallenge])
+
     return (
         <div className="content">
-            <div className="form-container">
+            <div>
                 <form className="form-container" onSubmit={(e) => {
                     e.preventDefault()
                     e.stopPropagation()
@@ -743,7 +765,7 @@ function ChallengeForm() {
                         </div>
                     </div>
                 </Modal>
-            </div >
+            </div>
         </div >
     );
 }
