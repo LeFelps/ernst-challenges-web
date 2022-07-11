@@ -27,6 +27,7 @@ function ChallengeForm() {
 
     const [showCategoryModal, setShowCategoryModal] = useState(false)
     const [showQuestionsModal, setShowQuestionsModal] = useState(false)
+    const [showTechnologyModal, setShowTechnologyModal] = useState(false)
 
     const [loadingCategoryChanges, setLoadingCategoryChanges] = useState(false)
 
@@ -57,7 +58,7 @@ function ChallengeForm() {
 
     const initialCategory = {
         id: null,
-        title: null,
+        name: null,
         accentColor: accentColors[0],
     }
 
@@ -70,10 +71,18 @@ function ChallengeForm() {
         answers: []
     }
 
+    const initialTechnology = {
+        value: null,
+        checkpointIndex: null
+    }
+
     const [editCategory, setEditCategory] = useState(initialCategory)
     const [editQuestion, setEditQuestion] = useState(initialCategory)
+    const [editTechnology, setEditTechnology] = useState(initialTechnology)
 
     const [newQuestionOption, setNewQuestionOption] = useState("")
+
+
 
     function searchMatch(search, array) {
         const matches = array.filter(key => {
@@ -94,6 +103,11 @@ function ChallengeForm() {
 
     const closeQuestionsModal = () => {
         setShowQuestionsModal(false)
+    }
+
+    const closeTechnologyModal = () => {
+        setShowTechnologyModal(false)
+        setEditTechnology({ ...initialTechnology })
     }
 
     useEffect(() => {
@@ -154,12 +168,12 @@ function ChallengeForm() {
                                     <div className="row w-100 gap-15 vertical-center">
                                         <select className='input-field' required
                                             onChange={(e) => {
-                                                setChallenge({ ...challenge, category: categories.find(c => c.id === e.target.value) })
+                                                setChallenge({ ...challenge, category: categories.find(c => c.id === parseInt(e.target.value)) })
                                             }} value={challenge.category?.id || ""}
                                         >
                                             <option value="">Select...</option>
-                                            {categories.map(category => (
-                                                <option value={category.id}>{category.name}</option>
+                                            {categories.map((category, index) => (
+                                                <option value={category.id} key={index}>{category.name}</option>
                                             ))}
                                         </select>
                                         {challenge.category?.id ?
@@ -262,19 +276,19 @@ function ChallengeForm() {
                                         <span className="card-title">
                                             {questionLevel["EASY"]}
                                         </span>
-                                        <span className='card-value green to-right'>{challenge.questions?.filter(q => q.level === "EASY")?.length || 0}</span>
+                                        <span className='card-value bg-green to-right'>{challenge.questions?.filter(q => q.level === "EASY")?.length || 0}</span>
                                     </div>
                                     <div className="round-card w-30">
                                         <span className="card-title">
                                             {questionLevel["MEDIUM"]}
                                         </span>
-                                        <span className='card-value orange to-right'>{challenge.questions?.filter(q => q.level === "MEDIUM")?.length || 0}</span>
+                                        <span className='card-value bg-orange to-right'>{challenge.questions?.filter(q => q.level === "MEDIUM")?.length || 0}</span>
                                     </div>
                                     <div className="round-card w-30">
                                         <span className="card-title">
                                             {questionLevel["HARD"]}
                                         </span>
-                                        <span className='card-value red to-right'>{challenge.questions?.filter(q => q.level === "HARD")?.length || 0}</span>
+                                        <span className='card-value bg-red to-right'>{challenge.questions?.filter(q => q.level === "HARD")?.length || 0}</span>
                                     </div>
                                 </div>
                                 <div className="row centered gap-25">
@@ -318,7 +332,7 @@ function ChallengeForm() {
                                         <span className="group-title">References</span>
                                         <div className="box-section">
                                             {checkpoint.references?.map((reference, rIndex) => (
-                                                <div className="radius-15 filled-container row">
+                                                <div className="radius-15 filled-container row" key={rIndex}>
                                                     <div className="row p-20 w-100">
                                                         <div className='input-group-50'>
                                                             <label>Title</label>
@@ -387,9 +401,8 @@ function ChallengeForm() {
                                             ))}
                                             <button type="button" className="add-button"
                                                 onClick={() => {
-                                                    let checkpointList = [...challenge.checkpoints]
-                                                    checkpointList[index].technologies = [...(checkpoint.technologies || []), "Test"]
-                                                    setChallenge({ ...challenge, checkpoints: checkpointList })
+                                                    setEditTechnology({ value: "", checkpointIndex: index })
+                                                    setShowTechnologyModal(true)
                                                 }}>
                                                 <FontAwesomeIcon icon={fa.faPlus} />
                                                 <span>Add technology</span>
@@ -431,11 +444,11 @@ function ChallengeForm() {
                                 type = "put"
 
                             setLoadingCategoryChanges(true)
-                            axios[type](`${consts.LOCAL_API}/challenges/category`, categoryData)
+                            axios[type](`${consts.LOCAL_API}/challenges/categories`, categoryData)
                                 .then((res) => {
                                     let categoryList = [...categories]
-                                    let category = categoryList.find(c => c.id === res.id)
-                                    let newCategoty = { ...res }
+                                    let category = categoryList.find(c => c.id === res.data.id)
+                                    let newCategoty = { ...res.data }
                                     if (category !== undefined) {
                                         categoryList[categoryList.indexOf(category)] = newCategoty
                                     } else {
@@ -463,15 +476,15 @@ function ChallengeForm() {
                         </div>
                         <div className="row w-100 vertical-bottom">
                             <div className='input-group-50'>
-                                <label>Title</label>
+                                <label>Name</label>
                                 <input type="text" className='input-field' required disabled={loadingCategoryChanges}
                                     onChange={(e) => {
-                                        setEditCategory({ ...editCategory, title: e.target.value })
-                                    }} value={editCategory?.title || ""}
+                                        setEditCategory({ ...editCategory, name: e.target.value })
+                                    }} value={editCategory?.name || ""}
                                 />
                             </div>
                             <b className="text-bigger w-50 text-center p-5" style={{ color: editCategory.accentColor }}>
-                                {editCategory?.title || "Text Preview"}
+                                {editCategory?.name || "Text Preview"}
                             </b>
                         </div>
                         <div className='input-group-50 flex gap-10'>
@@ -479,8 +492,8 @@ function ChallengeForm() {
                                 <label>Accent Color</label>
                             </div>
                             <div className='row gap-10 wrap'>
-                                {accentColors.map((accentColor) => (
-                                    <div type="checkbox" className="color-box" style={{ backgroundColor: accentColor }}
+                                {accentColors.map((accentColor, index) => (
+                                    <div type="checkbox" className="color-box" key={index} style={{ backgroundColor: accentColor }}
                                         onClick={() => {
                                             if (!loadingCategoryChanges)
                                                 setEditCategory({ ...editCategory, accentColor: accentColor })
@@ -576,7 +589,7 @@ function ChallengeForm() {
                             {editQuestion.options?.length > 0 ?
                                 <div className='row gap-10 wrap p-5'>
                                     {editQuestion.options?.map((option, index) => (
-                                        <div className="col">
+                                        <div className="col" key={index}>
                                             <div className="button-flat dark text-white">
                                                 {option.value}
                                             </div>
@@ -649,7 +662,7 @@ function ChallengeForm() {
                                                 <th></th>
                                             </tr>
                                             {challenge.questions.map((question, index) => (
-                                                <tr className={`${index % 2 === 0 ? 'bg-white' : ''}`}>
+                                                <tr key={index} className={`${index % 2 === 0 ? 'bg-white' : ''}`}>
                                                     <td className='w-100 p-10'>
                                                         {question.title}
                                                     </td>
@@ -692,6 +705,41 @@ function ChallengeForm() {
                                     </div>
                                 }
                             </div>
+                        </div>
+                    </div>
+                </Modal>
+
+                <Modal show={showTechnologyModal} close={() => closeTechnologyModal()} >
+                    <div className='col gap-25'>
+                        <div className="row w-100">
+                            <b className="text-huge">
+                                Add Technology
+                            </b>
+                            <div className="round-icon white text-light to-right text-bigger pointer"
+                                onClick={() => closeTechnologyModal()}
+                            >
+                                <FontAwesomeIcon icon={fa.faTimes} />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className='input-group-50'>
+                                <label>Name</label>
+                                <input type="text" className='input-field' required
+                                    onChange={(e) => {
+                                        setEditTechnology({ ...editTechnology, value: e.target.value })
+                                    }} value={editTechnology?.value || ""}
+                                />
+                            </div>
+                        </div>
+                        <div className="row justify-right vertical-center gap-25">
+                            <button className="button-rounded green text-white" type="button" onClick={() => {
+                                let checkpointList = [...challenge.checkpoints]
+                                checkpointList[editTechnology.checkpointIndex].technologies = [...checkpointList[editTechnology.checkpointIndex].technologies, editTechnology.value]
+                                setChallenge({ ...challenge, checkpoints: checkpointList })
+                                setEditTechnology({ ...editTechnology, value: "" })
+                            }}>
+                                Add
+                            </button>
                         </div>
                     </div>
                 </Modal>
