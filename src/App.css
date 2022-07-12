@@ -344,6 +344,7 @@ option {
   color: #0F9FD3;
   cursor: pointer;
   margin: 5px auto 0px auto;
+  font-size: .95rem;
 }
 
 .input-link:hover {
@@ -1094,6 +1095,10 @@ a {
   user-select: none;
   margin-right: 35px;
   color: #A0CD53;
+}
+
+.no-select {
+  user-select: none;
 }
 
 .nav-profile {

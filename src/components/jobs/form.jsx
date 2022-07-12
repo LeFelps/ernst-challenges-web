@@ -142,22 +142,32 @@ function JobForm({ editJob, ...props }) {
                 <div className="col gap-10">
                     <span className="group-title">Responsabilities</span>
                     <div className="box-section">
-                        <div className="radius-15 filled-container p-30">
-                            {job.responsabilities?.map((resp, index) => (
-                                <div className="input-section">
-                                    <div className="row gap-35">
-                                        <div className='input-group'>
-                                            <textarea type="text" className='input-field textarea' required disabled={loadingJob}
-                                                onChange={(e) => {
-                                                    let respList = [...job.responsabilities]
-                                                    respList[index] = e.target.value
-                                                    setJob({ ...job, responsabilities: respList })
-                                                }} value={resp || ""}
-                                            />
+                        <div className="radius-15 filled-container p-30 col gap-25">
+                            {job.responsabilities?.length > 0 ?
+                                job.responsabilities?.map((resp, index) => (
+                                    <div className="input-section">
+                                        <div className="row gap-35">
+                                            <div className='input-group'>
+                                                <div className="row w-100 vertical-center">
+                                                    <label>Description</label>
+                                                    <FontAwesomeIcon className='text-red text-big pointer to-right' icon={fa.faTrash} onClick={() => {
+                                                        let respList = [...job.responsabilities]
+                                                        respList.splice(index, 1)
+                                                        setJob({ ...job, responsabilities: respList })
+                                                    }} />
+                                                </div>
+                                                <textarea type="text" className='input-field textarea' required disabled={loadingJob}
+                                                    onChange={(e) => {
+                                                        let respList = [...job.responsabilities]
+                                                        respList[index] = e.target.value
+                                                        setJob({ ...job, responsabilities: respList })
+                                                    }} value={resp || ""}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))
+                                : <span className='text-bigger w-100 text-center text-gray no-select'>No responsability yet...</span>}
                         </div>
                         <div className="row centered">
                             <button className="button-flat blue text-white" type='button' required disabled={loadingJob}
@@ -174,22 +184,32 @@ function JobForm({ editJob, ...props }) {
                 <div className="col gap-10">
                     <span className="group-title">Compensations</span>
                     <div className="box-section">
-                        <div className="radius-15 filled-container p-30">
-                            {job.responsabilities?.map((comp, index) => (
-                                <div className="input-section">
-                                    <div className="row gap-35">
-                                        <div className='input-group'>
-                                            <textarea type="text" className='input-field textarea' required disabled={loadingJob}
-                                                onChange={(e) => {
-                                                    let compList = [...job.responsabilities]
-                                                    compList[index] = e.target.value
-                                                    setJob({ ...job, responsabilities: compList })
-                                                }} value={comp || ""}
-                                            />
+                        <div className="radius-15 filled-container p-30 col gap-25">
+                            {job.compensations?.length > 0 ?
+                                job.compensations?.map((comp, index) => (
+                                    <div className="input-section">
+                                        <div className="row gap-35">
+                                            <div className='input-group'>
+                                                <div className="row w-100 vertical-center">
+                                                    <label>Description</label>
+                                                    <FontAwesomeIcon className='text-red text-big pointer to-right' icon={fa.faTrash} onClick={() => {
+                                                        let compList = [...job.compensations]
+                                                        compList.splice(index, 1)
+                                                        setJob({ ...job, compensations: compList })
+                                                    }} />
+                                                </div>
+                                                <textarea type="text" className='input-field textarea' required disabled={loadingJob}
+                                                    onChange={(e) => {
+                                                        let compList = [...job.compensations]
+                                                        compList[index] = e.target.value
+                                                        setJob({ ...job, compensations: compList })
+                                                    }} value={comp || ""}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))
+                                : <span className='text-bigger w-100 text-center text-gray no-select'>No compensation yet...</span>}
                         </div>
                         <div className="row centered">
                             <button className="button-flat blue text-white" type='button' required disabled={loadingJob}
@@ -209,11 +229,11 @@ function JobForm({ editJob, ...props }) {
                         <div className="chip-section">
                             {job.requirements?.map((requirement, index) => (
                                 <div className="chip white text-dark border-thin">
-                                    <button className="chip-button" required disabled={loadingJob}
+                                    <button type='button' className="chip-button" required disabled={loadingJob}
                                         onClick={() => {
-                                            let respList = [...job.responsabilities]
-                                            respList.splice(index, 1)
-                                            setJob({ ...job, responsabilities: respList })
+                                            let reqList = [...job.requirements]
+                                            reqList.splice(index, 1)
+                                            setJob({ ...job, requirements: reqList })
                                         }}>
                                         <FontAwesomeIcon icon={fa.faCircleXmark} />
                                     </button>
