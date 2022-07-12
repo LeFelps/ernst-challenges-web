@@ -43,12 +43,15 @@ function JobForm({ editJob, ...props }) {
             setLoadingJob(true)
             axios.get(`${consts.LOCAL_API}/jobs/${editJob.id}`)
                 .then((resp) => {
-                    let challenge = resp.data
-                    if (challenge.checkpoints?.length > 0) {
-                        challenge.checkpoints.map((checkpoint, index) => {
-                            if (checkpoint.technologies)
-                                challenge.checkpoints[index].technologies = checkpoint.technologies.split(";")
-                        })
+                    let job = resp.data
+                    if (job.responsabilities) {
+                        job.responsabilities = job.responsabilities.split(";")
+                    }
+                    if (job.compensations) {
+                        job.compensations = job.compensations.split(";")
+                    }
+                    if (job.requirements) {
+                        job.requirements = job.requirements.split(";")
                     }
                 })
                 .catch(() => {
@@ -95,11 +98,16 @@ function JobForm({ editJob, ...props }) {
                             </div>
                             <div className='input-group-50'>
                                 <label>Level</label>
-                                <input type="text" className='input-field' required disabled={loadingJob}
+                                <select className='input-field' required
                                     onChange={(e) => {
                                         setJob({ ...job, level: e.target.value })
                                     }} value={job.level || ""}
-                                />
+                                >
+                                    <option value="">Select...</option>
+                                    {Object.keys(jobLevels).map((level) => (
+                                        <option value={level}>{jobLevels[level]}</option>
+                                    ))}
+                                </select>
                             </div>
                         </div>
                         <div className="row gap-35">

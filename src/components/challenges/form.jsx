@@ -132,6 +132,7 @@ function ChallengeForm({ editChallenge, ...props }) {
                         challenge.checkpoints.map((checkpoint, index) => {
                             if (checkpoint.technologies)
                                 challenge.checkpoints[index].technologies = checkpoint.technologies.split(";")
+                            return checkpoint
                         })
                     }
                 })
