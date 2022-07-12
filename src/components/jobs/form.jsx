@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as fa from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
+import Modal from '../../components/utilities/modals/Modal.jsx'
 import consts from '../../consts';
 import axios from 'axios';
 import { useEffect } from 'react';
@@ -38,7 +39,25 @@ function JobForm({ editJob, ...props }) {
     }
 
     useEffect(() => {
+        if (editJob?.id) {
+            setLoadingJob(true)
+            axios.get(`${consts.LOCAL_API}/jobs/${editJob.id}`)
+                .then((resp) => {
+                    let challenge = resp.data
+                    if (challenge.checkpoints?.length > 0) {
+                        challenge.checkpoints.map((checkpoint, index) => {
+                            if (checkpoint.technologies)
+                                challenge.checkpoints[index].technologies = checkpoint.technologies.split(";")
+                        })
+                    }
+                })
+                .catch(() => {
 
+                })
+                .then(() => {
+                    setLoadingJob(false)
+                })
+        }
     }, [editJob])
 
     return (
@@ -52,12 +71,14 @@ function JobForm({ editJob, ...props }) {
                 if (job.id)
                     type = "put"
 
+                setLoadingJob(true)
                 axios[type](`${consts.LOCAL_API}/jobs`)
                     .then(() => {
                     })
                     .catch(() => {
                     })
                     .then(() => {
+                        setLoadingJob(false)
                     })
             }}>
                 <div>
@@ -66,7 +87,7 @@ function JobForm({ editJob, ...props }) {
                         <div className="row gap-35">
                             <div className='input-group-50'>
                                 <label>Title</label>
-                                <input type="text" className='input-field'
+                                <input type="text" className='input-field' required disabled={loadingJob}
                                     onChange={(e) => {
                                         setJob({ ...job, title: e.target.value })
                                     }} value={job.title || ""}
@@ -74,7 +95,7 @@ function JobForm({ editJob, ...props }) {
                             </div>
                             <div className='input-group-50'>
                                 <label>Level</label>
-                                <input type="text" className='input-field'
+                                <input type="text" className='input-field' required disabled={loadingJob}
                                     onChange={(e) => {
                                         setJob({ ...job, level: e.target.value })
                                     }} value={job.level || ""}
@@ -84,15 +105,16 @@ function JobForm({ editJob, ...props }) {
                         <div className="row gap-35">
                             <div className='input-group-50'>
                                 <label>Location</label>
-                                <input type="text" className='input-field'
+                                <input type="text" className='input-field' required disabled={loadingJob}
                                     onChange={(e) => {
                                         setJob({ ...job, location: e.target.value })
                                     }} value={job.location || ""}
                                 />
                                 <div>
-                                    <input type="checkbox" name="remote" id="remote" onClick={() => {
-                                        setJob({ ...job, remote: !job.remote })
-                                    }} value={job.remote || false} />
+                                    <input type="checkbox" name="remote" id="remote" required disabled={loadingJob}
+                                        onClick={() => {
+                                            setJob({ ...job, remote: !job.remote })
+                                        }} value={job.remote || false} />
                                     <label className="check-label" for="remote">Remote</label>
                                 </div>
                             </div>
@@ -100,7 +122,7 @@ function JobForm({ editJob, ...props }) {
                         <div className="row gap-35">
                             <div className='input-group'>
                                 <label>Description</label>
-                                <textarea type="text" className='input-field textarea'
+                                <textarea type="text" className='input-field textarea' required disabled={loadingJob}
                                     onChange={(e) => {
                                         setJob({ ...job, description: e.target.value })
                                     }} value={job.description || ""}
@@ -117,7 +139,7 @@ function JobForm({ editJob, ...props }) {
                                 <div className="input-section">
                                     <div className="row gap-35">
                                         <div className='input-group'>
-                                            <textarea type="text" className='input-field textarea'
+                                            <textarea type="text" className='input-field textarea' required disabled={loadingJob}
                                                 onChange={(e) => {
                                                     let respList = [...job.responsabilities]
                                                     respList[index] = e.target.value
@@ -130,11 +152,12 @@ function JobForm({ editJob, ...props }) {
                             ))}
                         </div>
                         <div className="row centered">
-                            <button className="button-flat blue text-white" type='button' onClick={() => {
-                                let respList = [...job.responsabilities]
-                                respList.push("")
-                                setJob({ ...job, responsabilities: respList })
-                            }}>
+                            <button className="button-flat blue text-white" type='button' required disabled={loadingJob}
+                                onClick={() => {
+                                    let respList = [...job.responsabilities]
+                                    respList.push("")
+                                    setJob({ ...job, responsabilities: respList })
+                                }}>
                                 Add Responsability
                             </button>
                         </div>
@@ -148,7 +171,7 @@ function JobForm({ editJob, ...props }) {
                                 <div className="input-section">
                                     <div className="row gap-35">
                                         <div className='input-group'>
-                                            <textarea type="text" className='input-field textarea'
+                                            <textarea type="text" className='input-field textarea' required disabled={loadingJob}
                                                 onChange={(e) => {
                                                     let compList = [...job.responsabilities]
                                                     compList[index] = e.target.value
@@ -161,11 +184,12 @@ function JobForm({ editJob, ...props }) {
                             ))}
                         </div>
                         <div className="row centered">
-                            <button className="button-flat blue text-white" type='button' onClick={() => {
-                                let compList = [...job.compensations]
-                                compList.push("")
-                                setJob({ ...job, compensations: compList })
-                            }}>
+                            <button className="button-flat blue text-white" type='button' required disabled={loadingJob}
+                                onClick={() => {
+                                    let compList = [...job.compensations]
+                                    compList.push("")
+                                    setJob({ ...job, compensations: compList })
+                                }}>
                                 Add Compensation
                             </button>
                         </div>
@@ -177,20 +201,22 @@ function JobForm({ editJob, ...props }) {
                         <div className="chip-section">
                             {job.requirements?.map((requirement, index) => (
                                 <div className="chip white text-dark border-thin">
-                                    <button className="chip-button" onClick={() => {
-                                        let respList = [...job.responsabilities]
-                                        respList.splice(index, 1)
-                                        setJob({ ...job, responsabilities: respList })
-                                    }}>
+                                    <button className="chip-button" required disabled={loadingJob}
+                                        onClick={() => {
+                                            let respList = [...job.responsabilities]
+                                            respList.splice(index, 1)
+                                            setJob({ ...job, responsabilities: respList })
+                                        }}>
                                         <FontAwesomeIcon icon={fa.faCircleXmark} />
                                     </button>
                                     <span>{requirement}</span>
                                 </div>
                             ))}
-                            <button className="add-button" type='button' onClick={() => {
-                                setEditRequirement("")
-                                setShowRequirementModal(true)
-                            }}>
+                            <button className="add-button" type='button' required disabled={loadingJob}
+                                onClick={() => {
+                                    setEditRequirement("")
+                                    setShowRequirementModal(true)
+                                }}>
                                 <FontAwesomeIcon icon={fa.faPlus} />
                                 <span>Add Requirement</span>
                             </button>
@@ -201,7 +227,7 @@ function JobForm({ editJob, ...props }) {
                     <NavLink to="/jobs" className='button-rounded gray text-white'>
                         Cancel
                     </NavLink>
-                    <button className="button-rounded green text-white ">
+                    <button className="button-rounded green text-white" required disabled={loadingJob}>
                         Save
                     </button>
                 </div>

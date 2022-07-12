@@ -123,9 +123,9 @@ function ChallengeForm({ editChallenge, ...props }) {
     }, [])
 
     useEffect(() => {
-
-        if (editChallenge.id) {
-            axios.get(`${consts.LOCAL_API}/challenges/id`)
+        if (editChallenge?.id) {
+            setLoadingChallenge(true)
+            axios.get(`${consts.LOCAL_API}/challenges/${editChallenge.id}`)
                 .then((resp) => {
                     let challenge = resp.data
                     if (challenge.checkpoints?.length > 0) {
@@ -138,8 +138,10 @@ function ChallengeForm({ editChallenge, ...props }) {
                 .catch(() => {
 
                 })
+                .then(() => {
+                    setLoadingChallenge(false)
+                })
         }
-
     }, [editChallenge])
 
     return (
@@ -154,11 +156,13 @@ function ChallengeForm({ editChallenge, ...props }) {
                     let challengeData = { ...challenge }
 
                     if (challenge.icon === null) {
-
+                        // Toast like message to require icon input value
                     } else {
+
                         if (challenge.id)
                             type = "put"
 
+                        setLoadingChallenge(true)
                         axios[type](`${consts.LOCAL_API}/challenges`, challengeData)
                             .then((response) => {
                                 setChallenge(response.data || {})
@@ -167,7 +171,7 @@ function ChallengeForm({ editChallenge, ...props }) {
 
                             })
                             .then(() => {
-
+                                setLoadingChallenge(false)
                             })
                     }
                 }}>
@@ -179,7 +183,7 @@ function ChallengeForm({ editChallenge, ...props }) {
                             <div className="row">
                                 <div className='input-group-50'>
                                     <label>Title</label>
-                                    <input type="text" className='input-field' required
+                                    <input type="text" className='input-field' required disabled={loadingChallenge}
                                         onChange={(e) => {
                                             setChallenge({ ...challenge, title: e.target.value })
                                         }} value={challenge?.title || ""}
@@ -188,7 +192,7 @@ function ChallengeForm({ editChallenge, ...props }) {
                                 <div className='input-group-50'>
                                     <label>Category</label>
                                     <div className="row w-100 gap-15 vertical-center">
-                                        <select className='input-field' required
+                                        <select className='input-field' required disabled={loadingChallenge}
                                             onChange={(e) => {
                                                 setChallenge({ ...challenge, category: categories.find(c => c.id === parseInt(e.target.value)) })
                                             }} value={challenge.category?.id || ""}
@@ -200,25 +204,26 @@ function ChallengeForm({ editChallenge, ...props }) {
                                         </select>
                                         {challenge.category?.id ?
                                             <div>
-                                                <div className="round-icon yellow pointer"
+                                                <button type='button' className="round-icon yellow pointer" disabled={loadingChallenge}
                                                     onClick={() => {
                                                         setShowCategoryModal(true)
                                                         setEditCategory({ ...challenge.category })
                                                     }}>
                                                     <FontAwesomeIcon icon={fa.faPen} />
-                                                </div>
+                                                </button>
                                             </div>
                                             : null}
                                     </div>
-                                    <span className='input-link' onClick={() => setShowCategoryModal(true)}>
+                                    <button type="button" className='input-link' disabled={loadingChallenge}
+                                        onClick={() => setShowCategoryModal(true)}>
                                         New category
-                                    </span>
+                                    </button>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className='input-group-50'>
                                     <label>Brief</label>
-                                    <input type="text" className='input-field' required
+                                    <input type="text" className='input-field' required disabled={loadingChallenge}
                                         onChange={(e) => {
                                             setChallenge({ ...challenge, brief: e.target.value })
                                         }} value={challenge?.brief || ""}
@@ -231,7 +236,7 @@ function ChallengeForm({ editChallenge, ...props }) {
                             <div className="row gap-35">
                                 <div className='input-group'>
                                     <label>Description</label>
-                                    <textarea type="text" className='input-field textarea' required
+                                    <textarea type="text" className='input-field textarea' required disabled={loadingChallenge}
                                         onChange={(e) => {
                                             setChallenge({ ...challenge, description: e.target.value })
                                         }} value={challenge?.description || ""}
@@ -253,7 +258,7 @@ function ChallengeForm({ editChallenge, ...props }) {
                                 </div>
                                 <div className="row gap-15 wrap maxh-200 minh-20 overflowy-scroll p-15 filled-container rounded-15">
                                     {searchMatch(iconSearch, Object.keys(fa).filter(i => i !== 'fas' && i !== 'prefix')).map((key, index) => (
-                                        <button type="button" key={index} className={`${challenge.icon === key ? ' blue text-white ' : ' white text-dark border-light '} flex pointer p-5 square-small centered vertical-center text-small`}
+                                        <button type="button" disabled={loadingChallenge} key={index} className={`${challenge.icon === key ? ' blue text-white ' : ' white text-dark border-light '} flex pointer p-5 square-small centered vertical-center text-small`}
                                             onClick={() => {
                                                 setChallenge({ ...challenge, icon: key })
                                             }}>
@@ -273,7 +278,7 @@ function ChallengeForm({ editChallenge, ...props }) {
                                     </div>
                                     <div className="row to-right gap-15">
                                         <b>Showing</b>
-                                        <input type="number" className='text-blue naked w-75px text-center text-big'
+                                        <input type="number" className='text-blue naked w-75px text-center text-big' disabled={loadingChallenge}
                                             onChange={(e) => {
                                                 if (parseInt(e.target.value) > Object.keys(fa).length)
                                                     setIconMaxValues(Object.keys(fa).length)
@@ -314,7 +319,7 @@ function ChallengeForm({ editChallenge, ...props }) {
                                     </div>
                                 </div>
                                 <div className="row centered gap-25">
-                                    <button type="button" className="button-flat white text-dark border-thin"
+                                    <button type="button" className="button-flat white text-dark border-thin" disabled={loadingChallenge}
                                         onClick={() => {
                                             setShowQuestionsModal(true)
                                         }}>
@@ -328,7 +333,7 @@ function ChallengeForm({ editChallenge, ...props }) {
                         <div key={index}>
                             <span className="section-title row w-100 vertical-bottom">
                                 Checkpoint {index + 1}
-                                <button type="button" className="round-icon white pointer to-right text-center"
+                                <button type="button" className="round-icon white pointer to-right text-center" disabled={loadingChallenge}
                                     onClick={() => {
                                         let checkpoints = [...challenge.checkpoints]
                                         checkpoints.splice(index, 1)
@@ -342,7 +347,7 @@ function ChallengeForm({ editChallenge, ...props }) {
                                     <div className="row gap-35">
                                         <div className='input-group'>
                                             <label>Description</label>
-                                            <textarea type="text" className='input-field textarea' required
+                                            <textarea type="text" className='input-field textarea' required disabled={loadingChallenge}
                                                 onChange={(e) => {
                                                     let checkpointList = [...challenge.checkpoints]
                                                     checkpointList[index].description = e.target.value
@@ -358,7 +363,7 @@ function ChallengeForm({ editChallenge, ...props }) {
                                                     <div className="row p-20 w-100">
                                                         <div className='input-group-50'>
                                                             <label>Title</label>
-                                                            <input type="text" className='input-field' required
+                                                            <input type="text" className='input-field' required disabled={loadingChallenge}
                                                                 onChange={(e) => {
                                                                     let editReference = checkpoint.references[rIndex]
                                                                     editReference.title = e.target.value
@@ -369,7 +374,7 @@ function ChallengeForm({ editChallenge, ...props }) {
                                                         </div>
                                                         <div className='input-group-50'>
                                                             <label>Link</label>
-                                                            <input type="text" className='input-field' required
+                                                            <input type="text" className='input-field' required disabled={loadingChallenge}
                                                                 onChange={(e) => {
                                                                     let editReference = checkpoint.references[rIndex]
                                                                     editReference.link = e.target.value
@@ -379,7 +384,7 @@ function ChallengeForm({ editChallenge, ...props }) {
                                                                 }} value={reference?.link || ""} />
                                                         </div>
                                                     </div>
-                                                    <div className='p-10 red flex vertical-center text-white text-bigger pointer'
+                                                    <button className='p-10 red flex vertical-center text-white text-bigger pointer' disabled={loadingChallenge}
                                                         onClick={() => {
                                                             let checkpointList = [...challenge.checkpoints]
                                                             let referenceList = [...checkpoint.references]
@@ -388,11 +393,11 @@ function ChallengeForm({ editChallenge, ...props }) {
                                                             setChallenge({ ...challenge, checkpoints: checkpointList })
                                                         }}>
                                                         <FontAwesomeIcon icon={fa.faTrashAlt} />
-                                                    </div>
+                                                    </button>
                                                 </div>
                                             ))}
                                             <div className="row centered">
-                                                <button type="button" className="button-flat blue text-white"
+                                                <button type="button" className="button-flat blue text-white" disabled={loadingChallenge}
                                                     onClick={() => {
                                                         let checkpointList = [...challenge.checkpoints]
                                                         checkpointList[index].references = [...(checkpoint.references || []), { title: null, link: null }]
@@ -408,20 +413,20 @@ function ChallengeForm({ editChallenge, ...props }) {
                                         <div className="chip-section">
                                             {challenge.checkpoints && challenge.checkpoints[index]?.technologies?.map((technology, tIndex) => (
                                                 <div className="chip white text-dark border-thin" key={tIndex}>
-                                                    <button type="button" className="chip-button">
-                                                        <FontAwesomeIcon icon={fa.faCircleXmark} className="pointer"
-                                                            onClick={() => {
-                                                                let technologiesList = [...challenge.checkpoints[index].technologies]
-                                                                technologiesList.splice(tIndex, 1)
-                                                                let checkpointList = [...challenge.checkpoints]
-                                                                checkpointList[index].technologies = technologiesList
-                                                                setChallenge({ ...challenge, checkpoints: checkpointList })
-                                                            }} />
+                                                    <button type="button" className="chip-button" disabled={loadingChallenge}
+                                                        onClick={() => {
+                                                            let technologiesList = [...challenge.checkpoints[index].technologies]
+                                                            technologiesList.splice(tIndex, 1)
+                                                            let checkpointList = [...challenge.checkpoints]
+                                                            checkpointList[index].technologies = technologiesList
+                                                            setChallenge({ ...challenge, checkpoints: checkpointList })
+                                                        }} >
+                                                        <FontAwesomeIcon icon={fa.faCircleXmark} className="pointer" />
                                                     </button>
                                                     <span>{technology}</span>
                                                 </div>
                                             ))}
-                                            <button type="button" className="add-button"
+                                            <button type="button" className="add-button" disabled={loadingChallenge}
                                                 onClick={() => {
                                                     setEditTechnology({ value: "", checkpointIndex: index })
                                                     setShowTechnologyModal(true)
@@ -436,7 +441,7 @@ function ChallengeForm({ editChallenge, ...props }) {
                         </div>
                     ))}
                     <div className="row centered">
-                        <button type="button" className="button-flat blue text-white"
+                        <button type="button" className="button-flat blue text-white" disabled={loadingChallenge}
                             onClick={() => {
                                 setChallenge({ ...challenge, checkpoints: [...challenge.checkpoints, {}] })
                             }}>
@@ -447,7 +452,7 @@ function ChallengeForm({ editChallenge, ...props }) {
                         <NavLink to="/challenges" className='button-rounded gray text-white'>
                             Cancel
                         </NavLink>
-                        <button type="submit" className="button-rounded green text-white ">
+                        <button type="submit" className="button-rounded green text-white" disabled={loadingChallenge}>
                             Save
                         </button>
                     </div>
