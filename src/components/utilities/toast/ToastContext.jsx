@@ -7,6 +7,11 @@ export function ToastProvider({ children }) {
 
     const [toastList, setToastList] = useState([])
 
+    function getId() {
+        let id = toastList[toastList?.length - 1]?.id || 0
+        return id + 1
+    }
+
     const icons = {
         check: faCircleCheck,
         times: faTimesCircle,
@@ -19,7 +24,8 @@ export function ToastProvider({ children }) {
             message: message,
             icon: icons.check,
             color: "#7DD30F",
-            active: true
+            active: true,
+            id: getId()
         }
         setToastList([...toastList, newToast])
     }
@@ -29,7 +35,8 @@ export function ToastProvider({ children }) {
             message: message,
             icon: icons.times,
             color: "#D6000D",
-            active: true
+            active: true,
+            id: getId()
         }
         setToastList([...toastList, newToast])
     }
@@ -39,7 +46,8 @@ export function ToastProvider({ children }) {
             message: message,
             icon: icons.exclamation,
             color: "#E5D82A",
-            active: true
+            active: true,
+            id: getId()
         }
         setToastList([...toastList, newToast])
     }
@@ -49,7 +57,8 @@ export function ToastProvider({ children }) {
             message: message,
             icon: icons.info,
             color: "#188EB9",
-            active: true
+            active: true,
+            id: getId()
         }
         setToastList([...toastList, newToast])
     }
@@ -59,7 +68,8 @@ export function ToastProvider({ children }) {
             message: message,
             icon: icon,
             color: color,
-            active: true
+            active: true,
+            id: getId()
         }
         setToastList([...toastList, newToast])
     }
