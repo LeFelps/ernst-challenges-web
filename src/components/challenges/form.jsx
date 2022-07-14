@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as fa from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
@@ -6,8 +6,10 @@ import axios from 'axios';
 import consts from '../../consts.js'
 import Modal from '../../components/utilities/modals/Modal.jsx'
 import Spinner from '../../components/utilities/loading/Spinner'
+import ToastContext from '../utilities/toast/ToastContext.jsx';
 
 function ChallengeForm({ editChallenge, ...props }) {
+    const { toast } = useContext(ToastContext);
 
     const [challenge, setChallenge] = useState({
         id: undefined,
@@ -180,6 +182,12 @@ function ChallengeForm({ editChallenge, ...props }) {
                         <div className="form-title">
                             {challenge.id ? "Edit Challenge" : "New Challenge"}
                         </div>
+                        <button type="button" className="pointer p-5 green rounded-5" onClick={() => {
+                            toast.success("Tests :)")
+                        }}> Toast! </button>
+                        <button type="button" className="pointer p-5 green rounded-5" onClick={() => {
+                            toast.clear()
+                        }}> Clear! </button>
                         <div className="input-section">
                             <div className="row">
                                 <div className='input-group-50'>
