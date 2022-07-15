@@ -122,7 +122,7 @@ function ChallengeForm({ editChallenge, ...props }) {
             .catch(err => {
                 console.error(err)
             })
-    }, [])
+    })
 
     useEffect(() => {
         if (editChallenge?.id) {
@@ -139,7 +139,6 @@ function ChallengeForm({ editChallenge, ...props }) {
                     }
                 })
                 .catch(() => {
-
                 })
                 .then(() => {
                     setLoadingChallenge(false)
@@ -159,7 +158,7 @@ function ChallengeForm({ editChallenge, ...props }) {
                     let challengeData = { ...challenge }
 
                     if (challenge.icon === null) {
-                        // Toast like message to require icon input value
+                        toast.info("You need to select an icon")
                     } else {
 
                         if (challenge.id)
@@ -171,7 +170,7 @@ function ChallengeForm({ editChallenge, ...props }) {
                                 setChallenge(response.data || {})
                             })
                             .catch(() => {
-
+                                toast.error("An error occurred while saving the challenge")
                             })
                             .then(() => {
                                 setLoadingChallenge(false)
@@ -182,12 +181,6 @@ function ChallengeForm({ editChallenge, ...props }) {
                         <div className="form-title">
                             {challenge.id ? "Edit Challenge" : "New Challenge"}
                         </div>
-                        <button type="button" className="pointer p-5 green rounded-5" onClick={() => {
-                            toast.success("Tests :)")
-                        }}> Toast! </button>
-                        <button type="button" className="pointer p-5 green rounded-5" onClick={() => {
-                            toast.clear()
-                        }}> Clear! </button>
                         <div className="input-section">
                             <div className="row">
                                 <div className='input-group-50'>
