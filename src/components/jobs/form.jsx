@@ -53,6 +53,8 @@ function JobForm({ editJob, ...props }) {
                     if (job.requirements) {
                         job.requirements = job.requirements.split(";")
                     }
+
+                    setJob(job)
                 })
                 .catch(() => {
 
