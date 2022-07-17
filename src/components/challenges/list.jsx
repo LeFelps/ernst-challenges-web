@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBug, faCartShopping, faChartPie, faDatabase, faEthernet, faFingerprint, faGlobe, faKey, faListCheck, faLock, faMessage, faNetworkWired, faPen, faServer, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBug, faCartShopping, faChartPie, faDatabase, faEthernet, faFingerprint, faGlobe, faKey, faListCheck, faLock, faMessage, faNetworkWired, faPen, faPlus, faServer, faUser } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 
 function ChallengeList() {
@@ -79,6 +79,9 @@ function ChallengeList() {
                                 Manipulate and graph collections of data
                             </p>
                         </div>
+                    </div>
+                    <div className='card-add'>
+                        <FontAwesomeIcon icon={faPlus} className="card-image text-white" />
                     </div>
                 </div>
             </div>

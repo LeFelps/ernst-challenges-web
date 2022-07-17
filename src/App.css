@@ -150,6 +150,35 @@ button:disabled {
   transition: .3s;
 }
 
+.card-add {
+  width: 120px;
+  height: 120px;
+  background-color: #e5e5e5;
+  border: 2px solid #e5e5e5;
+  margin: 20px;
+  border-radius: 20px;
+  box-shadow: #e5e5e5 -1.95px 1.95px 2.6px;
+  transition: .1s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.card-add:hover .round-button {
+  height: 60px;
+  width: 60px;
+  transition: .3s;
+}
+
+.card-add:hover {
+  width: 160px;
+  height: 160px;
+  border-radius: 25px;
+  transition: .3s;
+  margin: 0px;
+  transform: rotate(-3deg);
+}
+
 .card-description {
   user-select: none;
   pointer-events: none;
