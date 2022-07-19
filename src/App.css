@@ -164,12 +164,6 @@ button:disabled {
   align-items: center;
 }
 
-.card-add:hover .round-button {
-  height: 60px;
-  width: 60px;
-  transition: .3s;
-}
-
 .card-add:hover {
   width: 160px;
   height: 160px;
@@ -1350,6 +1344,13 @@ a {
   margin: 0px auto 0px auto;
   height: 40%;
   width: 40%;
+}
+
+.card-add-image {
+  transition: .1s;
+  margin: 0px auto 0px auto;
+  height: 50%;
+  width: 50%;
 }
 
 .app-logo {

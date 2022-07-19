@@ -80,9 +80,11 @@ function ChallengeList() {
                             </p>
                         </div>
                     </div>
-                    <div className='card-add'>
-                        <FontAwesomeIcon icon={faPlus} className="card-image text-white" />
-                    </div>
+                    <NavLink to="/challenge-form">
+                        <div className='card-add'>
+                            <FontAwesomeIcon icon={faPlus} className="card-add-image text-white" />
+                        </div>
+                    </NavLink>
                 </div>
             </div>
             <div className='list-container'>

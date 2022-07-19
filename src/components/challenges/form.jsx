@@ -84,7 +84,7 @@ function ChallengeForm({ editChallenge, ...props }) {
     const [editQuestion, setEditQuestion] = useState(initialCategory)
     const [editTechnology, setEditTechnology] = useState(initialTechnology)
 
-    const [newQuestionOption, setNewQuestionOption] = useState("")
+    const [newQuestionAnswer, setNewQuestionAnswer] = useState("")
 
 
 
@@ -122,7 +122,7 @@ function ChallengeForm({ editChallenge, ...props }) {
             .catch(err => {
                 console.error(err)
             })
-    })
+    }, [])
 
     useEffect(() => {
         if (editChallenge?.id) {
@@ -594,18 +594,18 @@ function ChallengeForm({ editChallenge, ...props }) {
                         </div>
                         <div className="row">
                             <div className='input-group-50'>
-                                <label>New Option</label>
+                                <label>New Answer Option</label>
                                 <div className="row w-100 gap-10 vertical-center">
                                     <input type="text" className='input-field'
                                         onChange={(e) => {
-                                            setNewQuestionOption(e.target.value)
-                                        }} value={newQuestionOption || ""}
+                                            setNewQuestionAnswer(e.target.value)
+                                        }} value={newQuestionAnswer || ""}
                                     />
                                     <div>
                                         <div className="round-icon green text-white pointer text-bigger"
                                             onClick={() => {
-                                                setEditQuestion({ ...editQuestion, options: [...(editQuestion.options || []), { value: (newQuestionOption || ""), correctAnswer: false }] })
-                                                setNewQuestionOption("")
+                                                setEditQuestion({ ...editQuestion, answers: [...(editQuestion.answers || []), { value: (newQuestionAnswer || ""), correctAnswer: false }] })
+                                                setNewQuestionAnswer("")
                                             }}>
                                             <FontAwesomeIcon icon={fa.faPlus} />
                                         </div>
@@ -615,21 +615,27 @@ function ChallengeForm({ editChallenge, ...props }) {
                         </div>
                         <div className="w-100 col p-10 gap-10">
                             <span className='text-big text-thick'>Answer Options</span>
-                            {editQuestion.options?.length > 0 ?
+                            {editQuestion.answers?.length > 0 ?
                                 <div className='row gap-10 wrap p-5'>
-                                    {editQuestion.options?.map((option, index) => (
+                                    {editQuestion.answers?.map((answer, index) => (
                                         <div className="col" key={index}>
                                             <div className="button-flat dark text-white">
-                                                {option.value}
+                                                {answer.value}
                                             </div>
                                             <div className='row'>
-                                                <input type="checkbox" name={`check-${index}`} id={`check-${index}`} />
+                                                <input type="checkbox" name={`check-${index}`} id={`check-${index}`}
+                                                    onChange={() => {
+                                                        let answerList = [...editQuestion.answers]
+                                                        answerList[index].correctAnswer = !answerList[index].correctAnswer
+                                                        setEditQuestion({ ...editQuestion, answers: answerList })
+                                                    }}
+                                                    checked={answer.correctAnswer} />
                                                 <label className="check-label" for={`check-${index}`}>Correct answer</label>
                                                 <FontAwesomeIcon icon={fa.faTrashAlt} className="to-right text-red p-5 pointer"
                                                     onClick={() => {
-                                                        let optionList = [...editQuestion.options]
-                                                        optionList.splice(index, 1)
-                                                        setEditQuestion({ ...editQuestion, options: optionList })
+                                                        let answerList = [...editQuestion.answers]
+                                                        answerList.splice(index, 1)
+                                                        setEditQuestion({ ...editQuestion, answers: answerList })
                                                     }} />
                                             </div>
                                         </div>
@@ -637,7 +643,7 @@ function ChallengeForm({ editChallenge, ...props }) {
                                 </div>
                                 :
                                 <div className="row centered w-100">
-                                    <span className="text-gray text-big">No Options...</span>
+                                    <span className="text-gray text-big">No Answer Options...</span>
                                 </div>}
                         </div>
                         <div className="row justify-right vertical-center gap-25">
@@ -675,57 +681,61 @@ function ChallengeForm({ editChallenge, ...props }) {
                                 {challenge.questions?.length > 0 ?
                                     <>
                                         <table className='text-big w-100'>
-                                            <tr>
-                                                <th className='text-center'>
-                                                    <b>Title</b>
-                                                </th>
-                                                <th className='text-center'>
-                                                    <b>Level</b>
-                                                </th>
-                                                <th className='text-center'>
-                                                    <b>Type</b>
-                                                </th>
-                                                <th className='text-center'>
-                                                    <b>Options</b>
-                                                </th>
-                                                <th></th>
-                                            </tr>
-                                            {challenge.questions.map((question, index) => (
-                                                <tr key={index} className={`${index % 2 === 0 ? 'bg-white' : ''}`}>
-                                                    <td className='w-100 p-10'>
-                                                        {question.title}
-                                                    </td>
-                                                    <td className='p-10 text-center'>
-                                                        {questionType[question.type]}
-                                                    </td>
-                                                    <td className='p-10 text-center'>
-                                                        {questionLevel[question.level]}
-                                                    </td>
-                                                    <td className='p-10 text-center'>
-                                                        {question.options?.length || 0}
-                                                    </td>
-                                                    <td className='p-10 row'>
-                                                        <button className="round-icon text-bigger pointer" type="button"
-                                                            onClick={() => {
-                                                                let questions = [...(challenge.questions || [])]
-                                                                questions.splice(index, 1)
-                                                                setChallenge({ ...challenge, questions: questions })
-                                                            }}>
-                                                            <FontAwesomeIcon icon={fa.faTrashAlt} className="text-red" />
-                                                        </button>
-                                                        {editQuestion.tempIndex === undefined &&
-                                                            < button className="round-icon text-bigger pointer" type="button"
-                                                                onClick={() => {
-                                                                    let newEditQuestion = { ...question }
-                                                                    newEditQuestion.tempIndex = index
-                                                                    setEditQuestion({ ...newEditQuestion })
-                                                                }}>
-                                                                <FontAwesomeIcon icon={fa.faPen} className="text-dark" />
-                                                            </button>
-                                                        }
-                                                    </td>
+                                            <thead>
+                                                <tr>
+                                                    <th className='text-center'>
+                                                        <b>Title</b>
+                                                    </th>
+                                                    <th className='text-center'>
+                                                        <b>Level</b>
+                                                    </th>
+                                                    <th className='text-center'>
+                                                        <b>Type</b>
+                                                    </th>
+                                                    <th className='text-center'>
+                                                        <b>Options</b>
+                                                    </th>
+                                                    <th></th>
                                                 </tr>
-                                            ))}
+                                            </thead>
+                                            <tbody>
+                                                {challenge.questions.map((question, index) => (
+                                                    <tr key={index} className={`${index % 2 === 0 ? 'bg-white' : ''}`}>
+                                                        <td className='w-100 p-10'>
+                                                            {question.title}
+                                                        </td>
+                                                        <td className='p-10 text-center'>
+                                                            {questionType[question.type]}
+                                                        </td>
+                                                        <td className='p-10 text-center'>
+                                                            {questionLevel[question.level]}
+                                                        </td>
+                                                        <td className='p-10 text-center'>
+                                                            {question.answers?.length || 0}
+                                                        </td>
+                                                        <td className='p-10 row'>
+                                                            <button className="round-icon text-bigger pointer" type="button"
+                                                                onClick={() => {
+                                                                    let questions = [...(challenge.questions || [])]
+                                                                    questions.splice(index, 1)
+                                                                    setChallenge({ ...challenge, questions: questions })
+                                                                }}>
+                                                                <FontAwesomeIcon icon={fa.faTrashAlt} className="text-red" />
+                                                            </button>
+                                                            {editQuestion.tempIndex === undefined &&
+                                                                < button className="round-icon text-bigger pointer" type="button"
+                                                                    onClick={() => {
+                                                                        let newEditQuestion = { ...question }
+                                                                        newEditQuestion.tempIndex = index
+                                                                        setEditQuestion({ ...newEditQuestion })
+                                                                    }}>
+                                                                    <FontAwesomeIcon icon={fa.faPen} className="text-dark" />
+                                                                </button>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
                                         </table>
                                     </>
                                     :
@@ -763,6 +773,9 @@ function ChallengeForm({ editChallenge, ...props }) {
                         <div className="row justify-right vertical-center gap-25">
                             <button className="button-rounded green text-white" type="button" onClick={() => {
                                 let checkpointList = [...challenge.checkpoints]
+                                if (!checkpointList[editTechnology.checkpointIndex].technologies) {
+                                    checkpointList[editTechnology.checkpointIndex].technologies = []
+                                }
                                 checkpointList[editTechnology.checkpointIndex].technologies = [...checkpointList[editTechnology.checkpointIndex].technologies, editTechnology.value]
                                 setChallenge({ ...challenge, checkpoints: checkpointList })
                                 setEditTechnology({ ...editTechnology, value: "" })
