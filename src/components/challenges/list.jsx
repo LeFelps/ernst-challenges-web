@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBug, faCartShopping, faChartPie, faDatabase, faEthernet, faFingerprint, faGlobe, faKey, faListCheck, faLock, faMessage, faNetworkWired, faPen, faPlus, faServer, faUser } from '@fortawesome/free-solid-svg-icons';
+import * as fa from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
+import consts from '../../consts';
 
 function ChallengeList() {
+
+    const [categoryList, setCategoryList] = useState([])
+
+    // useEffect(() => {
+    //     axios.get(`${consts.LOCAL_API}/challenges/categories`)
+    //         .then((response) => {
+    //             setCategoryList(response.data || [])
+    //         })
+    //         .catch(() => {
+
+    //         })
+    // }, [])
 
     return (
         <div className='content'>
@@ -15,6 +29,39 @@ function ChallengeList() {
                     Challenges that help you test and improve your technical skills
                 </p>
             </div>
+
+            {/* {categoryList.map((category, index) => (
+                <div className='list-container'>
+                    <p className="group-title" style={{ color: category.accentColor }}>
+                        Front-end development
+                    </p>
+                    <div className='card-group'>
+                        {category.challenges?.map((challenge, index) => (
+                            <NavLink to="/challenge">
+                                <div className='card'>
+                                    <FontAwesomeIcon icon={fa[challenge.icon]} className="card-image" style={{ color: category.accentColor }} />
+                                    <div className='card-description'>
+                                        <p>
+                                            {challenge.title}
+                                        </p>
+                                        <p>
+                                            {challenge.brief}
+                                        </p>
+                                    </div>
+                                    <NavLink to="/challenge-form" className='round-button yellow card-br'>
+                                        <FontAwesomeIcon icon={fa.faPen} className="card-image" />
+                                    </NavLink>
+                                </div>
+                            </NavLink>
+                        ))}
+                        <NavLink to="/challenge-form">
+                            <div className='card-add'>
+                                <FontAwesomeIcon icon={fa.faPlus} className="card-add-image text-white" />
+                            </div>
+                        </NavLink>
+                    </div>
+                </div>
+            ))} */}
             <div className='list-container'>
                 <p className="group-title" style={{ color: '#188EB9' }}>
                     Front-end development
@@ -22,7 +69,7 @@ function ChallengeList() {
                 <div className='card-group'>
                     <NavLink to="/challenge">
                         <div className='card'>
-                            <FontAwesomeIcon icon={faCartShopping} className="card-image" style={{ color: '#188EB9' }} />
+                            <FontAwesomeIcon icon={fa.faCartShopping} className="card-image" style={{ color: '#188EB9' }} />
                             <div className='card-description'>
                                 <p>
                                     Shopping list
@@ -32,12 +79,12 @@ function ChallengeList() {
                                 </p>
                             </div>
                             <NavLink to="/challenge-form" className='round-button yellow card-br'>
-                                <FontAwesomeIcon icon={faPen} className="card-image" />
+                                <FontAwesomeIcon icon={fa.faPen} className="card-image" />
                             </NavLink>
                         </div>
                     </NavLink>
                     <div className='card'>
-                        <FontAwesomeIcon icon={faMessage} className="card-image" style={{ color: '#188EB9' }} />
+                        <FontAwesomeIcon icon={fa.faMessage} className="card-image" style={{ color: '#188EB9' }} />
                         <div className='card-description'>
                             <p>
                                 Chat
@@ -48,7 +95,7 @@ function ChallengeList() {
                         </div>
                     </div>
                     <div className='card'>
-                        <FontAwesomeIcon icon={faListCheck} className="card-image" style={{ color: '#188EB9' }} />
+                        <FontAwesomeIcon icon={fa.faListCheck} className="card-image" style={{ color: '#188EB9' }} />
                         <div className='card-description'>
                             <p>
                                 To-Do List
@@ -59,7 +106,7 @@ function ChallengeList() {
                         </div>
                     </div>
                     <div className='card'>
-                        <FontAwesomeIcon icon={faBug} className="card-image" style={{ color: '#188EB9' }} />
+                        <FontAwesomeIcon icon={fa.faBug} className="card-image" style={{ color: '#188EB9' }} />
                         <div className='card-description'>
                             <p>
                                 Bug Bounty
@@ -70,7 +117,7 @@ function ChallengeList() {
                         </div>
                     </div>
                     <div className='card'>
-                        <FontAwesomeIcon icon={faChartPie} className="card-image" style={{ color: '#188EB9' }} />
+                        <FontAwesomeIcon icon={fa.faChartPie} className="card-image" style={{ color: '#188EB9' }} />
                         <div className='card-description'>
                             <p>
                                 Graphs
@@ -82,7 +129,7 @@ function ChallengeList() {
                     </div>
                     <NavLink to="/challenge-form">
                         <div className='card-add'>
-                            <FontAwesomeIcon icon={faPlus} className="card-add-image text-white" />
+                            <FontAwesomeIcon icon={fa.faPlus} className="card-add-image text-white" />
                         </div>
                     </NavLink>
                 </div>
@@ -93,25 +140,25 @@ function ChallengeList() {
                 </p>
                 <div className='card-group'>
                     <div className='card'>
-                        <FontAwesomeIcon icon={faUser} className="card-image" style={{ color: '#E05263' }} />
+                        <FontAwesomeIcon icon={fa.faUser} className="card-image" style={{ color: '#E05263' }} />
                     </div>
                     <div className='card'>
-                        <FontAwesomeIcon icon={faLock} className="card-image" style={{ color: '#E05263' }} />
+                        <FontAwesomeIcon icon={fa.faLock} className="card-image" style={{ color: '#E05263' }} />
                     </div>
                     <div className='card'>
-                        <FontAwesomeIcon icon={faBug} className="card-image" style={{ color: '#E05263' }} />
+                        <FontAwesomeIcon icon={fa.faBug} className="card-image" style={{ color: '#E05263' }} />
                     </div>
                     <div className='card'>
-                        <FontAwesomeIcon icon={faKey} className="card-image" style={{ color: '#E05263' }} />
+                        <FontAwesomeIcon icon={fa.faKey} className="card-image" style={{ color: '#E05263' }} />
                     </div>
                     <div className='card'>
-                        <FontAwesomeIcon icon={faFingerprint} className="card-image" style={{ color: '#E05263' }} />
+                        <FontAwesomeIcon icon={fa.faFingerprint} className="card-image" style={{ color: '#E05263' }} />
                     </div>
                     <div className='card'>
-                        <FontAwesomeIcon icon={faDatabase} className="card-image" style={{ color: '#E05263' }} />
+                        <FontAwesomeIcon icon={fa.faDatabase} className="card-image" style={{ color: '#E05263' }} />
                     </div>
                     <div className='card'>
-                        <FontAwesomeIcon icon={faServer} className="card-image" style={{ color: '#E05263' }} />
+                        <FontAwesomeIcon icon={fa.faServer} className="card-image" style={{ color: '#E05263' }} />
                     </div>
                 </div>
             </div>
@@ -121,19 +168,19 @@ function ChallengeList() {
                 </p>
                 <div className='card-group'>
                     <div className='card'>
-                        <FontAwesomeIcon icon={faNetworkWired} className="card-image" style={{ color: '#37AE49' }} />
+                        <FontAwesomeIcon icon={fa.faNetworkWired} className="card-image" style={{ color: '#37AE49' }} />
                     </div>
                     <div className='card'>
-                        <FontAwesomeIcon icon={faEthernet} className="card-image" style={{ color: '#37AE49' }} />
+                        <FontAwesomeIcon icon={fa.faEthernet} className="card-image" style={{ color: '#37AE49' }} />
                     </div>
                     <div className='card'>
-                        <FontAwesomeIcon icon={faGlobe} className="card-image" style={{ color: '#37AE49' }} />
+                        <FontAwesomeIcon icon={fa.faGlobe} className="card-image" style={{ color: '#37AE49' }} />
                     </div>
                     <div className='card'>
-                        <FontAwesomeIcon icon={faServer} className="card-image" style={{ color: '#37AE49' }} />
+                        <FontAwesomeIcon icon={fa.faServer} className="card-image" style={{ color: '#37AE49' }} />
                     </div>
                     <div className='card'>
-                        <FontAwesomeIcon icon={faDatabase} className="card-image" style={{ color: '#37AE49' }} />
+                        <FontAwesomeIcon icon={fa.faDatabase} className="card-image" style={{ color: '#37AE49' }} />
                     </div>
                 </div>
             </div>
