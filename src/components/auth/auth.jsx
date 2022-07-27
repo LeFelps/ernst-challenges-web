@@ -1,31 +1,27 @@
 import axios from 'axios';
 import React from 'react';
-import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Login from './Login'
 import Signup from './Signup'
-import logo from '../../logo.svg'
 
-function saveLogin() {
-    const user = localStorage.getItem('user');
-    // localStorage.removeItem('user');
 
-    // axios.get('')
-    //     .then(() => {
+function Auth({ setUser, ...props }) {
 
-    //     })
-    //     .catch(() => {
+    function saveUser(user) {
+        setUser(user)
+        localStorage.setItem('user', JSON.stringify(user));
+    }
 
-    //     })
-    localStorage.setItem('user', JSON.stringify());
-}
-
-function Auth() {
     return (
         <div>
             <BrowserRouter>
                 <Routes>
-                    <Route path='/login' exact element={<Login />}></Route>
-                    <Route path='/signup' exact element={<Signup />}></Route>
+                    <Route path='/login' exact element={<Login saveUser={saveUser} />}></Route>
+                    <Route path='/signup' exact element={<Signup saveUser={saveUser} />}></Route>
+                    <Route
+                        path="*"
+                        element={<Navigate to="/login" replace />}
+                    />
                 </Routes>
             </BrowserRouter>
         </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, BrowserRouter, Route, Routes } from 'react-router-dom'
+import { NavLink, BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import logo from '../../logo.svg';
 
 // Pages
@@ -75,7 +75,7 @@ function Dashboard() {
                     </div>
                 </div>
                 <Routes>
-                    <Route path='/' exact element={<div/>
+                    <Route path='/' exact element={<div />
                     }></Route>
                     <Route path='/challenges' element={<ChallengeList />}></Route>
                     <Route path='/challenge' element={<ChallengeView />}></Route>
@@ -89,6 +89,10 @@ function Dashboard() {
                     <Route path='/opponent-form' element={<DungeonForm />}></Route>
                     <Route path='/dungeon' element={<DungeonView />}></Route>
                     <Route path='/battle' element={<QuizView />}></Route>
+                    <Route
+                        path="*"
+                        element={<Navigate to="/" replace />}
+                    />
                 </Routes>
                 <div className='footer'>
                 </div>

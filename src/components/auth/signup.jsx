@@ -11,15 +11,16 @@ function Signup() {
         password: ''
     })
 
+    // const navigate = useNavigate()
+
     function saveLogin() {
-        const user = localStorage.getItem('user');
-        // localStorage.removeItem('user');
 
         // axios.get('')
-        //     .then(() => {
-
+        //     .then((response) => {
+        //         saveUser(response.data)
+        //         navigate('/')
         //     })
-        //     .catch(() => {
+        //     .catch((error) => {
 
         //     })
 

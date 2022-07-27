@@ -1,30 +1,31 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import challengesLogo from '../../challenges-logo.svg'
 
-function Login() {
+function Login({ saveUser, ...props }) {
 
     const [userData, setUserData] = useState({
         username: '',
         password: ''
     })
 
+    // const navigate = useNavigate()
 
     function saveLogin() {
-        const user = localStorage.getItem('user');
-        // localStorage.removeItem('user');
 
         // axios.get('')
-        //     .then(() => {
-
+        //     .then((response) => {
+        //         saveUser(response.data)
+        //         navigate('/')
         //     })
-        //     .catch(() => {
+        //     .catch((error) => {
 
         //     })
 
         localStorage.setItem('user', JSON.stringify(userData));
     }
+
     return (
         <div className='auth-bg'>
             <div className='auth-card'>
