@@ -33,7 +33,7 @@ function JobList() {
                 <div className='list-container'>
                     <NavLink to="/job" className="nav-card">
                         <div className='long-card nav-card' stye={{ boxShadow: `7px 0px 0px ${job.category?.accentColor || '#CCC'} inset` }}>
-                            <div className='long-card-title text-blue nav-card'>
+                            <div className='long-card-title nav-card' style={{ color: job.category?.accentColor || '#CCC' }}>
                                 {`${job.title || ''} • ${job.level || ''}`}
                             </div>
                             <div className='long-card-content gap-15'>

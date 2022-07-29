@@ -3,8 +3,46 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../logo.svg';
 import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 function JobView() {
+
+    const [job, setJob] = useState({
+        title: null,
+        level: null,
+        location: null,
+        remote: false,
+        description: null,
+        salary: null,
+        displaySalary: false,
+        responsabilities: [],
+        compensations: [],
+        requirements: []
+    })
+
+    const jobLevels = {
+        INTERNSHIP: "Internship",
+        ENTRY: "Entry",
+        MID: "Mid",
+        SENIOR: "Senior"
+    }
+
+    useEffect(() => {
+        setJob({
+            businessName: "Ernest Young",
+            title: "Front-end Developer",
+            level: "ENTRY",
+            location: "São Paulo",
+            remote: true,
+            description: "",
+            salary: "R$ 4000,00",
+            displaySalary: true,
+            responsabilities: [],
+            compensations: [],
+            requirements: []
+        })
+    }, [])
 
     return (
         <div className="content">
@@ -12,19 +50,23 @@ function JobView() {
                 <div className="list-container col gap-15">
                     <div className='long-card highlight-left-blue'>
                         <div className='long-card-title text-blue'>
-                            Front-end developer • Junior
+                            {`${job.title || ""} • ${jobLevels[job.level] || ""}`}
                         </div>
                         <div className='long-card-content gap-15'>
                             <img src={logo} alt="" className='company-logo' />
                             <div className='align-center'>
-                                <p className='info-name'>Ernest Young</p>
-                                <p className='info-value'>R$ 4000,00</p>
-                                <div className='info-extra'>
-                                    <FontAwesomeIcon className='icon-margin-right' icon={faPlusCircle} color='#188EB9' />
-                                    <p>
-                                        Benefícios
-                                    </p>
-                                </div>
+                                <p className='info-name'>{job.businessName}</p>
+                                {job.displaySalary && job.salary ?
+                                    <p className='info-value'>{job.salary}</p>
+                                    : null}
+                                {job.compensations?.length > 0 &&
+                                    <div className='info-extra'>
+                                        <FontAwesomeIcon className='icon-margin-right' icon={faPlusCircle} color='#188EB9' />
+                                        <p>
+                                            Benefits
+                                        </p>
+                                    </div>
+                                }
                             </div>
                         </div>
                         <NavLink to="/job-form" className='round-button yellow long-card-br'>
@@ -32,17 +74,26 @@ function JobView() {
                         </NavLink>
                     </div>
                     <div className="row centered gap-25">
+                        {/* 
+                                TODO
+                                JOB APPLICATION FUNCTIONALITY
+                                JOB APPLICATIONS LIST
+                         */}
                         <button className="button-flat green text-white">Apply for Job</button>
                         <button className="button-flat blue text-white">Applications</button>
                     </div>
                 </div>
                 <div className='list-container'>
                     <b className='group-title text-center'>
-                        Inventory Highlights
+                        {job.title}
                     </b>
                     <ul>
-                        <li>Junior Level</li>
-                        <li>Remote (São Paulo, Brazil)</li>
+                        <li>{`${jobLevels[job.level]} Level` || ""}</li>
+                        {job.remote ?
+                            <li>{`Remote (${job.location})`}</li>
+                            :
+                            <li>{job.location}</li>
+                        }
                     </ul>
                 </div>
                 <div className='list-container'>
@@ -50,39 +101,45 @@ function JobView() {
                         Description
                     </b>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nunc lacus, tristique ut dolor sit amet, scelerisque congue nisi. Sed et dui id augue porttitor pharetra nec non orci. Ut a egestas nibh, a aliquet nibh. Aenean eu ex viverra, convallis ligula in, consequat mauris. Morbi mollis viverra orci. Etiam feugiat convallis ligula, vel sollicitudin quam pretium vel. Nunc in dignissim orci. Morbi tellus lorem, convallis nec consectetur venenatis, ultricies vel nulla.
+                        {job.description}
                     </p>
                 </div>
-                <div className='list-container'>
-                    <b className='group-title text-center'>
-                        What will you do?
-                    </b>
-                    <ul>
-                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nunc lacus, tristique ut dolor sit amet, scelerisque congue nisi</li>
-                        <li>Sed et dui id augue porttitor pharetra nec non orci. Ut a egestas nibh, a aliquet nibh. Aenean eu ex viverra, convallis ligula in, consequat mauris. Morbi mollis viverra orci.</li>
-                        <li>Etiam feugiat convallis ligula, vel sollicitudin quam pretium vel. Nunc in dignissim orci. Morbi tellus lorem, convallis nec consectetur venenatis, ultricies vel nulla.</li>
-                    </ul>
-                </div>
-                <div className='list-container'>
-                    <b className='group-title text-center'>
-                        Compensation
-                    </b>
-                    <ul>
-                        <li>R$ 4000,00 Monthly pay</li>
-                        <li>Food vouchers</li>
-                    </ul>
-                </div>
-                <div className='list-container'>
-                    <b className='group-title text-center'>
-                        Requirements
-                    </b>
-                    <ul>
-                        <li>ReactJs</li>
-                        <li>Redux</li>
-                        <li>Saga</li>
-                        <li>Firebase</li>
-                    </ul>
-                </div>
+                {job.responsabilities?.length > 0 &&
+                    <div className='list-container'>
+                        <b className='group-title text-center'>
+                            What will you do?
+                        </b>
+                        <ul>
+                            {job.responsabilities.map((responsability, index) => (
+                                <li>{responsability}</li>
+                            ))}
+                        </ul>
+                    </div>
+                }
+                {job.compensations?.length > 0 &&
+                    <div className='list-container'>
+                        <b className='group-title text-center'>
+                            Compensation
+                        </b>
+                        <ul>
+                            {job.compensations.map((compensation, index) => (
+                                <li>{compensation}</li>
+                            ))}
+                        </ul>
+                    </div>
+                }
+                {job.requirements?.length > 0 &&
+                    <div className='list-container'>
+                        <b className='group-title text-center'>
+                            Requirements
+                        </b>
+                        <ul>
+                            {job.requirements.map((requirement, index) => (
+                                <li>{requirement}</li>
+                            ))}
+                        </ul>
+                    </div>
+                }
                 <div className='list-container'>
                     <div className="row justify-right gap-25">
                         <NavLink to="/jobs" className='button-rounded gray text-white'>
