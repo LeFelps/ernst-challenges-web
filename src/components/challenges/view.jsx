@@ -20,7 +20,6 @@ function ChallengeView() {
 
     useEffect(() => {
         setChallenge({
-
             category: {
                 accentColor: "#188EB9",
                 name: "Front-end development"
