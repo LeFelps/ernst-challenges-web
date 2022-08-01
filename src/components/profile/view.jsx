@@ -1,8 +1,9 @@
-import { faCartShopping, faHandBackFist, faListCheck, faPen, faPlus, faPlusCircle, faShield } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faHandBackFist, faListCheck, faPen, faPlus, faPlusCircle, faShield, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import logo from '../../logo.svg';
+import Modal from '../utilities/modals/Modal';
 
 function ProfileView() {
 
@@ -27,6 +28,21 @@ function ProfileView() {
         MID: "Mid",
         SENIOR: "Senior"
     }
+
+    const [showLanguageModal, setShowLanguageModal] = useState(false)
+
+    function closeLanguageModal() {
+        setShowLanguageModal(false)
+        setEditLanguage({ ...initialLanguage })
+    }
+
+    const initialLanguage = {
+        index: null,
+        level: "",
+        language: ""
+    }
+
+    const [editLanguage, setEditLanguage] = useState({ ...initialLanguage })
 
     useEffect(() => {
         setUser({
@@ -260,7 +276,10 @@ function ProfileView() {
                 <div className='list-container col gap-15'>
                     <div className="row">
                         <span className="group-title">Languages</span>
-                        <button className="add-button to-right">
+                        <button className="add-button to-right"
+                            onClick={() => {
+                                setShowLanguageModal(true)
+                            }}>
                             <FontAwesomeIcon icon={faPlus} />
                             <span>Add</span>
                         </button>
@@ -312,6 +331,44 @@ function ProfileView() {
                     </div>
                 </div>
             </div>
+            <Modal show={showLanguageModal} close={() => closeLanguageModal()} >
+                <div className='col gap-25'>
+                    <div className="row w-100">
+                        <b className="text-huge">
+                            Add Language
+                        </b>
+                        <div className="round-icon white text-light to-right text-bigger pointer"
+                            onClick={() => closeLanguageModal()}
+                        >
+                            <FontAwesomeIcon icon={faTimes} />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className='input-group-50'>
+                            <label>Language</label>
+                            <input type="text" className='input-field' required
+                                onChange={(e) => {
+                                    setEditLanguage(e.target.value)
+                                }} value={editLanguage?.language || ""}
+                            />
+                        </div>
+                    </div>
+                    <div className="row justify-right vertical-center gap-25">
+                        <button className="button-rounded green text-white" type="button" onClick={() => {
+                            let langList = [...user.languages]
+                            if (editLanguage.index) {
+                                langList[editLanguage.index] = { ...editLanguage }
+                            } else {
+                                langList = [...langList, editLanguage]
+                            }
+                            setUser({ ...user, languages: langList })
+                            setEditLanguage({ ...initialLanguage })
+                        }}>
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 }
