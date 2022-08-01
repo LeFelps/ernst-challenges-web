@@ -1,9 +1,61 @@
 import { faCartShopping, faHandBackFist, faListCheck, faPen, faPlus, faPlusCircle, faShield } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
 import logo from '../../logo.svg';
 
 function ProfileView() {
+
+    const [user, setUser] = useState({
+        name: "",
+        email: "",
+        title: "",
+        level: "",
+        phone: "",
+        public: false,
+        inventory: [],
+        applications: [],
+        experience: [],
+        education: [],
+        languages: [],
+        skills: [],
+    })
+
+    const jobLevels = {
+        INTERNSHIP: "Internship",
+        ENTRY: "Entry",
+        MID: "Mid",
+        SENIOR: "Senior"
+    }
+
+    useEffect(() => {
+        setUser({
+            name: "Fellipe Corominas Pereira",
+            email: "fellipe.corominas@hotmail.com",
+            title: "Front-end Developer",
+            level: "ENTRY",
+            phone: "+55 (11) 98886-7001",
+            public: false,
+            inventory: [{
+
+            }],
+            applications: [{
+
+            }],
+            experience: [{
+
+            }],
+            education: [{
+
+            }],
+            languages: [{
+
+            }],
+            skills: [{
+
+            }],
+        })
+    }, [])
 
     return (
         <div className='content'>
@@ -11,14 +63,14 @@ function ProfileView() {
                 <div className='list-container col gap-25'>
                     <div className='long-card highlight-left-blue'>
                         <div className='long-card-title text-blue'>
-                            Front-end developer • Junior
+                            {`${user.title} • ${jobLevels[user.level]}`}
                         </div>
                         <div className='long-card-content gap-15'>
                             <img src={logo} alt="" className='round-img highlight-blue' />
                             <div className='align-center'>
-                                <p className='info-name'>Fellipe Corominas Pereira</p>
-                                <p className='info-value'>corominas.fellipe@hotmail.com</p>
-                                <p className='info-value'>+55 (11) 98886-7001</p>
+                                <p className='info-name'>{user.name}</p>
+                                <p className='info-value'>{user.email}</p>
+                                <p className='info-value'>{user.phone}</p>
                             </div>
                         </div>
                         <a to="/job-form" className='round-button yellow long-card-br'>
@@ -26,9 +78,15 @@ function ProfileView() {
                         </a>
                     </div>
                     <div className="row centered">
-                        <div className="button-flat green text-white">
-                            Public Profile
-                        </div>
+                        {user.public ?
+                            <div className="button-flat green text-white">
+                                Public Profile
+                            </div>
+                            :
+                            <div className="button-flat red text-white">
+                                Private Profile
+                            </div>
+                        }
                     </div>
                 </div>
                 <div className="list-container col">
