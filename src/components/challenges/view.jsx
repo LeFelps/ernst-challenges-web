@@ -1,8 +1,10 @@
 import * as fa from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import consts from "../../consts";
 
 function ChallengeView() {
 
@@ -19,63 +21,11 @@ function ChallengeView() {
     })
 
     useEffect(() => {
-        setChallenge({
-            category: {
-                accentColor: "#188EB9",
-                name: "Front-end development"
-            },
-            title: "Shopping Cart",
-            brief: "Build a shopping app",
-            description: "Build a basic online store with product categories, filtering, wish listing and checkout",
-            icon: "faShoppingCart",
-            checkpoints: [
-                {
-                    description: "Initialize the app and setup navigation",
-                    references: [
-                        {
-                            link: "https://reactnative.dev/docs/environment-setup",
-                            title: "React Native Docs"
-                        },
-                        {
-                            link: "https://github.com/LeFelps",
-                            title: "React app example"
-                        }
-                    ],
-                    technologies: [
-                        "React Native",
-                        "Typescript"
-                    ]
-                },
-                {
-                    description: "Create the main products page",
-                    references: [
-                        {
-                            link: "https://github.com/LeFelps",
-                            title: "React app example"
-                        }
-                    ],
-                    technologies: [
-                        "React Native",
-                        "Typescript",
-                        "Firebase"
-                    ]
-                },
-                {
-                    description: "Create the cart and checkout screens",
-                    references: [
-                        {
-                            link: "https://firebase.google.com/docs",
-                            title: "Firebase docs"
-                        }
-                    ],
-                    technologies: [
-                        "React Native",
-                        "Typescript",
-                        "Firebase"
-                    ]
-                }
-            ],
-        })
+        axios.get(`${consts.LOCAL_API}/challenges/${'30'}`)
+            .then(resp => {
+                setChallenge(resp.data || {})
+                
+            })
     }, [])
 
     const [selectedCheckpoint, setSelectedCheckpoint] = useState(0)
@@ -120,7 +70,7 @@ function ChallengeView() {
                         <b className='group-title text-center'>
                             Checkpoint
                         </b>
-                        {challenge.checkpoints.map((c, index) => (
+                        {challenge.checkpoints?.map((c, index) => (
                             <button type="button" className={`round-icon-sm ${index === selectedCheckpoint ? 'blue' : 'gray'} text-white pointer`}
                                 onClick={() => {
                                     setSelectedCheckpoint(index)
@@ -181,7 +131,7 @@ function ChallengeView() {
                                 Suggested technologies
                             </b>
                             <ul>
-                                {checkpoint.technologies?.map((technology) => (
+                                {checkpoint?.technologies?.['map']?.((technology) => (
                                     <li>{technology}</li>
                                 ))}
                             </ul>

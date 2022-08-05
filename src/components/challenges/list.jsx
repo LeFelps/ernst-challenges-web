@@ -32,7 +32,7 @@ function ChallengeList() {
             {categoryList.map((category, index) => (
                 <div className='list-container'>
                     <p className="group-title" style={{ color: category.accentColor }}>
-                        Front-end development
+                        {category.name}
                     </p>
                     <div className='card-group'>
                         {category.challenges?.map((challenge, index) => (

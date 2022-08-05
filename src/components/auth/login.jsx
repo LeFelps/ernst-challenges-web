@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import challengesLogo from '../../challenges-logo.svg'
+import consts from '../../consts';
 
 function Login({ saveUser, ...props }) {
 
@@ -10,20 +11,18 @@ function Login({ saveUser, ...props }) {
         password: ''
     })
 
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
 
     function saveLogin() {
 
-        // axios.get('')
-        //     .then((response) => {
-        //         saveUser(response.data)
-        //         navigate('/')
-        //     })
-        //     .catch((error) => {
+        axios.get(`${consts.LOCAL_API}/users`, userData)
+            .then((response) => {
+                saveUser(response.data)
+                navigate('/')
+            })
+            .catch((error) => {
 
-        //     })
-
-        localStorage.setItem('user', JSON.stringify(userData));
+            })
     }
 
     return (
@@ -42,7 +41,7 @@ function Login({ saveUser, ...props }) {
                     </div>
                     <div>
                         <label htmlFor="password">Password</label>
-                        <input type="password" className='input-field' onChange={(e) => {
+                        <input type="password" className='input-field text-small' onChange={(e) => {
                             setUserData({ ...userData, password: e.target.value })
                         }} value={userData.password} />
                     </div>
