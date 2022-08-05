@@ -25,7 +25,12 @@ function AppRoutes({ removeUser, ...props }) {
             }></Route>
             <Route path='/challenges' element={<ChallengeList />}></Route>
             <Route path='/challenge' element={<ChallengeView />}></Route>
-            <Route path='/challenge-form' element={<ChallengeForm />}></Route>
+
+            {/* Routes for challenge form */}
+            <Route path='/challenge-form' exact element={<ChallengeForm />}></Route>
+            <Route path='/challenge-form/new/:categoryId' exact render={(props) => (<ChallengeForm categoryId={props.match.params.categoryId} />)}></Route>
+            <Route path='/challenge-form/:id' exact render={(props) => (<ChallengeForm challengeId={props.match.params.id} />)}></Route>
+
             <Route path='/jobs' exact element={<JobList />}></Route>
             <Route path='/job' exact element={<JobView />}></Route>
             <Route path='/job-form' exact element={<JobForm />}></Route>

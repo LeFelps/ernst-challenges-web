@@ -9,6 +9,10 @@ import Spinner from '../../components/utilities/loading/Spinner'
 import ToastContext from '../utilities/toast/ToastContext.jsx';
 
 function ChallengeForm({ editChallenge, ...props }) {
+
+    const categoryId = props.categoryId
+    const challengeId = props.challengeId
+
     const { toast } = useContext(ToastContext);
 
     const [challenge, setChallenge] = useState({
@@ -115,6 +119,10 @@ function ChallengeForm({ editChallenge, ...props }) {
     }
 
     useEffect(() => {
+
+        console.log(categoryId)
+        console.log(challengeId)
+
         axios.get(`${consts.LOCAL_API}/challenges/categories?min=true`)
             .then(res => {
                 setCategories(res.data || [])

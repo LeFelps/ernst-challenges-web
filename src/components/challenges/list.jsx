@@ -47,13 +47,13 @@ function ChallengeList() {
                                             {challenge.brief}
                                         </p>
                                     </div>
-                                    <NavLink to="/challenge-form" className='round-button yellow card-br'>
+                                    <NavLink to={`/challenge-form/${challenge.id}`} className='round-button yellow card-br'>
                                         <FontAwesomeIcon icon={fa.faPen} className="card-image" />
                                     </NavLink>
                                 </div>
                             </NavLink>
                         ))}
-                        <NavLink to="/challenge-form">
+                        <NavLink to={`/challenge-form/new/${category.id}`}>
                             <div className='card-add'>
                                 <FontAwesomeIcon icon={fa.faPlus} className="card-add-image text-white" />
                             </div>
