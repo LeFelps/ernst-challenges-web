@@ -16,7 +16,7 @@ function App() {
       <ToastProvider>
         <ToastContainer />
         {user ?
-          <Dashboard />
+          <Dashboard removeUser={() => setUser(null)} />
           :
           <Auth setUser={setUser} />
         }

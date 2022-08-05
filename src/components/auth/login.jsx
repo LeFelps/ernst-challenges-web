@@ -15,7 +15,7 @@ function Login({ saveUser, ...props }) {
 
     function saveLogin() {
 
-        axios.get(`${consts.LOCAL_API}/users`, userData)
+        axios.post(`${consts.LOCAL_API}/users/login`, userData)
             .then((response) => {
                 saveUser(response.data)
                 navigate('/')

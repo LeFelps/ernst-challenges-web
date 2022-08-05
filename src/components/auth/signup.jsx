@@ -18,7 +18,7 @@ function Signup({ saveUser, ...props }) {
 
     function saveLogin() {
 
-        axios.post(`${consts.LOCAL_API}/users`, userData)
+        axios.post(`${consts.LOCAL_API}/users/signup`, userData)
             .then((response) => {
                 saveUser(response.data)
                 navigate('/')
@@ -41,15 +41,15 @@ function Signup({ saveUser, ...props }) {
                     <div className="login-input-area">
                         <div>
                             <label htmlFor="username">Username</label>
-                            <input type="text" className='input-field'
+                            <input id="username" type="text" className='input-field'
                                 required
                                 onChange={(e) => {
                                     setUserData({ ...userData, username: e.target.value })
                                 }} value={userData.username} />
                         </div>
                         <div>
-                            <label htmlFor="password">Email <span className='text-small text-gray'>(required)</span></label>
-                            <input type="text" className='input-field'
+                            <label htmlFor="email">Email <span className='text-small text-gray'>(required)</span></label>
+                            <input id="email" type="text" className='input-field'
                                 required
                                 onChange={(e) => {
                                     setUserData({ ...userData, email: e.target.value })
@@ -59,8 +59,8 @@ function Signup({ saveUser, ...props }) {
 
                     <div className="login-input-area">
                         <div>
-                            <label htmlFor="username">Password</label>
-                            <input type="password" className='input-field text-small'
+                            <label htmlFor="password">Password</label>
+                            <input id="password" type="password" className='input-field text-small'
                                 required
                                 onChange={(e) => {
                                     setUserData({ ...userData, password: e.target.value })
@@ -68,8 +68,8 @@ function Signup({ saveUser, ...props }) {
                             <span className='text-small text-gray'>* Minimum 8 characters</span>
                         </div>
                         <div>
-                            <label htmlFor="password">Confirm password</label>
-                            <input type="password" className='input-field text-small'
+                            <label htmlFor="password-confirm">Confirm password</label>
+                            <input id="password-confirm" type="password" className='input-field text-small'
                                 required
                                 onChange={(e) => {
                                     setUserData({ ...userData, passwordConfirm: e.target.value })

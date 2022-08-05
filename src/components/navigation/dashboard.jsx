@@ -4,7 +4,7 @@ import logo from '../../logo.svg';
 
 import AppRoutes from './AppRoutes';
 
-function Dashboard() {
+function Dashboard({ removeUser, ...props }) {
     return (
         <div className="app">
             <BrowserRouter>
@@ -61,12 +61,11 @@ function Dashboard() {
                     </div>
                 </div>
                 <div>
-                    <AppRoutes />
+                    <AppRoutes removeUser={removeUser} />
                 </div>
                 <div className='footer'>
                 </div>
             </BrowserRouter>
-
         </div >
     );
 }

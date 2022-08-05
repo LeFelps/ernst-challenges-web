@@ -2,10 +2,11 @@ import { faCartShopping, faHandBackFist, faListCheck, faPen, faPlus, faPlusCircl
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import logo from '../../logo.svg';
 import Modal from '../utilities/modals/Modal';
 
-function ProfileView() {
+function ProfileView({ removeUser, ...props }) {
 
     const [user, setUser] = useState({
         name: "",
@@ -73,10 +74,30 @@ function ProfileView() {
         })
     }, [])
 
+    const navigate = useNavigate()
+
+    function logout() {
+        localStorage.removeItem('user')
+        removeUser()
+        navigate('/login')
+    }
+
     return (
         <div className='content'>
             <div className="col gap-35">
                 <div className='list-container col gap-25'>
+                    <form onSubmit={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+
+                        logout()
+                    }} className='row centered'>
+                        <button type='submit' className="pointer">
+                            <b className="text-big text-gray">
+                                Logout
+                            </b>
+                        </button>
+                    </form>
                     <div className='long-card highlight-left-blue'>
                         <div className='long-card-title text-blue'>
                             {`${user.title} • ${jobLevels[user.level]}`}

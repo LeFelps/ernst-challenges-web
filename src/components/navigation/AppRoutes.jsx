@@ -17,7 +17,7 @@ import DungeonView from '../dungeon/View';
 import QuizView from '../quiz/View'
 
 
-function AppRoutes() {
+function AppRoutes({ removeUser, ...props }) {
 
     return (
         <Routes>
@@ -29,7 +29,7 @@ function AppRoutes() {
             <Route path='/jobs' exact element={<JobList />}></Route>
             <Route path='/job' exact element={<JobView />}></Route>
             <Route path='/job-form' exact element={<JobForm />}></Route>
-            <Route path='/profile' element={<ProfileView />}></Route>
+            <Route path='/profile' element={<ProfileView removeUser={removeUser} />}></Route>
             <Route path='/heros' element={<ProfileList />}></Route>
             <Route path='/opponents' exact element={<DungeonList />}></Route>
             <Route path='/opponent-form' element={<DungeonForm />}></Route>
