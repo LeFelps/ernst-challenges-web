@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../logo.svg';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import consts from '../../consts';
 
@@ -19,6 +19,8 @@ function JobList() {
             })
     }, [])
 
+    const navigate = useNavigate()
+
     return (
         <div className='content'>
             <div className="content-description">
@@ -31,7 +33,7 @@ function JobList() {
             </div>
             {jobList.map((job, index) => (
                 <div className='list-container'>
-                    <NavLink to="/job" className="nav-card">
+                    <NavLink to={`/job/${job.id}`} className="nav-card">
                         <div className='long-card nav-card' stye={{ boxShadow: `7px 0px 0px ${job.category?.accentColor || '#CCC'} inset` }}>
                             <div className='long-card-title nav-card' style={{ color: job.category?.accentColor || '#CCC' }}>
                                 {`${job.title || ''} • ${job.level || ''}`}
@@ -51,14 +53,27 @@ function JobList() {
                                         : null}
                                 </div>
                             </div>
-                            <NavLink to="/job-form" className='round-button yellow long-card-br'>
+                            <button type='button' className='round-button yellow long-card-br'
+                                onClick={() => navigate(`/job-form/${job.id}`)}>
                                 <FontAwesomeIcon icon={faPen} className="card-image" />
-                            </NavLink>
+                            </button>
                         </div>
                     </NavLink>
+                </div >
+            ))
+            }
+            <div className="list-container">
+                <div className="row centered w-100">
+                    <button type="button" className="add-button text-thick"
+                        onClick={() => {
+                            navigate('/job-form/new')
+                        }}>
+                        <FontAwesomeIcon icon={faPlus} />
+                        <span>Add Job</span>
+                    </button>
                 </div>
-            ))}
-        </div>
+            </div>
+        </div >
     );
 }
 

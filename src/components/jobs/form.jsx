@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as fa from '@fortawesome/free-solid-svg-icons';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import Modal from '../../components/utilities/modals/Modal.jsx'
 import consts from '../../consts';
 import axios from 'axios';
 import { useEffect } from 'react';
 
-function JobForm({ editJob, ...props }) {
+function JobForm({ ...props }) {
+
+    const { id } = useParams()
 
     const [job, setJob] = useState({
         id: undefined,
@@ -39,9 +41,9 @@ function JobForm({ editJob, ...props }) {
     }
 
     useEffect(() => {
-        if (editJob?.id) {
+        if (id) {
             setLoadingJob(true)
-            axios.get(`${consts.LOCAL_API}/jobs/${editJob.id}`)
+            axios.get(`${consts.LOCAL_API}/jobs/${id}`)
                 .then((resp) => {
                     let job = resp.data
                     if (job.responsabilities) {
@@ -63,7 +65,7 @@ function JobForm({ editJob, ...props }) {
                     setLoadingJob(false)
                 })
         }
-    }, [editJob])
+    }, [id])
 
     return (
         <div className="content">

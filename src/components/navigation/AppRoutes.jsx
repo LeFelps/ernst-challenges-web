@@ -33,8 +33,12 @@ function AppRoutes({ removeUser, ...props }) {
             <Route path='/challenge-form/:challengeId' exact element={<ChallengeForm />}></Route>
 
             <Route path='/jobs' exact element={<JobList />}></Route>
-            <Route path='/job' exact element={<JobView />}></Route>
-            <Route path='/job-form' exact element={<JobForm />}></Route>
+            <Route path='/job/:id' exact element={<JobView />}></Route>
+
+            {/* Routes for job form */}
+            <Route path='/job-form/new' exact element={<JobForm />}></Route>
+            <Route path='/job-form/:id' exact element={<JobForm />}></Route>
+
             <Route path='/profile' element={<ProfileView removeUser={removeUser} />}></Route>
             <Route path='/heros' element={<ProfileList />}></Route>
             <Route path='/opponents' exact element={<DungeonList />}></Route>

@@ -1,6 +1,5 @@
 import React from 'react';
-import logo from '../../logo.svg';
-import { NavLink } from 'react-router-dom';
+import profileLogo from '../../profile.svg';
 
 function ProfileList() {
 
@@ -20,7 +19,7 @@ function ProfileList() {
                         Fellipe Corominas Pereira
                     </div>
                     <div className='long-card-content gap-15'>
-                        <img src={logo} alt="" className='round-img highlight-blue' />
+                        <img src={profileLogo} alt="" className='round-img highlight-blue' />
                         <div className='align-center'>
                             <p className='info-name text-blue'>Front-end developer • Junior</p>
                             <p className='info-value'>1 year, 9 months experience</p>
@@ -33,7 +32,7 @@ function ProfileList() {
                         Fellipe Corominas Pereira
                     </div>
                     <div className='long-card-content gap-15'>
-                        <img src={logo} alt="" className='round-img highlight-pink' />
+                        <img src={profileLogo} alt="" className='round-img highlight-pink' />
                         <div className='align-center'>
                             <p className='info-name text-pink'>Back-end developer • Junior</p>
                             <p className='info-value'>1 year, 9 months experience</p>

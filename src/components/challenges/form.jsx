@@ -5,8 +5,8 @@ import { NavLink, useParams } from 'react-router-dom';
 import axios from 'axios';
 import consts from '../../consts.js'
 import Modal from '../../components/utilities/modals/Modal.jsx'
-import Spinner from '../../components/utilities/loading/Spinner'
 import ToastContext from '../utilities/toast/ToastContext.jsx';
+import CategoryModal from '../categories/Modal.jsx';
 
 function ChallengeForm({ ...props }) {
 
@@ -38,8 +38,6 @@ function ChallengeForm({ ...props }) {
     const [showCategoryModal, setShowCategoryModal] = useState(false)
     const [showQuestionsModal, setShowQuestionsModal] = useState(false)
     const [showTechnologyModal, setShowTechnologyModal] = useState(false)
-
-    const [loadingCategoryChanges, setLoadingCategoryChanges] = useState(false)
 
     const accentColors = [
         "#916932",
@@ -87,7 +85,7 @@ function ChallengeForm({ ...props }) {
     }
 
     const [editCategory, setEditCategory] = useState(initialCategory)
-    const [editQuestion, setEditQuestion] = useState(initialCategory)
+    const [editQuestion, setEditQuestion] = useState(initialQuestion)
     const [editTechnology, setEditTechnology] = useState(initialTechnology)
 
     const [newQuestionAnswer, setNewQuestionAnswer] = useState("")
@@ -116,6 +114,19 @@ function ChallengeForm({ ...props }) {
     const closeTechnologyModal = () => {
         setShowTechnologyModal(false)
         setEditTechnology({ ...initialTechnology })
+    }
+
+    function saveCategory(response) {
+        let categoryList = [...categories]
+        let category = categoryList.find(c => c.id === response.id)
+        let newCategoty = { ...response }
+        if (category !== undefined) {
+            categoryList[categoryList.indexOf(category)] = newCategoty
+        } else {
+            categoryList.push(newCategoty)
+        }
+        setChallenge({ ...challenge, category: newCategoty })
+        setCategories([...categoryList])
     }
 
     useEffect(() => {
@@ -457,89 +468,13 @@ function ChallengeForm({ ...props }) {
                         </button>
                     </div>
                 </form>
-                <Modal show={showCategoryModal} close={() => closeCategoryModal()} >
-                    <form className='col gap-25'
-                        onSubmit={(e) => {
-                            e.preventDefault()
-                            e.stopPropagation()
 
-                            let categoryData = { ...editCategory }
-
-                            let type = "post"
-
-                            if (categoryData.id)
-                                type = "put"
-
-                            setLoadingCategoryChanges(true)
-                            axios[type](`${consts.LOCAL_API}/challenges/categories`, categoryData)
-                                .then((res) => {
-                                    let categoryList = [...categories]
-                                    let category = categoryList.find(c => c.id === res.data.id)
-                                    let newCategoty = { ...res.data }
-                                    if (category !== undefined) {
-                                        categoryList[categoryList.indexOf(category)] = newCategoty
-                                    } else {
-                                        categoryList.push(newCategoty)
-                                    }
-                                    setChallenge({ ...challenge, category: newCategoty })
-                                    setCategories([...categoryList])
-                                })
-                                .catch(() => {
-                                })
-                                .then(() => {
-                                    setLoadingCategoryChanges(false)
-                                    closeCategoryModal()
-                                })
-                        }}>
-                        <div className="row w-100">
-                            <b className="text-huge">
-                                New Category
-                            </b>
-                            <div className="round-icon white text-light to-right text-bigger pointer"
-                                onClick={() => closeCategoryModal()}
-                            >
-                                <FontAwesomeIcon icon={fa.faTimes} />
-                            </div>
-                        </div>
-                        <div className="row w-100 vertical-bottom">
-                            <div className='input-group-50'>
-                                <label>Name</label>
-                                <input type="text" className='input-field' required disabled={loadingCategoryChanges}
-                                    onChange={(e) => {
-                                        setEditCategory({ ...editCategory, name: e.target.value })
-                                    }} value={editCategory?.name || ""}
-                                />
-                            </div>
-                            <b className="text-bigger w-50 text-center p-5" style={{ color: editCategory.accentColor }}>
-                                {editCategory?.name || "Text Preview"}
-                            </b>
-                        </div>
-                        <div className='input-group-50 flex gap-10'>
-                            <div>
-                                <label>Accent Color</label>
-                            </div>
-                            <div className='row gap-10 wrap'>
-                                {accentColors.map((accentColor, index) => (
-                                    <div type="checkbox" className="color-box" key={index} style={{ backgroundColor: accentColor }}
-                                        onClick={() => {
-                                            if (!loadingCategoryChanges)
-                                                setEditCategory({ ...editCategory, accentColor: accentColor })
-                                        }}>
-                                        {editCategory.accentColor === accentColor ?
-                                            <FontAwesomeIcon icon={fa.faCheck} /> : null}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="row justify-right vertical-center gap-25">
-                            {loadingCategoryChanges ?
-                                <Spinner size="sm" color='dark' /> : null}
-                            <button className="button-rounded green text-white" type='submit' disabled={loadingCategoryChanges}>
-                                Save
-                            </button>
-                        </div>
-                    </form>
-                </Modal>
+                <CategoryModal
+                    afterSave={saveCategory}
+                    close={closeCategoryModal}
+                    show={showCategoryModal}
+                    category={editCategory}
+                />
 
                 <Modal show={showQuestionsModal} close={() => closeQuestionsModal()} >
                     <div className='col gap-25'>

@@ -40,11 +40,7 @@ function ChallengeView() {
                         <div>
                             <div className='card-sm'>
                                 <FontAwesomeIcon icon={fa[challenge.icon]} className="card-image" style={{ color: challenge.category?.accentColor }} />
-                                <NavLink to="/challenge-form" className='round-icon yellow text-dark card-sm-br'>
-                                    {/* 
-                                                    TODO
-                                        ADD NAVIGATION TO CHALLENGE BY ID 
-                                    */}
+                                <NavLink to={`/challenge-form/${challenge.id}`} className='round-icon yellow text-dark card-sm-br'>
                                     <FontAwesomeIcon icon={fa.faPen} className="card-image" />
                                 </NavLink>
                             </div>

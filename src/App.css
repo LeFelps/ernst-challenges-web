@@ -1354,6 +1354,13 @@ a {
   width: 40%;
 }
 
+.card-image-big {
+  transition: .1s;
+  margin: 0px auto 0px auto;
+  height: 50%;
+  width: 50%;
+}
+
 .card-add-image {
   transition: .1s;
   margin: 0px auto 0px auto;
@@ -1440,6 +1447,7 @@ a {
   max-width: 350px;
   overflow: hidden;
   padding-left: 50px;
+  pointer-events: none;
 }
 
 .toast {
