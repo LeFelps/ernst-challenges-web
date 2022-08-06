@@ -36,7 +36,7 @@ function ChallengeList() {
                     </p>
                     <div className='card-group'>
                         {category.challenges?.map((challenge, index) => (
-                            <NavLink to="/challenge">
+                            <NavLink to={`/challenge/${challenge.id}`}>
                                 <div className='card'>
                                     <FontAwesomeIcon icon={fa[challenge.icon]} className="card-image" style={{ color: category.accentColor }} />
                                     <div className='card-description'>

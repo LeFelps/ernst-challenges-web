@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../logo.svg';
+import profileLogo from '../../profile.svg';
 import Modal from '../utilities/modals/Modal';
 
 function ProfileView({ removeUser, ...props }) {
@@ -103,7 +104,7 @@ function ProfileView({ removeUser, ...props }) {
                             {`${user.title} • ${jobLevels[user.level]}`}
                         </div>
                         <div className='long-card-content gap-15'>
-                            <img src={logo} alt="" className='round-img highlight-blue' />
+                            <img src={profileLogo} alt="" className='round-img highlight-blue' />
                             <div className='align-center'>
                                 <p className='info-name'>{user.name}</p>
                                 <p className='info-value'>{user.email}</p>

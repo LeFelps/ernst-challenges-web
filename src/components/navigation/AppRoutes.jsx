@@ -24,7 +24,8 @@ function AppRoutes({ removeUser, ...props }) {
             <Route path='/' exact element={<div />
             }></Route>
             <Route path='/challenges' element={<ChallengeList />}></Route>
-            <Route path='/challenge' element={<ChallengeView />}></Route>
+
+            <Route path='/challenge/:id' element={<ChallengeView />}></Route>
 
             {/* Routes for challenge form */}
             <Route path='/challenge-form' exact element={<ChallengeForm />}></Route>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, BrowserRouter } from 'react-router-dom'
-import logo from '../../logo.svg';
+import profileLogo from '../../profile.svg';
 
 import AppRoutes from './AppRoutes';
 
@@ -56,7 +56,7 @@ function Dashboard({ removeUser, ...props }) {
                             </p>
                         </NavLink>
                         <NavLink to="/profile" className="nav-profile highlight-blue to-right" >
-                            <img src={logo} alt="Small profile" />
+                            <img src={profileLogo} alt="Small profile" />
                         </NavLink>
                     </div>
                 </div>

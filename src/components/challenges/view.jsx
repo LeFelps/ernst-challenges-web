@@ -3,10 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import consts from "../../consts";
 
 function ChallengeView() {
+
+    const { id } = useParams()
 
     const [challenge, setChallenge] = useState({
         category: {
@@ -21,10 +23,10 @@ function ChallengeView() {
     })
 
     useEffect(() => {
-        axios.get(`${consts.LOCAL_API}/challenges/${'30'}`)
+        axios.get(`${consts.LOCAL_API}/challenges/${id}`)
             .then(resp => {
                 setChallenge(resp.data || {})
-                
+
             })
     }, [])
 
