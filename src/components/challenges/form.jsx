@@ -1,21 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as fa from '@fortawesome/free-solid-svg-icons';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import axios from 'axios';
 import consts from '../../consts.js'
 import Modal from '../../components/utilities/modals/Modal.jsx'
 import Spinner from '../../components/utilities/loading/Spinner'
 import ToastContext from '../utilities/toast/ToastContext.jsx';
 
-function ChallengeForm({ editChallenge, ...props }) {
+function ChallengeForm({ ...props }) {
 
-    const categoryId = props.categoryId
-    const challengeId = props.challengeId
+    const { categoryId, challengeId } = useParams()
 
     const { toast } = useContext(ToastContext);
 
-    const [challenge, setChallenge] = useState({
+    const initialChallenge = {
         id: undefined,
         category: {
             id: null
@@ -25,7 +24,10 @@ function ChallengeForm({ editChallenge, ...props }) {
         description: null,
         icon: null,
         checkpoints: []
-    })
+    }
+
+    const [challenge, setChallenge] = useState({ ...initialChallenge })
+
     const [categories, setCategories] = useState([])
 
     const [loadingChallenge, setLoadingChallenge] = useState(false)
@@ -90,8 +92,6 @@ function ChallengeForm({ editChallenge, ...props }) {
 
     const [newQuestionAnswer, setNewQuestionAnswer] = useState("")
 
-
-
     function searchMatch(search, array) {
         const matches = array.filter(key => {
             var regexp = new RegExp(search, "gi")
@@ -120,8 +120,7 @@ function ChallengeForm({ editChallenge, ...props }) {
 
     useEffect(() => {
 
-        console.log(categoryId)
-        console.log(challengeId)
+        categoryId && setChallenge({ ...challenge, category: { id: categoryId } })
 
         axios.get(`${consts.LOCAL_API}/challenges/categories?min=true`)
             .then(res => {
@@ -130,29 +129,20 @@ function ChallengeForm({ editChallenge, ...props }) {
             .catch(err => {
                 console.error(err)
             })
-    }, [])
 
-    useEffect(() => {
-        if (editChallenge?.id) {
+        if (challengeId) {
             setLoadingChallenge(true)
-            axios.get(`${consts.LOCAL_API}/challenges/${editChallenge.id}`)
-                .then((resp) => {
-                    let challenge = resp.data
-                    if (challenge.checkpoints?.length > 0) {
-                        challenge.checkpoints.map((checkpoint, index) => {
-                            if (checkpoint.technologies)
-                                challenge.checkpoints[index].technologies = checkpoint.technologies.split(";")
-                            return checkpoint
-                        })
-                    }
-                })
-                .catch(() => {
-                })
-                .then(() => {
+            axios.get(`${consts.LOCAL_API}/challenges/${challengeId}`)
+                .then(res => {
+                    console.log(res.data)
+                    setChallenge(res.data || { ...initialChallenge })
+                }).catch(err => {
+                    console.error(err)
+                }).then(() => {
                     setLoadingChallenge(false)
                 })
         }
-    }, [editChallenge])
+    }, [])
 
     return (
         <div className="content">
@@ -421,7 +411,7 @@ function ChallengeForm({ editChallenge, ...props }) {
                                     <div>
                                         <span className="group-title">Technologies</span>
                                         <div className="chip-section">
-                                            {challenge.checkpoints && challenge.checkpoints[index]?.technologies?.map((technology, tIndex) => (
+                                            {challenge.checkpoints?.length > 0 && challenge.checkpoints[index]?.technologies?.map((technology, tIndex) => (
                                                 <div className="chip white text-dark border-thin" key={tIndex}>
                                                     <button type="button" className="chip-button" disabled={loadingChallenge}
                                                         onClick={() => {
@@ -707,7 +697,7 @@ function ChallengeForm({ editChallenge, ...props }) {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {challenge.questions.map((question, index) => (
+                                                {challenge.questions?.map((question, index) => (
                                                     <tr key={index} className={`${index % 2 === 0 ? 'bg-white' : ''}`}>
                                                         <td className='w-100 p-10'>
                                                             {question.title}
