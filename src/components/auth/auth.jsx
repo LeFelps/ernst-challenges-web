@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Login from './Login'

@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import consts from '../../consts';
 import axios from 'axios';
 
-function OpponentForm({ editOpponent, ...props }) {
+function OpponentForm({ ...props }) {
+
+    const { id } = useParams()
 
     const [opponent, setOpponent] = useState({
         id: undefined,
-        mame: null,
+        name: null,
         level: null,
         personality: null,
         about: null
@@ -23,18 +25,16 @@ function OpponentForm({ editOpponent, ...props }) {
 
     const personalities = {
         PRACTICAL: "Practical",
-        THEORICAL: "Theorical",
+        THEORICAL: "Theoretical",
         SPECIALIST: "Specialist"
     }
 
-
     useEffect(() => {
-        if (editOpponent?.id) {
+        if (id) {
             setLoadingOpponent(true)
-            axios.get(`${consts.LOCAL_API}/opponents/${editOpponent.id}`)
+            axios.get(`${consts.LOCAL_API}/opponents/${id}`)
                 .then((resp) => {
-                    let opponent = resp.data
-                    setOpponent(opponent)
+                    setOpponent(resp.data || {})
                 })
                 .catch(() => {
 
@@ -43,28 +43,37 @@ function OpponentForm({ editOpponent, ...props }) {
                     setLoadingOpponent(false)
                 })
         }
-    }, [editOpponent])
+    }, [id])
 
     return (
         <div className="content">
             <form className="form-container" onSubmit={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
 
                 let type = "post"
+                if (opponent.id) type = "put";
 
-                if (opponent.id) {
-                    type = "put"
-                }
-
+                setLoadingOpponent(false)
                 axios[type](`${consts.LOCAL_API}/opponents`, opponent)
                     .then((resp) => {
-
+                        setOpponent(resp.data || {})
                     })
                     .catch((err) => {
 
+                    })
+                    .then(() => {
+                        setLoadingOpponent(false)
                     });
             }}>
                 <div>
-                    <div className="form-title">New Opponent</div>
+                    <div className="form-title">
+                        {opponent.id ?
+                            "Edit Opponent"
+                            :
+                            "New Opponent"
+                        }
+                    </div>
                     <div className="input-section">
                         <div className="row gap-35">
                             <div className='input-group-50'>

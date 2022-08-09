@@ -3,8 +3,46 @@ import { faCartShopping, faCircleCheck, faClock, faHandBackFist, faListCheck, fa
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 import logo from '../../logo.svg';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
+import consts from '../../consts';
 
 function OpponentView() {
+
+    const [opponent, setOpponent] = useState({})
+
+    useEffect(() => {
+        getRandomOpponent()
+    }, [])
+
+    function getRandomOpponent() {
+        axios.get(`${consts.LOCAL_API}/opponents/random`)
+            .then((resp) => {
+                setOpponent(resp.data || {})
+            })
+            .catch((err) => {
+
+            })
+    }
+
+    const levels = {
+        EASY: "Easy",
+        MEDIUM: "Medium",
+        HARD: "Hard"
+    }
+
+    const personalities = {
+        PRACTICAL: "Practical",
+        THEORICAL: "Theoretical",
+        SPECIALIST: "Specialist"
+    }
+
+    const colors = {
+        EASY: "green",
+        MEDIUM: "orange",
+        HARD: "red"
+    }
 
     return (
         <div className="content">
@@ -12,15 +50,15 @@ function OpponentView() {
                 <div className="list-container col gap-15">
                     <div className="row">
                         <span className="group-title">Your opponent is...</span>
-                        <button className="add-button to-right">
+                        <NavLink to="/opponent-form/new" className="add-button to-right">
                             <FontAwesomeIcon icon={faPlus} />
                             <span>Add opponent</span>
-                        </button>
+                        </NavLink>
                     </div>
-                    <div className='long-card highlight-left-green'>
-                        <div className='long-card-title text-green'>
+                    <div className={`long-card highlight-left-${colors[opponent.level]}`}>
+                        <div className={`long-card-title text-${colors[opponent.level]}`}>
                             <div className="row gap-25">
-                                Coding Goblin
+                                {opponent.name}
                                 <NavLink to="/opponents" className='card-value green'>
                                     View all
                                 </NavLink>
@@ -28,26 +66,26 @@ function OpponentView() {
                         </div>
                         <div className="col gap-25">
                             <div className='long-card-content gap-25'>
-                                <img src={logo} alt="" className='round-img highlight-green' />
+                                <img src={logo} alt="" className={`round-img highlight-${colors[opponent.level]}`} />
                                 <div className="col justify-center">
                                     <div className='row gap-15'>
                                         <span className='info-name'>Personality</span>
-                                        <span className='my-auto'>Practical</span>
+                                        <span className='my-auto'>{personalities[opponent.personality]}</span>
                                     </div>
                                     <div className='row gap-15'>
                                         <span className='info-name'>Difficulty</span>
-                                        <span className='my-auto'>Easy</span>
+                                        <span className='my-auto'>{levels[opponent.level]}</span>
                                     </div>
                                 </div>
                             </div>
                             <div className='long-card-content'>
                                 <div className="col justify-center">
                                     <span className='info-name'>About</span>
-                                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nunc lacus, tristique ut dolor sit amet, scelerisque congue nisi. Sed et dui id augue porttitor pharetra nec non orci. Ut a egestas nibh, a aliquet nibh. Aenean eu ex viverra, convallis ligula in, consequat mauris. Morbi mollis viverra orci.</span>
+                                    <span>{opponent.about}</span>
                                 </div>
                             </div>
                         </div>
-                        <NavLink to="/opponent-form" className='round-button yellow long-card-br'>
+                        <NavLink to={`/opponent-form/${opponent.id}`} className='round-button yellow long-card-br'>
                             <FontAwesomeIcon icon={faPen} className="card-image" />
                         </NavLink>
                     </div>

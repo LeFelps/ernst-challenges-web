@@ -61,7 +61,7 @@ function ChallengeForm({ ...props }) {
 
     const questionType = {
         PRACTICAL: "Practical",
-        THEORICAL: "Theorical"
+        THEORICAL: "Theoretical"
     }
 
     const initialCategory = {

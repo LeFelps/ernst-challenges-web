@@ -1,104 +1,98 @@
-import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import consts from '../../consts';
 import logo from '../../logo.svg';
 
-
-
 function OpponentList() {
+
+    const navigate = useNavigate()
+
+    const [opponents, setOpponents] = useState([])
+
+    const levels = {
+        EASY: "Easy",
+        MEDIUM: "Medium",
+        HARD: "Hard"
+    }
+
+    const personalities = {
+        PRACTICAL: "Practical",
+        THEORICAL: "Theorical",
+        SPECIALIST: "Specialist"
+    }
+
+    const colors = {
+        EASY: "green",
+        MEDIUM: "orange",
+        HARD: "red"
+    }
+
+    useEffect(() => {
+        axios.get(`${consts.LOCAL_API}/opponents`)
+            .then((resp) => {
+                setOpponents(resp.data || [])
+            })
+            .catch((err) => {
+            })
+    }, [])
 
     return (
         <div className='content'>
             <div className="content-description">
                 <p className='text-title'>
-                    Job Opportunities
+                    Opponents
                 </p>
                 <p className='text-secondary'>
-                    Here you will find job openings that fit you an that you'll fit in
+                    The complete list of opponents you can face
                 </p>
             </div>
-            <div className='list-container col gap-25'>
-                <div className='long-card highlight-left-green'>
-                    <div className='long-card-title text-green'>
-                        Coding Goblin
-                    </div>
-                    <div className="col gap-25">
-                        <div className='long-card-content gap-25'>
-                            <img src={logo} alt="" className='round-img' />
-                            <div className="col justify-center">
-                                <div className='row gap-15'>
-                                    <span className='info-name'>Personality</span>
-                                    <span className='my-auto'>Practical</span>
+            {opponents.map((opponent) => (
+                <div className='list-container col gap-25'>
+                    <div className={`long-card highlight-left-${colors[opponent.level]}`}>
+                        <div className={`long-card-title text-${colors[opponent.level]}`}>
+                            {opponent.name}
+                        </div>
+                        <div className="col gap-25">
+                            <div className='long-card-content gap-25'>
+                                <img src={logo} alt="" className={`round-img highlight-${colors[opponent.level]}`} />
+                                <div className="col justify-center">
+                                    <div className='row gap-15'>
+                                        <span className='info-name'>Personality</span>
+                                        <span className='my-auto'>{personalities[opponent.personality]}</span>
+                                    </div>
+                                    <div className='row gap-15'>
+                                        <span className='info-name'>Difficulty</span>
+                                        <span className='my-auto'>{levels[opponent.level]}</span>
+                                    </div>
                                 </div>
-                                <div className='row gap-15'>
-                                    <span className='info-name'>Difficulty</span>
-                                    <span className='my-auto'>Easy</span>
+                            </div>
+                            <div className='long-card-content'>
+                                <div className="col justify-center">
+                                    <span className='info-name'>About</span>
+                                    <span>{opponent.about}</span>
                                 </div>
                             </div>
                         </div>
-                        <div className='long-card-content'>
-                            <div className="col justify-center">
-                                <span className='info-name'>About</span>
-                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nunc lacus, tristique ut dolor sit amet, scelerisque congue nisi. Sed et dui id augue porttitor pharetra nec non orci. Ut a egestas nibh, a aliquet nibh. Aenean eu ex viverra, convallis ligula in, consequat mauris. Morbi mollis viverra orci.</span>
-                            </div>
-                        </div>
+                        <button type="button" className='round-button yellow long-card-br'
+                            onClick={() => {
+                                navigate(`/opponent-form/${opponent.id}`)
+                            }}>
+                            <FontAwesomeIcon icon={faPen} className="card-image" />
+                        </button>
                     </div>
-                    <NavLink to="/opponent-form" className='round-button yellow long-card-br'>
-                        <FontAwesomeIcon icon={faPen} className="card-image" />
+                </div>
+            ))}
+            <div className="list-container">
+                <div className="row centered w-100">
+                    <NavLink to="/opponent-form/new" className="add-button text-thick">
+                        <FontAwesomeIcon icon={faPlus} />
+                        <span>Add Opponent</span>
                     </NavLink>
-                </div>
-                <div className='long-card highlight-left-orange'>
-                    <div className='long-card-title text-orange'>
-                        Giant Book Worm
-                    </div>
-                    <div className="col gap-25">
-                        <div className='long-card-content gap-25'>
-                            <img src={logo} alt="" className='round-img' />
-                            <div className="col justify-center">
-                                <div className='row gap-15'>
-                                    <span className='info-name'>Personality</span>
-                                    <span className='my-auto'>Theorical</span>
-                                </div>
-                                <div className='row gap-15'>
-                                    <span className='info-name'>Difficulty</span>
-                                    <span className='my-auto'>Medium</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='long-card-content'>
-                            <div className="col justify-center">
-                                <span className='info-name'>About</span>
-                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nunc lacus, tristique ut dolor sit amet, scelerisque congue nisi. Sed et dui id augue porttitor pharetra nec non orci. Ut a egestas nibh, a aliquet nibh. Aenean eu ex viverra, convallis ligula in, consequat mauris. Morbi mollis viverra orci.</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className='long-card highlight-left-red'>
-                    <div className='long-card-title text-red'>
-                        The Wizard
-                    </div>
-                    <div className="col gap-25">
-                        <div className='long-card-content gap-25'>
-                            <img src={logo} alt="" className='round-img' />
-                            <div className="col justify-center">
-                                <div className='row gap-15'>
-                                    <span className='info-name'>Personality</span>
-                                    <span className='my-auto'>Specialist</span>
-                                </div>
-                                <div className='row gap-15'>
-                                    <span className='info-name'>Difficulty</span>
-                                    <span className='my-auto'>Hard</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='long-card-content'>
-                            <div className="col justify-center">
-                                <span className='info-name'>About</span>
-                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nunc lacus, tristique ut dolor sit amet, scelerisque congue nisi. Sed et dui id augue porttitor pharetra nec non orci. Ut a egestas nibh, a aliquet nibh. Aenean eu ex viverra, convallis ligula in, consequat mauris. Morbi mollis viverra orci.</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

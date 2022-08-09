@@ -13,8 +13,11 @@ function JobForm({ ...props }) {
 
     const [job, setJob] = useState({
         id: undefined,
+        companyName: null,
         title: null,
         level: null,
+        salary: null,
+        displaySalary: null,
         location: null,
         remote: false,
         description: null,
@@ -40,7 +43,18 @@ function JobForm({ ...props }) {
         setEditRequirement("")
     }
 
+    const [categories, setCategories] = useState([])
+
     useEffect(() => {
+
+        axios.get(`${consts.LOCAL_API}/challenges/categories?min=true`)
+            .then(res => {
+                setCategories(res.data || [])
+            })
+            .catch(err => {
+                console.error(err)
+            })
+
         if (id) {
             setLoadingJob(true)
             axios.get(`${consts.LOCAL_API}/jobs/${id}`)
@@ -65,7 +79,7 @@ function JobForm({ ...props }) {
                     setLoadingJob(false)
                 })
         }
-    }, [id])
+    }, [])
 
     return (
         <div className="content">
@@ -91,7 +105,7 @@ function JobForm({ ...props }) {
                 <div>
                     <div className="form-title">New Job</div>
                     <div className="input-section">
-                        <div className="row gap-35">
+                        <div className="row">
                             <div className='input-group-50'>
                                 <label>Title</label>
                                 <input type="text" className='input-field' required disabled={loadingJob}
@@ -100,6 +114,23 @@ function JobForm({ ...props }) {
                                     }} value={job.title || ""}
                                 />
                             </div>
+                            <div className='input-group-50'>
+                                <label>Category</label>
+                                <div className="row w-100 gap-15 vertical-center">
+                                    <select className='input-field' required disabled={loadingJob}
+                                        onChange={(e) => {
+                                            setJob({ ...job, category: categories.find(c => c.id === parseInt(e.target.value)) })
+                                        }} value={job.category?.id || ""}
+                                    >
+                                        <option value="">Select...</option>
+                                        {categories.map((category, index) => (
+                                            <option value={category.id} key={index}>{category.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
                             <div className='input-group-50'>
                                 <label>Level</label>
                                 <select className='input-field' required
@@ -113,8 +144,23 @@ function JobForm({ ...props }) {
                                     ))}
                                 </select>
                             </div>
+                            <div className='input-group-50'>
+                                <label>Salary</label>
+                                <input type="text" className='input-field' required disabled={loadingJob}
+                                    onChange={(e) => {
+                                        setJob({ ...job, salary: e.target.value })
+                                    }} value={job.salary || ""}
+                                />
+                                <div>
+                                    <input type="checkbox" name="displaySalary" id="displaySalary" required disabled={loadingJob}
+                                        onClick={() => {
+                                            setJob({ ...job, displaySalary: !job.displaySalary })
+                                        }} value={job.remote || false} />
+                                    <label className="check-label" for="displaySalary">Display Salary</label>
+                                </div>
+                            </div>
                         </div>
-                        <div className="row gap-35">
+                        <div className="row">
                             <div className='input-group-50'>
                                 <label>Location</label>
                                 <input type="text" className='input-field' required disabled={loadingJob}
@@ -131,7 +177,7 @@ function JobForm({ ...props }) {
                                 </div>
                             </div>
                         </div>
-                        <div className="row gap-35">
+                        <div className="row">
                             <div className='input-group'>
                                 <label>Description</label>
                                 <textarea type="text" className='input-field textarea' required disabled={loadingJob}
