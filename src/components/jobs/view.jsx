@@ -2,11 +2,15 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../logo.svg';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import axios from 'axios';
+import consts from '../../consts';
 
 function JobView() {
+
+    const { id } = useParams()
 
     const [job, setJob] = useState({
         title: null,
@@ -29,34 +33,30 @@ function JobView() {
     }
 
     useEffect(() => {
-        setJob({
-            businessName: "Ernest Young",
-            title: "Front-end Developer",
-            level: "ENTRY",
-            location: "São Paulo",
-            remote: true,
-            description: "",
-            salary: "R$ 4000,00",
-            displaySalary: true,
-            responsabilities: [],
-            compensations: [],
-            requirements: []
-        })
+        if (id) {
+            axios.get(`${consts.LOCAL_API}/jobs/${id}`)
+                .then((response) => {
+                    setJob(response.data || {})
+                })
+                .catch(() => {
+
+                })
+        }
     }, [])
 
     return (
         <div className="content">
             <div className="col gap-15">
                 <div className="list-container col gap-15">
-                    <div className='long-card highlight-left-blue'>
-                        <div className='long-card-title text-blue'>
+                    <div className='long-card' style={{ boxShadow: `7px 0px 0px ${job.category?.accentColor || '#CCC'} inset` }}>
+                        <div className='long-card-title' style={{ color: job.category?.accentColor }}>
                             {`${job.title || ""} • ${jobLevels[job.level] || ""}`}
                         </div>
                         <div className='long-card-content gap-15'>
                             <img src={logo} alt="" className='company-logo' />
                             <div className='align-center'>
-                                <p className='info-name'>{job.businessName}</p>
-                                {job.displaySalary && job.salary ?
+                                <p className='info-name'>{job.companyName}</p>
+                                {!job.hideSalary && job.salary ?
                                     <p className='info-value'>{job.salary}</p>
                                     : null}
                                 {job.compensations?.length > 0 &&
@@ -69,19 +69,19 @@ function JobView() {
                                 }
                             </div>
                         </div>
-                        <NavLink to="/job-form" className='round-button yellow long-card-br'>
+                        <NavLink to={`/job-form/${job.id}`} className='round-button yellow long-card-br'>
                             <FontAwesomeIcon icon={faPen} className="card-image" />
                         </NavLink>
                     </div>
-                    <div className="row centered gap-25">
-                        {/* 
+                </div>
+                <div className="row centered gap-25">
+                    {/* 
                                 TODO
                                 JOB APPLICATION FUNCTIONALITY
                                 JOB APPLICATIONS LIST
                          */}
-                        <button className="button-flat green text-white">Apply for Job</button>
-                        <button className="button-flat blue text-white">Applications</button>
-                    </div>
+                    <button className="button-flat green text-white">Apply for Job</button>
+                    <button className="button-flat blue text-white">Applications</button>
                 </div>
                 <div className='list-container'>
                     <b className='group-title text-center'>

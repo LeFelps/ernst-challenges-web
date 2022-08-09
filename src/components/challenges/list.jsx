@@ -56,12 +56,6 @@ function ChallengeList() {
                                             {challenge.brief}
                                         </p>
                                     </div>
-                                    <button type='button' className='round-button yellow card-br pointer'
-                                        onClick={() => {
-                                            navigate(`/challenge-form/${challenge.id}`)
-                                        }}>
-                                        <FontAwesomeIcon icon={fa.faPen} className="card-image-big" />
-                                    </button>
                                 </div>
                             </NavLink>
                         ))}

@@ -21,6 +21,13 @@ function JobList() {
 
     const navigate = useNavigate()
 
+    const jobLevels = {
+        INTERNSHIP: "Internship",
+        ENTRY: "Entry",
+        MID: "Mid",
+        SENIOR: "Senior"
+    }
+
     return (
         <div className='content'>
             <div className="content-description">
@@ -34,14 +41,14 @@ function JobList() {
             {jobList.map((job, index) => (
                 <div className='list-container'>
                     <NavLink to={`/job/${job.id}`} className="nav-card">
-                        <div className='long-card nav-card' stye={{ boxShadow: `7px 0px 0px ${job.category?.accentColor || '#CCC'} inset` }}>
+                        <div className='long-card nav-card' style={{ boxShadow: `7px 0px 0px ${job.category?.accentColor || '#CCC'} inset` }}>
                             <div className='long-card-title nav-card' style={{ color: job.category?.accentColor || '#CCC' }}>
-                                {`${job.title || ''} • ${job.level || ''}`}
+                                {`${job.title || ''} • ${jobLevels[job.level] || ''}`}
                             </div>
                             <div className='long-card-content gap-15'>
                                 <img src={logo} alt="Business Logo" className='company-logo' />
                                 <div className='align-center'>
-                                    <p className='info-name'>{job.businessName}</p>
+                                    <p className='info-name'>{job.companyName}</p>
                                     <p className='info-value' hidden={job.displaySalary === false}>{job.salary}</p>
                                     {job.compensations?.length > 0 ?
                                         <div className='info-extra'>
@@ -53,10 +60,6 @@ function JobList() {
                                         : null}
                                 </div>
                             </div>
-                            <button type='button' className='round-button yellow long-card-br'
-                                onClick={() => navigate(`/job-form/${job.id}`)}>
-                                <FontAwesomeIcon icon={faPen} className="card-image" />
-                            </button>
                         </div>
                     </NavLink>
                 </div >
