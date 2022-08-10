@@ -11,6 +11,7 @@ import consts from '../../consts';
 function JobView() {
 
     const { id } = useParams()
+    const userId = JSON.parse(localStorage.getItem('user')).id
 
     const [job, setJob] = useState({
         title: null,
@@ -32,6 +33,28 @@ function JobView() {
         SENIOR: "Senior"
     }
 
+    const [appliedToJob, setAppliedToJob] = useState(false)
+
+    function removeApplication() {
+        axios.delete(`${consts.LOCAL_API}/job-applications`, {
+            jobId: id,
+            userId: userId
+        })
+            .then(() => {
+                setAppliedToJob(false)
+            })
+    }
+
+    function applyTojob() {
+        axios.post(`${consts.LOCAL_API}/job-applications`, {
+            jobId: id,
+            userId: userId
+        })
+            .then(() => {
+                setAppliedToJob(true)
+            })
+    }
+
     useEffect(() => {
         if (id) {
             axios.get(`${consts.LOCAL_API}/jobs/${id}`)
@@ -42,6 +65,15 @@ function JobView() {
 
                 })
         }
+
+        axios.get(`${consts.LOCAL_API}/job-applications/${userId}?jobId=${id}`)
+            .then((resp) => {
+                setAppliedToJob(resp.data)
+            })
+            .catch(() => {
+
+            })
+
     }, [])
 
     return (
@@ -80,7 +112,16 @@ function JobView() {
                                 JOB APPLICATION FUNCTIONALITY
                                 JOB APPLICATIONS LIST
                          */}
-                    <button className="button-flat green text-white">Apply for Job</button>
+                    {appliedToJob ?
+                        <button className="button-flat red text-white"
+                            onClick={() => {
+                                removeApplication()
+                            }}>Remove job application</button>
+                        : <button className="button-flat green text-white"
+                            onClick={() => {
+                                applyTojob()
+                            }}>Apply for Job</button>
+                    }
                     <button className="button-flat blue text-white">Applications</button>
                 </div>
                 <div className='list-container'>
