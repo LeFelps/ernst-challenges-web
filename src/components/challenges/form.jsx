@@ -7,6 +7,7 @@ import consts from '../../consts.js'
 import Modal from '../../components/utilities/modals/Modal.jsx'
 import ToastContext from '../utilities/toast/ToastContext.jsx';
 import CategoryModal from '../categories/Modal.jsx';
+import { getColors, getDifficultyLevels, getQuestionTypes } from '../utilities/functions/knownLists.js';
 
 function ChallengeForm({ ...props }) {
 
@@ -39,30 +40,11 @@ function ChallengeForm({ ...props }) {
     const [showQuestionsModal, setShowQuestionsModal] = useState(false)
     const [showTechnologyModal, setShowTechnologyModal] = useState(false)
 
-    const accentColors = [
-        "#916932",
-        "#D48E29",
-        "#EC5A46",
-        "#E15263",
-        "#DF5193",
-        "#D59AC5",
-        "#8D55A2",
-        "#18A2C6",
-        "#0288AD",
-        "#2B9446",
-        "#83C341"
-    ]
+    const accentColors = getColors()
 
-    const questionLevel = {
-        EASY: "Easy",
-        MEDIUM: "Medium",
-        HARD: "Hard"
-    }
+    const questionLevels = getDifficultyLevels()
 
-    const questionType = {
-        PRACTICAL: "Practical",
-        THEORICAL: "Theoretical"
-    }
+    const questionTypes = getQuestionTypes()
 
     const initialCategory = {
         id: null,
@@ -218,7 +200,8 @@ function ChallengeForm({ ...props }) {
                                                 <button type='button' className="round-icon yellow pointer" disabled={loadingChallenge}
                                                     onClick={() => {
                                                         setShowCategoryModal(true)
-                                                        setEditCategory({ ...challenge.category })
+                                                        console.log(categories)
+                                                        setEditCategory({ ...categories.find(c => parseInt(c.id) === parseInt(challenge.category.id)) })
                                                     }}>
                                                     <FontAwesomeIcon icon={fa.faPen} />
                                                 </button>
@@ -312,19 +295,19 @@ function ChallengeForm({ ...props }) {
                                 <div className='row space-between'>
                                     <div className="round-card w-30">
                                         <span className="card-title">
-                                            {questionLevel["EASY"]}
+                                            {questionLevels["EASY"]}
                                         </span>
                                         <span className='card-value bg-green to-right'>{challenge.questions?.filter(q => q.level === "EASY")?.length || 0}</span>
                                     </div>
                                     <div className="round-card w-30">
                                         <span className="card-title">
-                                            {questionLevel["MEDIUM"]}
+                                            {questionLevels["MEDIUM"]}
                                         </span>
                                         <span className='card-value bg-orange to-right'>{challenge.questions?.filter(q => q.level === "MEDIUM")?.length || 0}</span>
                                     </div>
                                     <div className="round-card w-30">
                                         <span className="card-title">
-                                            {questionLevel["HARD"]}
+                                            {questionLevels["HARD"]}
                                         </span>
                                         <span className='card-value bg-red to-right'>{challenge.questions?.filter(q => q.level === "HARD")?.length || 0}</span>
                                     </div>
@@ -505,9 +488,9 @@ function ChallengeForm({ ...props }) {
                                     }} value={editQuestion.level || ""}
                                 >
                                     <option value="">Select...</option>
-                                    <option value="EASY">{questionLevel["EASY"]}</option>
-                                    <option value="MEDIUM">{questionLevel["MEDIUM"]}</option>
-                                    <option value="HARD">{questionLevel["HARD"]}</option>
+                                    {Object.keys(questionLevels).map((key, index) => (
+                                        <option key={index} value={key}>{questionLevels[key]}</option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
@@ -520,8 +503,9 @@ function ChallengeForm({ ...props }) {
                                     }} value={editQuestion.type || ""}
                                 >
                                     <option value="">Select...</option>
-                                    <option value="PRACTICAL">{questionType["PRACTICAL"]}</option>
-                                    <option value="THEORICAL">{questionType["THEORICAL"]}</option>
+                                    {Object.keys(questionTypes).map((key, index) => (
+                                        <option key={index} value={key}>{questionTypes[key]}</option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
@@ -638,10 +622,10 @@ function ChallengeForm({ ...props }) {
                                                             {question.title}
                                                         </td>
                                                         <td className='p-10 text-center'>
-                                                            {questionType[question.type]}
+                                                            {questionTypes[question.type]}
                                                         </td>
                                                         <td className='p-10 text-center'>
-                                                            {questionLevel[question.level]}
+                                                            {questionLevels[question.level]}
                                                         </td>
                                                         <td className='p-10 text-center'>
                                                             {question.answers?.length || 0}

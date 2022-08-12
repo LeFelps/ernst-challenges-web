@@ -1,19 +1,23 @@
-import { faCartShopping, faHandBackFist, faListCheck, faPen, faPlus, faPlusCircle, faShield, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faListCheck, faPen, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import consts from '../../consts';
 import logo from '../../logo.svg';
 import profileLogo from '../../profile.svg';
-import Modal from '../utilities/modals/Modal';
+import { getJobLevels } from '../utilities/functions/knownLists.js'
 
 function ProfileView({ removeUser, ...props }) {
 
-    const [user, setUser] = useState({
-        name: "",
+    const userId = JSON.parse(localStorage.getItem('user')).id
+
+    const initialUser = {
+        fullName: "",
         email: "",
-        title: "",
-        level: "",
+        jobTitle: "",
+        jobLevel: "",
         phone: "",
         public: false,
         inventory: [],
@@ -22,57 +26,31 @@ function ProfileView({ removeUser, ...props }) {
         education: [],
         languages: [],
         skills: [],
-    })
-
-    const jobLevels = {
-        INTERNSHIP: "Internship",
-        ENTRY: "Entry",
-        MID: "Mid",
-        SENIOR: "Senior"
     }
 
-    const [showLanguageModal, setShowLanguageModal] = useState(false)
+    const [user, setUser] = useState({ ...initialUser })
 
-    function closeLanguageModal() {
-        setShowLanguageModal(false)
-        setEditLanguage({ ...initialLanguage })
-    }
+    const jobLevels = getJobLevels()
 
-    const initialLanguage = {
-        index: null,
-        level: "",
-        language: ""
-    }
 
-    const [editLanguage, setEditLanguage] = useState({ ...initialLanguage })
+    const [appliedJobs, setAppliedJobs] = useState([])
 
     useEffect(() => {
-        setUser({
-            name: "Fellipe Corominas Pereira",
-            email: "fellipe.corominas@hotmail.com",
-            title: "Front-end Developer",
-            level: "ENTRY",
-            phone: "+55 (11) 98886-7001",
-            public: false,
-            inventory: [{
+        axios.get(`${consts.LOCAL_API}/job-applications/${userId}`)
+            .then((resp) => {
+                setAppliedJobs(resp.data || [])
+            })
+            .catch(() => {
 
-            }],
-            applications: [{
+            })
 
-            }],
-            experience: [{
+        axios.get(`${consts.LOCAL_API}/users/${userId}`)
+            .then((resp) => {
+                setUser(resp.data || {})
+            })
+            .catch(() => {
 
-            }],
-            education: [{
-
-            }],
-            languages: [{
-
-            }],
-            skills: [{
-
-            }],
-        })
+            })
     }, [])
 
     const navigate = useNavigate()
@@ -99,21 +77,23 @@ function ProfileView({ removeUser, ...props }) {
                             </b>
                         </button>
                     </form>
-                    <div className='long-card highlight-left-blue'>
-                        <div className='long-card-title text-blue'>
-                            {`${user.title} • ${jobLevels[user.level]}`}
+                    <div className='long-card'
+                        style={{ boxShadow: `7px 0px 0px ${user.category?.accentColor || '#CCC'} inset` }}>
+                        <div className='long-card-title' style={{ color: user.category?.accentColor || "#CCC" }}>
+                            {`${user.jobTitle || "[ Job Title ]"} ${user.jobTitle && jobLevels[user.jobLevel] ? "•" : "[ Job Position ]"} ${jobLevels[user.jobLevel] || ""}`}
                         </div>
                         <div className='long-card-content gap-15'>
-                            <img src={profileLogo} alt="" className='round-img highlight-blue' />
+                            <img src={profileLogo} alt="" className='round-img'
+                                style={{ boxShadow: `0px 0px 0px 3px ${user.category?.accentColor || '#CCC'}` }} />
                             <div className='align-center'>
-                                <p className='info-name'>{user.name}</p>
-                                <p className='info-value'>{user.email}</p>
-                                <p className='info-value'>{user.phone}</p>
+                                <p className='info-name'>{user.fullName || '[ Full Name ]'}</p>
+                                <p className='info-value'>{user.email || '[ Email ]'}</p>
+                                <p className='info-value'>{user.phone || '[ Phone ]'}</p>
                             </div>
                         </div>
-                        <a to="/job-form" className='round-button yellow long-card-br'>
+                        <NavLink to={`/profile-form`} className='round-button yellow long-card-br'>
                             <FontAwesomeIcon icon={faPen} className="card-image" />
-                        </a>
+                        </NavLink>
                     </div>
                     <div className="row centered">
                         {user.public ?
@@ -205,193 +185,135 @@ function ProfileView({ removeUser, ...props }) {
                         </span>
                     </div>
                     <div className='list-container col gap-15'>
-                        <div className='long-card highlight-left-blue'>
-                            <div className='long-card-title text-blue'>
-                                Front-end developer • Junior
-                            </div>
-                            <div className='long-card-content gap-15'>
-                                <img src={logo} alt="" className='company-logo' />
-                                <div className='align-center'>
-                                    <p className='info-name'>Ernest Young</p>
-                                    <p className='info-value'>R$ 4000,00</p>
-                                    <div className='info-extra'>
-                                        <FontAwesomeIcon className='icon-margin-right' icon={faPlusCircle} color='#188EB9' />
-                                        <p>
-                                            Benefícios
-                                        </p>
+                        {appliedJobs.map((job) => (
+                            <div className='long-card highlight-left-blue'>
+                                <div className='long-card-title text-blue'>
+                                    {job.title} • {jobLevels[job.level]}
+                                </div>
+                                <div className='long-card-content gap-15'>
+                                    <img src={logo} alt="" className='company-logo' />
+                                    <div className='align-center'>
+                                        <p className='info-name'>{job.companyName}</p>
+                                        {!job.displaySalary ?
+                                            <p className='info-value'>{job.salary}</p>
+                                            : null}
+                                        {job.compensations?.length > 0 ?
+                                            <div className='info-extra'>
+                                                <FontAwesomeIcon className='icon-margin-right' icon={faPlusCircle} color='#188EB9' />
+                                                <p>
+                                                    Benefits
+                                                </p>
+                                            </div>
+                                            : null}
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className='long-card highlight-left-pink'>
-                            <div className='long-card-title text-pink'>
-                                Back-end developer • Sênior
-                            </div>
-                            <div className='long-card-content gap-15'>
-                                <img src={logo} alt="" className='company-logo' />
-                                <div className='align-center'>
-                                    <p className='info-name'>Ernest Young</p>
-                                    <p className='info-value'>R$ 14000,00</p>
-                                </div>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
                 <div className='list-container col gap-15'>
                     <div className="row">
                         <span className="group-title">Work Experience</span>
-                        <button className="add-button to-right">
-                            <FontAwesomeIcon icon={faPlus} />
-                            <span>Add</span>
-                        </button>
                     </div>
                     <div className='col gap-15'>
-                        <div className="form-card p-15">
-                            <div className='row gap-15'>
-                                <img src={logo} alt="" className='company-logo' />
-                                <div className='col gap-15'>
-                                    <span className='info-name'>Junior, Front-end developer</span>
-                                    <div className='col'>
-                                        <b>Allergisa</b>
-                                        <span className='info-value'>2021 - Current</span>
+                        {user.experiences?.length > 0 ?
+                            user.experiences?.map((experience, index) => (
+                                <div key={index} className="form-card p-15">
+                                    <div className='row gap-15'>
+                                        <img src={logo} alt="" className='company-logo' />
+                                        <div className='col gap-15'>
+                                            <span className='info-name'>{jobLevels[experience.level]}, {experience.title}</span>
+                                            <div className='col'>
+                                                <b>{experience.companyName}</b>
+                                                <span className='info-value'>{experience.timeStart} - {experience.timeEnd}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="form-card p-15">
-                            <div className='row gap-15'>
-                                <img src={logo} alt="" className='company-logo' />
-                                <div className='col gap-15'>
-                                    <span className='info-name'>Internship, Front-end developer</span>
-                                    <div className='col'>
-                                        <b >Opsfactor</b>
-                                        <span className='info-value'>2020 - 2020</span>
-                                    </div>
+                            ))
+                            : <>
+                                <div className="row centered w-100">
+                                    <span className="text-gray no-select">
+                                        No Registered Experiences
+                                    </span>
                                 </div>
-                            </div>
-                        </div>
+                            </>}
                     </div>
                 </div>
                 <div className='list-container col gap-15'>
                     <div className="row">
                         <span className="group-title">Education</span>
-                        <button className="add-button to-right">
-                            <FontAwesomeIcon icon={faPlus} />
-                            <span>Add</span>
-                        </button>
                     </div>
                     <div className='col gap-15'>
-                        <div className="form-card p-15">
-                            <div className='row gap-15'>
-                                <img src={logo} alt="" className='company-logo' />
-                                <div className='col gap-15'>
-                                    <span className='info-name'>Fiap</span>
-                                    <div className='col'>
-                                        <b>Information Systems, Bachelors</b>
-                                        <span className='info-value'>2019 - 2022</span>
+                        {user.education?.length > 0 ?
+                            user.education.map((education, index) => (
+                                <div className="form-card p-15">
+                                    <div className='row gap-15'>
+                                        <img src={logo} alt="" className='company-logo' />
+                                        <div className='col gap-15'>
+                                            <span className='info-name'>{education.name}</span>
+                                            <div className='col'>
+                                                <b>{education.course}, {education.type}</b>
+                                                <span className='info-value'>{education.timeStart} - {education.timeEnd}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            ))
+                            : <>
+                                <div className="row centered w-100">
+                                    <span className="text-gray no-select">
+                                        No Registered Education
+                                    </span>
+                                </div>
+                            </>}
                     </div>
                 </div>
                 <div className='list-container col gap-15'>
                     <div className="row">
                         <span className="group-title">Languages</span>
-                        <button className="add-button to-right"
-                            onClick={() => {
-                                setShowLanguageModal(true)
-                            }}>
-                            <FontAwesomeIcon icon={faPlus} />
-                            <span>Add</span>
-                        </button>
                     </div>
-                    <div className="col gap-25 p-25">
-                        <div className='row gap-25'>
-                            <div className="round-card w-50 centered">
-                                <span className="card-title">
-                                    Fluent in English
-                                </span>
+                    <div className='row wrap'>
+                        {user.languages?.length > 0 ?
+                            <div className="col gap-25 p-25">
+                                {user.languages.map((language, index) => (
+                                    <div className='w-50' key={index}>
+                                        <div className="round-card centered">
+                                            <span className="card-title">
+                                                {language}
+                                            </span>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
-                            <div className="round-card w-50 centered">
-                                <span className="card-title">
-                                    Basic in German
+                            :
+                            <div className="row centered w-100">
+                                <span className="text-gray no-select">
+                                    No Registered Languages
                                 </span>
-                            </div>
-                        </div>
-                        <div className='row gap-25'>
-                            <div className="round-card w-50 centered">
-                                <span className="card-title">
-                                    Native in Portuguese
-                                </span>
-                            </div>
-                            <div className='w-50'></div>
-                        </div>
+                            </div>}
                     </div>
                 </div>
                 <div className='list-container'>
-                    <p className="group-title">
-                        Your skills
-                    </p>
-                    <div className="skills">
-                        <div className="profile-skill">
-                            <input type="checkbox" name="check1" id="check1" />
-                            <label className="check-label" for="check1">Javascript</label>
-                        </div>
-                        <div className="profile-skill">
-                            <input type="checkbox" name="check2" id="check2" />
-                            <label className="check-label" for="check2">ReactNative</label>
-                        </div>
-                        <div className="profile-skill">
-                            <input type="checkbox" name="check3" id="check3" />
-                            <label className="check-label" for="check3">IOS</label>
-                        </div>
-                        <div className="profile-skill">
-                            <input type="checkbox" name="check4" id="check4" />
-                            <label className="check-label" for="check4">CSS</label>
-                        </div>
+                    <div className="row">
+                        <span className="group-title">Skills</span>
                     </div>
+                    {user.skills?.length > 0 ?
+                        user.skills?.map((skill, index) => (
+                            <div key={index} className="chip-button">
+                                <span>{skill}</span>
+                            </div>
+                        ))
+                        :
+                        <div className="row centered w-100">
+                            <span className="text-gray no-select">
+                                No Registered Skills
+                            </span>
+                        </div>
+                    }
                 </div>
             </div>
-            <Modal show={showLanguageModal} close={() => closeLanguageModal()} >
-                <div className='col gap-25'>
-                    <div className="row w-100">
-                        <b className="text-huge">
-                            Add Language
-                        </b>
-                        <div className="round-icon white text-light to-right text-bigger pointer"
-                            onClick={() => closeLanguageModal()}
-                        >
-                            <FontAwesomeIcon icon={faTimes} />
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className='input-group-50'>
-                            <label>Language</label>
-                            <input type="text" className='input-field' required
-                                onChange={(e) => {
-                                    setEditLanguage(e.target.value)
-                                }} value={editLanguage?.language || ""}
-                            />
-                        </div>
-                    </div>
-                    <div className="row justify-right vertical-center gap-25">
-                        <button className="button-rounded green text-white" type="button" onClick={() => {
-                            let langList = [...user.languages]
-                            if (editLanguage.index) {
-                                langList[editLanguage.index] = { ...editLanguage }
-                            } else {
-                                langList = [...langList, editLanguage]
-                            }
-                            setUser({ ...user, languages: langList })
-                            setEditLanguage({ ...initialLanguage })
-                        }}>
-                            Add
-                        </button>
-                    </div>
-                </div>
-            </Modal>
-        </div>
+        </div >
     );
 }
 

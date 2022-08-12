@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import consts from '../../consts';
 import axios from 'axios';
+import { getArchetipes, getDifficultyLevels } from '../utilities/functions/knownLists';
 
 function OpponentForm({ ...props }) {
 
@@ -17,17 +18,8 @@ function OpponentForm({ ...props }) {
 
     const [loadingOpponent, setLoadingOpponent] = useState(false)
 
-    const levels = {
-        EASY: "Easy",
-        MEDIUM: "Medium",
-        HARD: "Hard"
-    }
-
-    const personalities = {
-        PRACTICAL: "Practical",
-        THEORICAL: "Theoretical",
-        SPECIALIST: "Specialist"
-    }
+    const levels = getDifficultyLevels()
+    const personalities = getArchetipes()
 
     useEffect(() => {
         if (id) {

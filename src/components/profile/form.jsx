@@ -1,8 +1,519 @@
-function ProfileForm() {
+import { faCircleXmark, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
+import consts from '../../consts';
+import logo from '../../logo.svg';
+import profileLogo from '../../profile.svg';
+import Modal from '../utilities/modals/Modal';
+import { getJobLevels, getLanguageLevels } from '../utilities/functions/knownLists.js'
+
+function ProfileForm({ ...props }) {
+
+    const userId = JSON.parse(localStorage.getItem('user')).id
+
+    const initialUser = {
+        fullName: "",
+        email: "",
+        jobTitle: "",
+        jobLevel: "",
+        phone: "",
+        public: false,
+        inventory: [],
+        applications: [],
+        experience: [],
+        education: [],
+        languages: [],
+        skills: [],
+    }
+
+    const [user, setUser] = useState({ ...initialUser })
+    const [loadingUser, setLoadingUser] = useState(true)
+
+    const jobLevels = getJobLevels()
+    const languageLevels = getLanguageLevels()
+
+    const initialExperience = {
+        index: null,
+        level: "",
+        title: "",
+        companyName: "",
+        timeStart: "",
+        timeEnd: ""
+    }
+
+    const initialEducation = {
+        index: null,
+        name: "",
+        course: "",
+        type: "",
+        timeStart: "",
+        timeEnd: ""
+    }
+
+    const initialLanguage = {
+        index: null,
+        level: "",
+        language: ""
+    }
+
+    const initialSkill = {
+        index: null,
+        value: ""
+    }
+
+    const [editExperience, setEditExperience] = useState({ ...initialExperience })
+    const [editEducation, setEditEducation] = useState({ ...initialEducation })
+    const [editLanguage, setEditLanguage] = useState({ ...initialLanguage })
+    const [editSkill, setEditSkill] = useState({ ...initialSkill })
+
+    const [showExperienceModal, setShowExperienceModal] = useState(false)
+    const [showEducationModal, setShowEducationModal] = useState(false)
+    const [showLanguageModal, setShowLanguageModal] = useState(false)
+    const [showSkillModal, setShowSkillModal] = useState(false)
+
+    function closeExperienceModal() {
+        setShowExperienceModal(false)
+        setEditExperience({ ...initialExperience })
+    }
+
+    function closeEducationModal() {
+        setShowEducationModal(false)
+        setEditEducation({ ...initialEducation })
+    }
+
+    function closeLanguageModal() {
+        setShowLanguageModal(false)
+        setEditLanguage({ ...initialLanguage })
+    }
+
+    function closeSkillModal() {
+        setShowSkillModal(false)
+        setEditSkill({ ...initialSkill })
+    }
+
+    const [categories, setCategories] = useState([])
+
+    useEffect(() => {
+        axios.get(`${consts.LOCAL_API}/users/${userId}`)
+            .then((resp) => {
+                setUser(resp.data || {})
+                setLoadingUser(false)
+            })
+            .catch(() => {
+
+            })
+
+        axios.get(`${consts.LOCAL_API}/challenges/categories?min=true`)
+            .then((resp) => {
+                setCategories(resp.data || [])
+            })
+            .catch(() => {
+
+            })
+    }, [])
+
 
     return (
-        <div>
-        </div>
+        <div className='content'>
+            <div className="col gap-35">
+                <div className='list-container col gap-5'>
+                    <b className='group-title text-center'>
+                        Card Preview
+                    </b>
+                    <div className='long-card'
+                        style={{ boxShadow: `7px 0px 0px ${user.category?.accentColor || '#CCC'} inset` }}>
+                        <div className='long-card-title' style={{ color: user.category?.accentColor || "#CCC" }}>
+                            {`${user.jobTitle || "[ job Title ]"} ${user.jobTitle && jobLevels[user.jobLevel] ? "•" : "[ Job Position ]"} ${jobLevels[user.jobLevel] || ""}`}
+                        </div>
+                        <div className='long-card-content gap-15'>
+                            <img src={profileLogo} alt="" className='round-img'
+                                style={{ boxShadow: `0px 0px 0px 3px ${user.category?.accentColor || '#CCC'}` }} />
+                            <div className='align-center'>
+                                <p className='info-name'>{user.fullName || "[ Full Name ]"}</p>
+                                <p className='info-value'>{user.email || "[ Email ]"}</p>
+                                <p className='info-value'>{user.phone || "[ Phone ]"}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form className="form-container" onSubmit={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                }}>
+
+                    <div className="input-section">
+                        <div className="row">
+                            <div className='input-group-50'>
+                                <label>Full Name</label>
+                                <input type="text" className='input-field' required disabled={loadingUser}
+                                    onChange={(e) => {
+                                        setUser({ ...user, fullName: e.target.value })
+                                    }} value={user?.fullName || ""}
+                                />
+                            </div>
+                            <div className='input-group-50'>
+                                <label>Category</label>
+                                <div className="row w-100 gap-15 vertical-center">
+                                    <select className='input-field' required disabled={loadingUser}
+                                        onChange={(e) => {
+                                            setUser({ ...user, category: categories.find(c => c.id === parseInt(e.target.value)) })
+                                        }} value={user.category?.id || ""}
+                                    >
+                                        <option value="">Select...</option>
+                                        {categories.map((category, index) => (
+                                            <option value={category.id} key={index}>{category.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className='input-group-50'>
+                                <label>Job Title</label>
+                                <input type="text" className='input-field' required disabled={loadingUser}
+                                    onChange={(e) => {
+                                        setUser({ ...user, jobTitle: e.target.value })
+                                    }} value={user?.jobTitle || ""}
+                                />
+                            </div>
+                            <div className='input-group-50'>
+                                <label>Job Position</label>
+                                <div className="row w-100 gap-15 vertical-center">
+                                    <select className='input-field' required disabled={loadingUser}
+                                        onChange={(e) => {
+                                            setUser({ ...user, jobLevel: e.target.value })
+                                        }} value={user.jobLevel || ""}
+                                    >
+                                        <option value="">Select...</option>
+                                        {Object.keys(jobLevels).map((key, index) => (
+                                            <option value={key} key={index}>{jobLevels[key]}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className='input-group-50'>
+                                <label>Phone</label>
+                                <input type="text" className='input-field' required disabled={loadingUser}
+                                    onChange={(e) => {
+                                        setUser({ ...user, phone: e.target.value })
+                                    }} value={user?.phone || ""}
+                                />
+                            </div>
+                            <div className='input-group-50'>
+                                <label>Email</label>
+                                <input type="text" className='input-field' required disabled={loadingUser}
+                                    onChange={(e) => {
+                                        setUser({ ...user, email: e.target.value })
+                                    }} value={user?.email || ""}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div className='list-container col gap-15'>
+                    <div className="row">
+                        <span className="group-title">Work Experience</span>
+                        <button className="add-button to-right">
+                            <FontAwesomeIcon icon={faPlus} />
+                            <span>Add</span>
+                        </button>
+                    </div>
+                    <div className='col gap-15'>
+                        {user.experiences?.length > 0 ?
+                            user.experiences?.map((experience, index) => (
+                                <div key={index} className="form-card p-15">
+                                    <div className='row gap-15'>
+                                        <img src={logo} alt="" className='company-logo' />
+                                        <div className='col gap-15'>
+                                            <span className='info-name'>{jobLevels[experience.level]}, {experience.title}</span>
+                                            <div className='col'>
+                                                <b>{experience.companyName}</b>
+                                                <span className='info-value'>{experience.timeStart} - {experience.timeEnd}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                            : <>
+                                <div className="row centered w-100">
+                                    <span className="text-gray no-select">
+                                        No Registered Experiences
+                                    </span>
+                                </div>
+                            </>}
+                    </div>
+                </div>
+                <div className='list-container col gap-15'>
+                    <div className="row">
+                        <span className="group-title">Education</span>
+                        <button className="add-button to-right">
+                            <FontAwesomeIcon icon={faPlus} />
+                            <span>Add</span>
+                        </button>
+                    </div>
+                    <div className='col gap-15'>
+                        {user.education?.length > 0 ?
+                            user.education.map((education, index) => (
+                                <div className="form-card p-15">
+                                    <div className='row gap-15'>
+                                        <img src={logo} alt="" className='company-logo' />
+                                        <div className='col gap-15'>
+                                            <span className='info-name'>{education.name}</span>
+                                            <div className='col'>
+                                                <b>{education.course}, {education.type}</b>
+                                                <span className='info-value'>{education.timeStart} - {education.timeEnd}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                            : <>
+                                <div className="row centered w-100">
+                                    <span className="text-gray no-select">
+                                        No Registered Education
+                                    </span>
+                                </div>
+                            </>}
+                    </div>
+                </div>
+                <div className='list-container col gap-15'>
+                    <div className="row">
+                        <span className="group-title">Languages</span>
+                        <button className="add-button to-right"
+                            onClick={() => {
+                                setShowLanguageModal(true)
+                            }}>
+                            <FontAwesomeIcon icon={faPlus} />
+                            <span>Add</span>
+                        </button>
+                    </div>
+                    {user.languages?.length > 0 ?
+                        <div className="col gap-25 p-15">
+                            <div className='row wrap'>
+                                {user.languages.map((language, index) => (
+                                    <div className='w-50' key={index}>
+                                        <div className="round-card centered">
+                                            <span className="card-title">
+                                                {`${language.language} (${languageLevels[language.level]})`}
+                                            </span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        :
+                        <div className="row centered w-100">
+                            <span className="text-gray no-select">
+                                No Registered Languages
+                            </span>
+                        </div>}
+                </div>
+                <div className='list-container'>
+                    <div className="row">
+                        <span className="group-title">Skills</span>
+                        <button type="button" className="add-button to-right"
+                            onClick={() => {
+                                setShowSkillModal(true)
+                            }}>
+                            <FontAwesomeIcon icon={faPlus} />
+                            <span>Add</span>
+                        </button>
+                    </div>
+                    {user.skills?.length > 0 ?
+                        <div className="chip-section">
+                            {user.skills?.map((skill, index) => (
+                                <div className="chip white text-dark border-thin" key={index}>
+                                    <button type="button" className="chip-button" disabled={loadingUser}
+                                        onClick={() => {
+                                            let skillList = [...user.skills]
+                                            skillList.splice(index, 1)
+                                            setUser({ ...user, skills: skillList })
+                                        }} >
+                                        <FontAwesomeIcon icon={faCircleXmark} className="pointer" />
+                                    </button>
+                                    <span>{skill}</span>
+                                </div>
+                            ))}
+                        </div>
+                        :
+                        <div className="row centered w-100">
+                            <span className="text-gray no-select">
+                                No Registered Skills
+                            </span>
+                        </div>
+                    }
+                </div>
+                <div className="list-container">
+                    <div className="row justify-right gap-25">
+                        <NavLink to="/profile" className='button-rounded gray text-white'>
+                            Cancel
+                        </NavLink>
+                        <button type="submit" className="button-rounded green text-white" disabled={loadingUser}>
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div >
+            <Modal show={showEducationModal} close={() => closeEducationModal()}>
+                <form className='col gap-25'
+                    onSubmit={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+
+                        let educationList = [...(user.education || [])]
+                        if (editLanguage.index) {
+                            educationList[editLanguage.index] = { ...editLanguage }
+                        } else {
+                            educationList = [...educationList, editLanguage]
+                        }
+                        setUser({ ...user, education: educationList })
+                        setEditLanguage({ ...initialLanguage })
+
+                    }}>
+                    <div className="row w-100">
+                        <b className="text-huge">
+                            Add Education
+                        </b>
+                        <div className="round-icon white text-light to-right text-bigger pointer"
+                            onClick={() => closeEducationModal()}
+                        >
+                            <FontAwesomeIcon icon={faTimes} />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className='input-group-50'>
+                            <label>Language</label>
+                            <input type="text" className='input-field' required
+                                onChange={(e) => {
+                                    setEditLanguage({ ...editLanguage, language: e.target.value })
+                                }} value={editLanguage.language || ""}
+                            />
+                        </div>
+                        <div className='input-group-50'>
+                            <label>Level</label>
+                            <div className="row w-100 gap-15 vertical-center">
+                                <select className='input-field' required disabled={loadingUser}
+                                    onChange={(e) => {
+                                        setEditLanguage({ ...editLanguage, level: e.target.value })
+                                    }} value={editLanguage.level || ""}
+                                >
+                                    <option value="">Select...</option>
+                                    {Object.keys(languageLevels).map((key, index) => (
+                                        <option value={key} key={index}>{languageLevels[key]}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row justify-right vertical-center gap-25">
+                        <button className="button-rounded green text-white" type="submit">
+                            Add
+                        </button>
+                    </div>
+                </form>
+            </Modal>
+            <Modal show={showLanguageModal} close={() => closeLanguageModal()}>
+                <form className='col gap-25'
+                    onSubmit={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+
+                        let langList = [...(user.languages || [])]
+                        if (editLanguage.index) {
+                            langList[editLanguage.index] = { ...editLanguage }
+                        } else {
+                            langList = [...langList, editLanguage]
+                        }
+                        setUser({ ...user, languages: langList })
+                        setEditLanguage({ ...initialLanguage })
+
+                    }}>
+                    <div className="row w-100">
+                        <b className="text-huge">
+                            Add Language
+                        </b>
+                        <div className="round-icon white text-light to-right text-bigger pointer"
+                            onClick={() => closeLanguageModal()}
+                        >
+                            <FontAwesomeIcon icon={faTimes} />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className='input-group-50'>
+                            <label>Language</label>
+                            <input type="text" className='input-field' required
+                                onChange={(e) => {
+                                    setEditLanguage({ ...editLanguage, language: e.target.value })
+                                }} value={editLanguage.language || ""}
+                            />
+                        </div>
+                        <div className='input-group-50'>
+                            <label>Level</label>
+                            <div className="row w-100 gap-15 vertical-center">
+                                <select className='input-field' required disabled={loadingUser}
+                                    onChange={(e) => {
+                                        setEditLanguage({ ...editLanguage, level: e.target.value })
+                                    }} value={editLanguage.level || ""}
+                                >
+                                    <option value="">Select...</option>
+                                    {Object.keys(languageLevels).map((key, index) => (
+                                        <option value={key} key={index}>{languageLevels[key]}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row justify-right vertical-center gap-25">
+                        <button className="button-rounded green text-white" type="submit">
+                            Add
+                        </button>
+                    </div>
+                </form>
+            </Modal>
+            <Modal show={showSkillModal} close={() => closeSkillModal()} >
+                <div className='col gap-25'>
+                    <div className="row w-100">
+                        <b className="text-huge">
+                            Add Skill
+                        </b>
+                        <div className="round-icon white text-light to-right text-bigger pointer"
+                            onClick={() => closeSkillModal()}
+                        >
+                            <FontAwesomeIcon icon={faTimes} />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className='input-group-50'>
+                            <label>Name</label>
+                            <input type="text" className='input-field' required
+                                onChange={(e) => {
+                                    setEditSkill({ ...editSkill, value: e.target.value })
+                                }} value={editSkill?.value || ""}
+                            />
+                        </div>
+                    </div>
+                    <div className="row justify-right vertical-center gap-25">
+                        <button className="button-rounded green text-white" type="button" onClick={() => {
+                            let skillList = [...(user.skills || [])]
+                            if (editSkill.index) {
+                                skillList[editSkill.index] = editSkill.value
+                            } else {
+                                skillList.push(editSkill.value)
+                            }
+                            setUser({ ...user, skills: skillList })
+                            setEditSkill({ ...initialSkill })
+                        }}>
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </Modal>
+        </div >
     );
 }
 

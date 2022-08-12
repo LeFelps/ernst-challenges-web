@@ -468,6 +468,7 @@ button:disabled {
   box-shadow: #e5e5e5 -2px 2px 0px 4px;
   box-sizing: border-box;
   padding: 15px 25px 15px 25px;
+  margin: 10px;
 }
 
 .w-50px {
@@ -759,7 +760,7 @@ button:disabled {
 }
 
 .chip span {
-  margin: auto 15px auto 7px;
+  margin: auto 15px auto 15px;
 }
 
 .chip-button {

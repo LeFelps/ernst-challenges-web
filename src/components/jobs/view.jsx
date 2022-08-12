@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
 import consts from '../../consts';
+import { getJobLevels } from '../utilities/functions/knownLists';
 
 function JobView() {
 
@@ -26,20 +27,12 @@ function JobView() {
         requirements: []
     })
 
-    const jobLevels = {
-        INTERNSHIP: "Internship",
-        ENTRY: "Entry",
-        MID: "Mid",
-        SENIOR: "Senior"
-    }
+    const jobLevels = getJobLevels()
 
-    const [appliedToJob, setAppliedToJob] = useState(false)
+    const [appliedToJob, setAppliedToJob] = useState(undefined)
 
     function removeApplication() {
-        axios.delete(`${consts.LOCAL_API}/job-applications`, {
-            jobId: id,
-            userId: userId
-        })
+        axios.delete(`${consts.LOCAL_API}/job-applications?userId=${userId}&jobId=${id}`)
             .then(() => {
                 setAppliedToJob(false)
             })
@@ -108,11 +101,10 @@ function JobView() {
                 </div>
                 <div className="row centered gap-25">
                     {/* 
-                                TODO
-                                JOB APPLICATION FUNCTIONALITY
-                                JOB APPLICATIONS LIST
-                         */}
-                    {appliedToJob ?
+                        TODO
+                        JOB APPLICATIONS LIST
+                    */}
+                    {appliedToJob !== undefined && (appliedToJob ?
                         <button className="button-flat red text-white"
                             onClick={() => {
                                 removeApplication()
@@ -120,9 +112,9 @@ function JobView() {
                         : <button className="button-flat green text-white"
                             onClick={() => {
                                 applyTojob()
-                            }}>Apply for Job</button>
+                            }}>Apply for Job</button>)
                     }
-                    <button className="button-flat blue text-white">Applications</button>
+                    {/* <button className="button-flat blue text-white">Applications</button> */}
                 </div>
                 <div className='list-container'>
                     <b className='group-title text-center'>
