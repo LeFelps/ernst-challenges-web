@@ -8,7 +8,7 @@ import consts from '../../consts';
 import logo from '../../logo.svg';
 import profileLogo from '../../profile.svg';
 import Modal from '../utilities/modals/Modal';
-import { getJobLevels, getLanguageLevels } from '../utilities/functions/knownLists.js'
+import { getDegreeTypes, getJobLevels, getLanguageLevels } from '../utilities/functions/knownLists.js'
 
 function ProfileForm({ ...props }) {
 
@@ -34,6 +34,7 @@ function ProfileForm({ ...props }) {
 
     const jobLevels = getJobLevels()
     const languageLevels = getLanguageLevels()
+    const degreeTypes = getDegreeTypes()
 
     const initialExperience = {
         index: null,
@@ -218,7 +219,10 @@ function ProfileForm({ ...props }) {
                 <div className='list-container col gap-15'>
                     <div className="row">
                         <span className="group-title">Work Experience</span>
-                        <button className="add-button to-right">
+                        <button className="add-button to-right"
+                            onClick={() => {
+                                setShowExperienceModal(true)
+                            }}>
                             <FontAwesomeIcon icon={faPlus} />
                             <span>Add</span>
                         </button>
@@ -251,7 +255,10 @@ function ProfileForm({ ...props }) {
                 <div className='list-container col gap-15'>
                     <div className="row">
                         <span className="group-title">Education</span>
-                        <button className="add-button to-right">
+                        <button className="add-button to-right"
+                            onClick={() => {
+                                setShowEducationModal(true)
+                            }}>
                             <FontAwesomeIcon icon={faPlus} />
                             <span>Add</span>
                         </button>
@@ -265,8 +272,12 @@ function ProfileForm({ ...props }) {
                                         <div className='col gap-15'>
                                             <span className='info-name'>{education.name}</span>
                                             <div className='col'>
-                                                <b>{education.course}, {education.type}</b>
-                                                <span className='info-value'>{education.timeStart} - {education.timeEnd}</span>
+                                                <b>{education.course}, {degreeTypes[education.type]}</b>
+                                                <span className='info-value'>{
+                                                    education.timeStart.split("-")[0]
+                                                } - {
+                                                        education.timeEnd.split("-")[0]
+                                                    }</span>
                                             </div>
                                         </div>
                                     </div>
@@ -359,6 +370,92 @@ function ProfileForm({ ...props }) {
                     </div>
                 </div>
             </div >
+            <Modal show={showExperienceModal} close={() => closeExperienceModal()}>
+                <form className='col gap-25'
+                    onSubmit={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+
+                        let experienceList = [...(user.experience || [])]
+                        if (editExperience.index) {
+                            experienceList[editExperience.index] = { ...editExperience }
+                        } else {
+                            experienceList = [...experienceList, editExperience]
+                        }
+                        setUser({ ...user, experience: experienceList })
+                        setEditExperience({ ...initialExperience })
+
+                    }}>
+                    <div className="row w-100">
+                        <b className="text-huge">
+                            Add Experience
+                        </b>
+                        <div className="round-icon white text-light to-right text-bigger pointer"
+                            onClick={() => closeExperienceModal()}
+                        >
+                            <FontAwesomeIcon icon={faTimes} />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className='input-group-50'>
+                            <label>Company Name</label>
+                            <input type="text" className='input-field' required
+                                onChange={(e) => {
+                                    setEditExperience({ ...editExperience, companyName: e.target.value })
+                                }} value={editExperience.companyName || ""}
+                            />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className='input-group-50'>
+                            <label>Title</label>
+                            <input type="text" className='input-field' required
+                                onChange={(e) => {
+                                    setEditExperience({ ...editExperience, title: e.target.value })
+                                }} value={editExperience.title || ""}
+                            />
+                        </div>
+                        <div className='input-group-50'>
+                            <label>Job Title</label>
+                            <div className="row w-100 gap-15 vertical-center">
+                                <select className='input-field' required disabled={loadingUser}
+                                    onChange={(e) => {
+                                        setEditExperience({ ...editExperience, level: e.target.value })
+                                    }} value={editExperience.level || ""}
+                                >
+                                    <option value="">Select...</option>
+                                    {Object.keys(jobLevels).map((key, index) => (
+                                        <option value={key} key={index}>{jobLevels[key]}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className='input-group-50'>
+                            <label>Start</label>
+                            <input type="date" className='input-field' required
+                                onChange={(e) => {
+                                    setEditExperience({ ...editExperience, timeStart: e.target.value })
+                                }} value={editExperience.timeStart || ""}
+                            />
+                        </div>
+                        <div className='input-group-50'>
+                            <label>End</label>
+                            <input type="date" className='input-field' required
+                                onChange={(e) => {
+                                    setEditExperience({ ...editExperience, timeEnd: e.target.value })
+                                }} value={editExperience.timeEnd || ""}
+                            />
+                        </div>
+                    </div>
+                    <div className="row justify-right vertical-center gap-25">
+                        <button className="button-rounded green text-white" type="submit">
+                            Add
+                        </button>
+                    </div>
+                </form>
+            </Modal>
             <Modal show={showEducationModal} close={() => closeEducationModal()}>
                 <form className='col gap-25'
                     onSubmit={(e) => {
@@ -366,13 +463,13 @@ function ProfileForm({ ...props }) {
                         e.stopPropagation()
 
                         let educationList = [...(user.education || [])]
-                        if (editLanguage.index) {
-                            educationList[editLanguage.index] = { ...editLanguage }
+                        if (editEducation.index) {
+                            educationList[editEducation.index] = { ...editEducation }
                         } else {
-                            educationList = [...educationList, editLanguage]
+                            educationList = [...educationList, editEducation]
                         }
                         setUser({ ...user, education: educationList })
-                        setEditLanguage({ ...initialLanguage })
+                        setEditEducation({ ...initialEducation })
 
                     }}>
                     <div className="row w-100">
@@ -387,27 +484,55 @@ function ProfileForm({ ...props }) {
                     </div>
                     <div className="row">
                         <div className='input-group-50'>
-                            <label>Language</label>
+                            <label>Institution</label>
                             <input type="text" className='input-field' required
                                 onChange={(e) => {
-                                    setEditLanguage({ ...editLanguage, language: e.target.value })
-                                }} value={editLanguage.language || ""}
+                                    setEditEducation({ ...editEducation, name: e.target.value })
+                                }} value={editEducation.name || ""}
+                            />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className='input-group-50'>
+                            <label>Course</label>
+                            <input type="text" className='input-field' required
+                                onChange={(e) => {
+                                    setEditEducation({ ...editEducation, course: e.target.value })
+                                }} value={editEducation.course || ""}
                             />
                         </div>
                         <div className='input-group-50'>
-                            <label>Level</label>
+                            <label>Degree Type</label>
                             <div className="row w-100 gap-15 vertical-center">
                                 <select className='input-field' required disabled={loadingUser}
                                     onChange={(e) => {
-                                        setEditLanguage({ ...editLanguage, level: e.target.value })
-                                    }} value={editLanguage.level || ""}
+                                        setEditEducation({ ...editEducation, type: e.target.value })
+                                    }} value={editEducation.type || ""}
                                 >
                                     <option value="">Select...</option>
-                                    {Object.keys(languageLevels).map((key, index) => (
-                                        <option value={key} key={index}>{languageLevels[key]}</option>
+                                    {Object.keys(degreeTypes).map((key, index) => (
+                                        <option value={key} key={index}>{degreeTypes[key]}</option>
                                     ))}
                                 </select>
                             </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className='input-group-50'>
+                            <label>Start</label>
+                            <input type="date" className='input-field' required
+                                onChange={(e) => {
+                                    setEditEducation({ ...editEducation, timeStart: e.target.value })
+                                }} value={editEducation.timeStart || ""}
+                            />
+                        </div>
+                        <div className='input-group-50'>
+                            <label>End</label>
+                            <input type="date" className='input-field' required
+                                onChange={(e) => {
+                                    setEditEducation({ ...editEducation, timeEnd: e.target.value })
+                                }} value={editEducation.timeEnd || ""}
+                            />
                         </div>
                     </div>
                     <div className="row justify-right vertical-center gap-25">

@@ -39,6 +39,15 @@ export function getLanguageLevels() {
     }
 }
 
+export function getDegreeTypes() {
+    return {
+        BACHELORS: "Bachelors",
+        ASSOCIATE: "Associate",
+        MASTERS: "Masters",
+        DOCTORAL: "Doctoral"
+    }
+}
+
 export function getColors() {
     return [
         "#916932",
