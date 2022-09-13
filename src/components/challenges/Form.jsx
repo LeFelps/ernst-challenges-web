@@ -352,38 +352,38 @@ function ChallengeForm({ ...props }) {
                                     <div>
                                         <span className="group-title">References</span>
                                         <div className="box-section">
-                                            {checkpoint.references?.map((reference, rIndex) => (
+                                            {checkpoint.sources?.map((source, rIndex) => (
                                                 <div className="radius-15 filled-container row" key={rIndex}>
                                                     <div className="row p-20 w-100">
                                                         <div className='input-group-50'>
                                                             <label>Title</label>
                                                             <input type="text" className='input-field' required disabled={loadingChallenge}
                                                                 onChange={(e) => {
-                                                                    let editReference = checkpoint.references[rIndex]
-                                                                    editReference.title = e.target.value
+                                                                    let editSource = checkpoint.sources[rIndex]
+                                                                    editSource.title = e.target.value
                                                                     let checkpointList = [...challenge.checkpoints]
-                                                                    checkpointList[index].references[rIndex] = editReference
+                                                                    checkpointList[index].sources[rIndex] = editSource
                                                                     setChallenge({ ...challenge, checkpoints: checkpointList })
-                                                                }} value={reference?.title || ""} />
+                                                                }} value={source?.title || ""} />
                                                         </div>
                                                         <div className='input-group-50'>
                                                             <label>Link</label>
                                                             <input type="text" className='input-field' required disabled={loadingChallenge}
                                                                 onChange={(e) => {
-                                                                    let editReference = checkpoint.references[rIndex]
-                                                                    editReference.link = e.target.value
+                                                                    let editSource = checkpoint.sources[rIndex]
+                                                                    editSource.link = e.target.value
                                                                     let checkpointList = [...challenge.checkpoints]
-                                                                    checkpointList[index].references[rIndex] = editReference
+                                                                    checkpointList[index].sources[rIndex] = editSource
                                                                     setChallenge({ ...challenge, checkpoints: checkpointList })
-                                                                }} value={reference?.link || ""} />
+                                                                }} value={source?.link || ""} />
                                                         </div>
                                                     </div>
                                                     <button className='p-10 red flex vertical-center text-white text-bigger pointer' disabled={loadingChallenge}
                                                         onClick={() => {
                                                             let checkpointList = [...challenge.checkpoints]
-                                                            let referenceList = [...checkpoint.references]
-                                                            referenceList.splice(rIndex, 1)
-                                                            checkpointList[index].references = referenceList
+                                                            let sourceList = [...checkpoint.sources]
+                                                            sourceList.splice(rIndex, 1)
+                                                            checkpointList[index].sources = sourceList
                                                             setChallenge({ ...challenge, checkpoints: checkpointList })
                                                         }}>
                                                         <FontAwesomeIcon icon={fa.faTrashAlt} />
@@ -394,7 +394,7 @@ function ChallengeForm({ ...props }) {
                                                 <button type="button" className="button-flat blue text-white" disabled={loadingChallenge}
                                                     onClick={() => {
                                                         let checkpointList = [...challenge.checkpoints]
-                                                        checkpointList[index].references = [...(checkpoint.references || []), { title: null, link: null }]
+                                                        checkpointList[index].sources = [...(checkpoint.sources || []), { title: null, link: null }]
                                                         setChallenge({ ...challenge, checkpoints: checkpointList })
                                                     }}>
                                                     Add reference

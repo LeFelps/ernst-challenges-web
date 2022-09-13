@@ -139,10 +139,10 @@ function ChallengeView() {
                                 References and documentation
                             </b>
                             <ul>
-                                {checkpoint.references?.map((reference) => (
+                                {checkpoint.sources?.map((source) => (
                                     <li>
                                         <a className="text-blue text-thick"
-                                            href={reference.link}>{reference.title}</a>
+                                            href={source.link}>{source.title}</a>
                                     </li>
                                 ))}
                             </ul>

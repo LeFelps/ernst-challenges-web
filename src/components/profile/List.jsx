@@ -1,7 +1,25 @@
+import axios from 'axios';
 import React from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import consts from '../../consts';
 import profileLogo from '../../profile.svg';
+import { getJobLevels } from '../utilities/functions/knownLists';
 
 function ProfileList() {
+
+    const jobLevels = getJobLevels()
+
+    const [users, setUsers] = useState([])
+
+    useEffect(() => {
+        axios.get(`${consts.LOCAL_API}/users/public`)
+            .then(response => {
+                setUsers(response.data || [])
+            }).catch(err => {
+                console.error(err)
+            })
+    }, [])
 
     return (
         <div className="content">
@@ -14,32 +32,22 @@ function ProfileList() {
                 </p>
             </div>
             <div className="list-container col gap-25">
-                <div className='long-card highlight-left-blue'>
-                    <div className='long-card-title'>
-                        Fellipe Corominas Pereira
-                    </div>
-                    <div className='long-card-content gap-15'>
-                        <img src={profileLogo} alt="" className='round-img highlight-blue' />
-                        <div className='align-center'>
-                            <p className='info-name text-blue'>Front-end developer • Junior</p>
-                            <p className='info-value'>1 year, 9 months experience</p>
-                            <p>React.Js</p>
+                {users.map((user, index) => (
+                    <div className='long-card' style={{ boxShadow: `7px 0px 0px ${user.category?.accentColor || '#CCC'} inset` }}>
+                        {console.log(user)}
+                        <div className='long-card-title'>
+                            {user.fullName}
+                        </div>
+                        <div className='long-card-content gap-15'>
+                            <img src={profileLogo} alt="" className='round-img' style={{ boxShadow: `0px 0px 0px 3px ${user.category?.accentColor}` }} />
+                            <div className='align-center'>
+                                <p className='info-name' style={{ color: user.category?.accentColor || '#CCC' }}>{user.jobTitle} • {jobLevels[user.jobLevel]}</p>
+                                <p className='info-value'>1 year, 9 months experience</p>
+                                <p>{user.skills?.map((skill, index) => ((index !== 0 ? ", " : '') + skill))}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className='long-card highlight-left-pink'>
-                    <div className='long-card-title'>
-                        Fellipe Corominas Pereira
-                    </div>
-                    <div className='long-card-content gap-15'>
-                        <img src={profileLogo} alt="" className='round-img highlight-pink' />
-                        <div className='align-center'>
-                            <p className='info-name text-pink'>Back-end developer • Junior</p>
-                            <p className='info-value'>1 year, 9 months experience</p>
-                            <p>Express.Js</p>
-                        </div>
-                    </div>
-                </div>
+                ))}
             </div>
         </div>
     );

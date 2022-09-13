@@ -42,7 +42,8 @@ function ProfileForm({ ...props }) {
         title: "",
         companyName: "",
         timeStart: "",
-        timeEnd: ""
+        timeEnd: "",
+        current: false
     }
 
     const initialEducation = {
@@ -143,8 +144,16 @@ function ProfileForm({ ...props }) {
                 <form className="form-container" onSubmit={(e) => {
                     e.preventDefault()
                     e.stopPropagation()
-                }}>
 
+                    axios.put(`${consts.LOCAL_API}/users`, user)
+                        .then(user => {
+
+                        })
+                        .catch(err => {
+
+                        })
+
+                }}>
                     <div className="input-section">
                         <div className="row">
                             <div className='input-group-50'>
@@ -215,160 +224,168 @@ function ProfileForm({ ...props }) {
                             </div>
                         </div>
                     </div>
-                </form>
-                <div className='list-container col gap-15'>
-                    <div className="row">
-                        <span className="group-title">Work Experience</span>
-                        <button className="add-button to-right"
-                            onClick={() => {
-                                setShowExperienceModal(true)
-                            }}>
-                            <FontAwesomeIcon icon={faPlus} />
-                            <span>Add</span>
-                        </button>
-                    </div>
-                    <div className='col gap-15'>
-                        {user.experiences?.length > 0 ?
-                            user.experiences?.map((experience, index) => (
-                                <div key={index} className="form-card p-15">
-                                    <div className='row gap-15'>
-                                        <img src={logo} alt="" className='company-logo' />
-                                        <div className='col gap-15'>
-                                            <span className='info-name'>{jobLevels[experience.level]}, {experience.title}</span>
-                                            <div className='col'>
-                                                <b>{experience.companyName}</b>
-                                                <span className='info-value'>{experience.timeStart} - {experience.timeEnd}</span>
+                    <div className='list-container col gap-15'>
+                        <div className="row">
+                            <span className="group-title">Work Experience</span>
+                            <button className="add-button to-right"
+                                onClick={() => {
+                                    setShowExperienceModal(true)
+                                }}>
+                                <FontAwesomeIcon icon={faPlus} />
+                                <span>Add</span>
+                            </button>
+                        </div>
+                        <div className='col gap-15'>
+                            {user.experience?.length > 0 ?
+                                user.experience?.map((experience, index) => (
+                                    <div key={index} className="form-card p-15">
+                                        <div className='row gap-15'>
+                                            <img src={logo} alt="" className='company-logo' />
+                                            <div className='col gap-15'>
+                                                <span className='info-name'>{jobLevels[experience.level]}, {experience.title}</span>
+                                                <div className='col'>
+                                                    <b>{experience.companyName}</b>
+                                                    <span className='info-value'>
+                                                        {
+                                                            experience.timeStart.split("-")[0]
+                                                        } - {
+                                                            experience.current ? "Current" : experience.timeEnd.split("-")[0]
+                                                        }
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))
-                            : <>
-                                <div className="row centered w-100">
-                                    <span className="text-gray no-select">
-                                        No Registered Experiences
-                                    </span>
-                                </div>
-                            </>}
+                                ))
+                                : <>
+                                    <div className="row centered w-100">
+                                        <span className="text-gray no-select">
+                                            No Registered Experiences
+                                        </span>
+                                    </div>
+                                </>}
+                        </div>
                     </div>
-                </div>
-                <div className='list-container col gap-15'>
-                    <div className="row">
-                        <span className="group-title">Education</span>
-                        <button className="add-button to-right"
-                            onClick={() => {
-                                setShowEducationModal(true)
-                            }}>
-                            <FontAwesomeIcon icon={faPlus} />
-                            <span>Add</span>
-                        </button>
-                    </div>
-                    <div className='col gap-15'>
-                        {user.education?.length > 0 ?
-                            user.education.map((education, index) => (
-                                <div className="form-card p-15">
-                                    <div className='row gap-15'>
-                                        <img src={logo} alt="" className='company-logo' />
-                                        <div className='col gap-15'>
-                                            <span className='info-name'>{education.name}</span>
-                                            <div className='col'>
-                                                <b>{education.course}, {degreeTypes[education.type]}</b>
-                                                <span className='info-value'>{
-                                                    education.timeStart.split("-")[0]
-                                                } - {
-                                                        education.timeEnd.split("-")[0]
-                                                    }</span>
+                    <div className='list-container col gap-15'>
+                        <div className="row">
+                            <span className="group-title">Education</span>
+                            <button className="add-button to-right"
+                                onClick={() => {
+                                    setShowEducationModal(true)
+                                }}>
+                                <FontAwesomeIcon icon={faPlus} />
+                                <span>Add</span>
+                            </button>
+                        </div>
+                        <div className='col gap-15'>
+                            {user.education?.length > 0 ?
+                                user.education.map((education, index) => (
+                                    <div className="form-card p-15">
+                                        <div className='row gap-15'>
+                                            <img src={logo} alt="" className='company-logo' />
+                                            <div className='col gap-15'>
+                                                <span className='info-name'>{education.name}</span>
+                                                <div className='col'>
+                                                    <b>{education.course}, {degreeTypes[education.type]}</b>
+                                                    <span className='info-value'>
+                                                        {
+                                                            education.timeStart.split("-")[0]
+                                                        } - {
+                                                            education.timeEnd.split("-")[0]
+                                                        }
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))
-                            : <>
-                                <div className="row centered w-100">
-                                    <span className="text-gray no-select">
-                                        No Registered Education
-                                    </span>
-                                </div>
-                            </>}
+                                ))
+                                : <>
+                                    <div className="row centered w-100">
+                                        <span className="text-gray no-select">
+                                            No Registered Education
+                                        </span>
+                                    </div>
+                                </>}
+                        </div>
                     </div>
-                </div>
-                <div className='list-container col gap-15'>
-                    <div className="row">
-                        <span className="group-title">Languages</span>
-                        <button className="add-button to-right"
-                            onClick={() => {
-                                setShowLanguageModal(true)
-                            }}>
-                            <FontAwesomeIcon icon={faPlus} />
-                            <span>Add</span>
-                        </button>
-                    </div>
-                    {user.languages?.length > 0 ?
-                        <div className="col gap-25 p-15">
-                            <div className='row wrap'>
-                                {user.languages.map((language, index) => (
-                                    <div className='w-50' key={index}>
-                                        <div className="round-card centered">
-                                            <span className="card-title">
-                                                {`${language.language} (${languageLevels[language.level]})`}
-                                            </span>
+                    <div className='list-container col gap-15'>
+                        <div className="row">
+                            <span className="group-title">Languages</span>
+                            <button className="add-button to-right"
+                                onClick={() => {
+                                    setShowLanguageModal(true)
+                                }}>
+                                <FontAwesomeIcon icon={faPlus} />
+                                <span>Add</span>
+                            </button>
+                        </div>
+                        {user.languages?.length > 0 ?
+                            <div className="col gap-25 p-15">
+                                <div className='row wrap'>
+                                    {user.languages.map((language, index) => (
+                                        <div className='w-50' key={index}>
+                                            <div className="round-card centered">
+                                                <span className="card-title">
+                                                    {`${language.language} (${languageLevels[language.level]})`}
+                                                </span>
+                                            </div>
                                         </div>
+                                    ))}
+                                </div>
+                            </div>
+                            :
+                            <div className="row centered w-100">
+                                <span className="text-gray no-select">
+                                    No Registered Languages
+                                </span>
+                            </div>}
+                    </div>
+                    <div className='list-container'>
+                        <div className="row">
+                            <span className="group-title">Skills</span>
+                            <button type="button" className="add-button to-right"
+                                onClick={() => {
+                                    setShowSkillModal(true)
+                                }}>
+                                <FontAwesomeIcon icon={faPlus} />
+                                <span>Add</span>
+                            </button>
+                        </div>
+                        {user.skills?.length > 0 ?
+                            <div className="chip-section">
+                                {user.skills?.map((skill, index) => (
+                                    <div className="chip white text-dark border-thin" key={index}>
+                                        <button type="button" className="chip-button" disabled={loadingUser}
+                                            onClick={() => {
+                                                let skillList = [...user.skills]
+                                                skillList.splice(index, 1)
+                                                setUser({ ...user, skills: skillList })
+                                            }} >
+                                            <FontAwesomeIcon icon={faCircleXmark} className="pointer" />
+                                        </button>
+                                        <span>{skill}</span>
                                     </div>
                                 ))}
                             </div>
-                        </div>
-                        :
-                        <div className="row centered w-100">
-                            <span className="text-gray no-select">
-                                No Registered Languages
-                            </span>
-                        </div>}
-                </div>
-                <div className='list-container'>
-                    <div className="row">
-                        <span className="group-title">Skills</span>
-                        <button type="button" className="add-button to-right"
-                            onClick={() => {
-                                setShowSkillModal(true)
-                            }}>
-                            <FontAwesomeIcon icon={faPlus} />
-                            <span>Add</span>
-                        </button>
+                            :
+                            <div className="row centered w-100">
+                                <span className="text-gray no-select">
+                                    No Registered Skills
+                                </span>
+                            </div>
+                        }
                     </div>
-                    {user.skills?.length > 0 ?
-                        <div className="chip-section">
-                            {user.skills?.map((skill, index) => (
-                                <div className="chip white text-dark border-thin" key={index}>
-                                    <button type="button" className="chip-button" disabled={loadingUser}
-                                        onClick={() => {
-                                            let skillList = [...user.skills]
-                                            skillList.splice(index, 1)
-                                            setUser({ ...user, skills: skillList })
-                                        }} >
-                                        <FontAwesomeIcon icon={faCircleXmark} className="pointer" />
-                                    </button>
-                                    <span>{skill}</span>
-                                </div>
-                            ))}
+                    <div className="list-container">
+                        <div className="row justify-right gap-25">
+                            <NavLink to="/profile" className='button-rounded gray text-white'>
+                                Cancel
+                            </NavLink>
+                            <button type="submit" className="button-rounded green text-white" disabled={loadingUser}>
+                                Save
+                            </button>
                         </div>
-                        :
-                        <div className="row centered w-100">
-                            <span className="text-gray no-select">
-                                No Registered Skills
-                            </span>
-                        </div>
-                    }
-                </div>
-                <div className="list-container">
-                    <div className="row justify-right gap-25">
-                        <NavLink to="/profile" className='button-rounded gray text-white'>
-                            Cancel
-                        </NavLink>
-                        <button type="submit" className="button-rounded green text-white" disabled={loadingUser}>
-                            Save
-                        </button>
                     </div>
-                </div>
+                </form>
             </div >
             <Modal show={showExperienceModal} close={() => closeExperienceModal()}>
                 <form className='col gap-25'
@@ -442,11 +459,20 @@ function ProfileForm({ ...props }) {
                         </div>
                         <div className='input-group-50'>
                             <label>End</label>
-                            <input type="date" className='input-field' required
+                            <input type="date" className='input-field'
+                                required={!editExperience.current}
+                                disabled={editExperience.current}
                                 onChange={(e) => {
                                     setEditExperience({ ...editExperience, timeEnd: e.target.value })
                                 }} value={editExperience.timeEnd || ""}
                             />
+                            <div>
+                                <input type="checkbox" name="current" id="current"
+                                    onClick={() => {
+                                        setEditExperience({ ...editExperience, current: !editExperience.current })
+                                    }} value={editExperience.current || false} />
+                                <label className="check-label" htmlFor="current">Current</label>
+                            </div>
                         </div>
                     </div>
                     <div className="row justify-right vertical-center gap-25">

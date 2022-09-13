@@ -55,40 +55,48 @@ function OpponentView() {
                             <span>Add opponent</span>
                         </NavLink>
                     </div>
-                    <div className={`long-card highlight-left-${colors[opponent.level]}`}>
-                        <div className={`long-card-title text-${colors[opponent.level]}`}>
-                            <div className="row gap-25">
-                                {opponent.name}
-                                <NavLink to="/opponents" className='card-value green'>
-                                    View all
-                                </NavLink>
+                    {opponent.id ?
+                        <div className={`long-card highlight-left-${colors[opponent.level]}`}>
+                            <div className={`long-card-title text-${colors[opponent.level]}`}>
+                                <div className="row gap-25">
+                                    {opponent.name || ""}
+                                    <NavLink to="/opponents" className='card-value green'>
+                                        View all
+                                    </NavLink>
+                                </div>
                             </div>
-                        </div>
-                        <div className="col gap-25">
-                            <div className='long-card-content gap-25'>
-                                <img src={logo} alt="" className={`round-img highlight-${colors[opponent.level]}`} />
-                                <div className="col justify-center">
-                                    <div className='row gap-15'>
-                                        <span className='info-name'>Personality</span>
-                                        <span className='my-auto'>{personalities[opponent.personality]}</span>
+                            <div className="col gap-25">
+                                <div className='long-card-content gap-25'>
+                                    <img src={logo} alt="" className={`round-img highlight-${colors[opponent.level]}`} />
+                                    <div className="col justify-center">
+                                        <div className='row gap-15'>
+                                            <span className='info-name'>Personality</span>
+                                            <span className='my-auto'>{personalities[opponent.personality] || ""}</span>
+                                        </div>
+                                        <div className='row gap-15'>
+                                            <span className='info-name'>Difficulty</span>
+                                            <span className='my-auto'>{levels[opponent.level] || ""}</span>
+                                        </div>
                                     </div>
-                                    <div className='row gap-15'>
-                                        <span className='info-name'>Difficulty</span>
-                                        <span className='my-auto'>{levels[opponent.level]}</span>
+                                </div>
+                                <div className='long-card-content'>
+                                    <div className="col justify-center">
+                                        <span className='info-name'>About</span>
+                                        <span>{opponent.about || ""}</span>
                                     </div>
                                 </div>
                             </div>
-                            <div className='long-card-content'>
-                                <div className="col justify-center">
-                                    <span className='info-name'>About</span>
-                                    <span>{opponent.about}</span>
-                                </div>
-                            </div>
+                            <NavLink to={`/opponent-form/${opponent.id}`} className='round-button yellow long-card-br'>
+                                <FontAwesomeIcon icon={faPen} className="card-image" />
+                            </NavLink>
                         </div>
-                        <NavLink to={`/opponent-form/${opponent.id}`} className='round-button yellow long-card-br'>
-                            <FontAwesomeIcon icon={faPen} className="card-image" />
-                        </NavLink>
-                    </div>
+                        :
+                        <div className="row centered w-100">
+                            <span className="text-gray no-select">
+                                Missing...
+                            </span>
+                        </div>
+                    }
                 </div>
                 <div className="list-container col gap-15">
                     <div className="row">

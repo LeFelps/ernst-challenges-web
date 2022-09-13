@@ -7,7 +7,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import consts from '../../consts';
 import logo from '../../logo.svg';
 import profileLogo from '../../profile.svg';
-import { getJobLevels } from '../utilities/functions/knownLists.js'
+import { getJobLevels, getLanguageLevels } from '../utilities/functions/knownLists.js'
 
 function ProfileView({ removeUser, ...props }) {
 
@@ -34,6 +34,7 @@ function ProfileView({ removeUser, ...props }) {
 
 
     const [appliedJobs, setAppliedJobs] = useState([])
+    const languageLevels = getLanguageLevels()
 
     useEffect(() => {
         axios.get(`${consts.LOCAL_API}/job-applications/${userId}`)
@@ -59,6 +60,18 @@ function ProfileView({ removeUser, ...props }) {
         localStorage.removeItem('user')
         removeUser()
         navigate('/login')
+    }
+
+    function changeUserVisibility() {
+        axios.put(`${consts.LOCAL_API}/users/change-visibility`, user)
+            .then(response => {
+                setUser({
+                    ...user,
+                    public: response.data
+                })
+            }).catch(err => {
+                console.error(err)
+            })
     }
 
     return (
@@ -96,15 +109,14 @@ function ProfileView({ removeUser, ...props }) {
                         </NavLink>
                     </div>
                     <div className="row centered">
-                        {user.public ?
-                            <div className="button-flat green text-white">
-                                Public Profile
-                            </div>
-                            :
-                            <div className="button-flat red text-white">
-                                Private Profile
-                            </div>
-                        }
+                        <button type='button' className={`button-flat ${user.public ? ' green ' : ' red '} text-white`}
+                            onClick={() => changeUserVisibility()}>
+                            {user.public ?
+                                'Make Profile Public'
+                                :
+                                'Make Profile Private'
+                            }
+                        </button>
                     </div>
                 </div>
                 <div className="list-container col">
@@ -180,35 +192,45 @@ function ProfileView({ removeUser, ...props }) {
                         <b className='group-title text-center'>
                             My Job Applications
                         </b>
-                        <span className='card-value green pointer'>
-                            View all
-                        </span>
+                        {appliedJobs.length > 0 ?
+                            <span className='card-value green pointer'>
+                                View all
+                            </span>
+                            : <></>}
                     </div>
                     <div className='list-container col gap-15'>
-                        {appliedJobs.map((job) => (
-                            <div className='long-card highlight-left-blue'>
-                                <div className='long-card-title text-blue'>
-                                    {job.title} • {jobLevels[job.level]}
-                                </div>
-                                <div className='long-card-content gap-15'>
-                                    <img src={logo} alt="" className='company-logo' />
-                                    <div className='align-center'>
-                                        <p className='info-name'>{job.companyName}</p>
-                                        {!job.displaySalary ?
-                                            <p className='info-value'>{job.salary}</p>
-                                            : null}
-                                        {job.compensations?.length > 0 ?
-                                            <div className='info-extra'>
-                                                <FontAwesomeIcon className='icon-margin-right' icon={faPlusCircle} color='#188EB9' />
-                                                <p>
-                                                    Benefits
-                                                </p>
-                                            </div>
-                                            : null}
+                        {appliedJobs.length > 0 ?
+                            appliedJobs.map((job) => (
+                                <div className='long-card highlight-left-blue'>
+                                    <div className='long-card-title text-blue'>
+                                        {job.title} • {jobLevels[job.level]}
+                                    </div>
+                                    <div className='long-card-content gap-15'>
+                                        <img src={logo} alt="" className='company-logo' />
+                                        <div className='align-center'>
+                                            <p className='info-name'>{job.companyName}</p>
+                                            {!job.displaySalary ?
+                                                <p className='info-value'>{job.salary}</p>
+                                                : null}
+                                            {job.compensations?.length > 0 ?
+                                                <div className='info-extra'>
+                                                    <FontAwesomeIcon className='icon-margin-right' icon={faPlusCircle} color='#188EB9' />
+                                                    <p>
+                                                        Benefits
+                                                    </p>
+                                                </div>
+                                                : null}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))
+                            : <>
+                                <div className="row centered w-100">
+                                    <span className="text-gray no-select">
+                                        No Current Job Applications
+                                    </span>
+                                </div>
+                            </>}
                     </div>
                 </div>
                 <div className='list-container col gap-15'>
@@ -216,8 +238,8 @@ function ProfileView({ removeUser, ...props }) {
                         <span className="group-title">Work Experience</span>
                     </div>
                     <div className='col gap-15'>
-                        {user.experiences?.length > 0 ?
-                            user.experiences?.map((experience, index) => (
+                        {user.experience?.length > 0 ?
+                            user.experience?.map((experience, index) => (
                                 <div key={index} className="form-card p-15">
                                     <div className='row gap-15'>
                                         <img src={logo} alt="" className='company-logo' />
@@ -225,7 +247,13 @@ function ProfileView({ removeUser, ...props }) {
                                             <span className='info-name'>{jobLevels[experience.level]}, {experience.title}</span>
                                             <div className='col'>
                                                 <b>{experience.companyName}</b>
-                                                <span className='info-value'>{experience.timeStart} - {experience.timeEnd}</span>
+                                                <span className='info-value'>
+                                                    {
+                                                        experience.timeStart.split("-")[0]
+                                                    } - {
+                                                        experience.current ? "Current" : experience.timeEnd.split("-")[0]
+                                                    }
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -254,7 +282,13 @@ function ProfileView({ removeUser, ...props }) {
                                             <span className='info-name'>{education.name}</span>
                                             <div className='col'>
                                                 <b>{education.course}, {education.type}</b>
-                                                <span className='info-value'>{education.timeStart} - {education.timeEnd}</span>
+                                                <span className='info-value'>
+                                                    {
+                                                        education.timeStart.split("-")[0]
+                                                    } - {
+                                                        education.current ? "Current" : education.timeEnd.split("-")[0]
+                                                    }
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -273,37 +307,39 @@ function ProfileView({ removeUser, ...props }) {
                     <div className="row">
                         <span className="group-title">Languages</span>
                     </div>
-                    <div className='row wrap'>
-                        {user.languages?.length > 0 ?
-                            <div className="col gap-25 p-25">
+                    {user.languages?.length > 0 ?
+                        <div className="col gap-25 p-15">
+                            <div className='row wrap'>
                                 {user.languages.map((language, index) => (
                                     <div className='w-50' key={index}>
                                         <div className="round-card centered">
                                             <span className="card-title">
-                                                {language}
+                                                {`${language.language} (${languageLevels[language.level]})`}
                                             </span>
                                         </div>
                                     </div>
                                 ))}
                             </div>
-                            :
-                            <div className="row centered w-100">
-                                <span className="text-gray no-select">
-                                    No Registered Languages
-                                </span>
-                            </div>}
-                    </div>
+                        </div>
+                        :
+                        <div className="row centered w-100">
+                            <span className="text-gray no-select">
+                                No Registered Languages
+                            </span>
+                        </div>}
                 </div>
                 <div className='list-container'>
                     <div className="row">
                         <span className="group-title">Skills</span>
                     </div>
                     {user.skills?.length > 0 ?
-                        user.skills?.map((skill, index) => (
-                            <div key={index} className="chip-button">
-                                <span>{skill}</span>
-                            </div>
-                        ))
+                        <div className="chip-section">
+                            {user.skills?.map((skill, index) => (
+                                <div className="chip white text-dark border-thin" key={index}>
+                                    <span>{skill}</span>
+                                </div>
+                            ))}
+                        </div>
                         :
                         <div className="row centered w-100">
                             <span className="text-gray no-select">
