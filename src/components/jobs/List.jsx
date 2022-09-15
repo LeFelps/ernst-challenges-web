@@ -54,7 +54,7 @@ function JobList() {
                                         <div className='info-extra'>
                                             <FontAwesomeIcon className='icon-margin-right' icon={faPlusCircle} color={job.category?.accentColor} />
                                             <p>
-                                                Benefícios
+                                                Benefits
                                             </p>
                                         </div>
                                         : null}
