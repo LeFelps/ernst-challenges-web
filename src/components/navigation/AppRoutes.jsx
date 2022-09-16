@@ -56,12 +56,13 @@ function AppRoutes({ removeUser, ...props }) {
 
                 {/* Routes for opponent form */}
                 <Route path='/opponent-form/new' element={<DungeonForm />}></Route>
-                <Route path='/opponent-form/:id' element={<DungeonForm />}></Route>
+                <Route path='/opponent-form/:id' element={<DungeonForm readOnly={true} />}></Route>
             </>
 
             <> {/* USERS */}
                 {/* Route for user details */}
                 <Route path='/profile' element={<ProfileView removeUser={removeUser} />}></Route>
+                <Route path='/user/:id' element={<ProfileView readOnly />}></Route>
 
                 {/* Route for user form */}
                 <Route path='/profile-form' element={<ProfileForm />}></Route>

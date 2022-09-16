@@ -3,15 +3,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import consts from '../../consts';
-import logo from '../../logo.svg';
+import missingImg from '../../missing.png';
 import profileLogo from '../../profile.svg';
 import { getJobLevels, getLanguageLevels } from '../utilities/functions/knownLists.js'
 
-function ProfileView({ removeUser, ...props }) {
+function ProfileView({ removeUser = false, readOnly, ...props }) {
 
-    const userId = JSON.parse(localStorage.getItem('user')).id
+    const { id } = useParams()
+
+    const userId = id || JSON.parse(localStorage.getItem('user')).id
 
     const initialUser = {
         fullName: "",
@@ -32,7 +34,6 @@ function ProfileView({ removeUser, ...props }) {
 
     const jobLevels = getJobLevels()
 
-
     const [appliedJobs, setAppliedJobs] = useState([])
     const languageLevels = getLanguageLevels()
 
@@ -52,7 +53,7 @@ function ProfileView({ removeUser, ...props }) {
             .catch(() => {
 
             })
-    }, [])
+    }, [userId])
 
     const navigate = useNavigate()
 
@@ -84,11 +85,12 @@ function ProfileView({ removeUser, ...props }) {
 
                         logout()
                     }} className='row centered'>
-                        <button type='submit' className="pointer">
-                            <b className="text-big text-gray">
-                                Logout
-                            </b>
-                        </button>
+                        {removeUser !== false ?
+                            <button type='submit' className="pointer">
+                                <b className="text-big text-gray">
+                                    Logout
+                                </b>
+                            </button> : <></>}
                     </form>
                     <div className='long-card'
                         style={{ boxShadow: `7px 0px 0px ${user.category?.accentColor || '#CCC'} inset` }}>
@@ -104,19 +106,23 @@ function ProfileView({ removeUser, ...props }) {
                                 <p className='info-value'>{user.phone || '[ Phone ]'}</p>
                             </div>
                         </div>
-                        <NavLink to={`/profile-form`} className='round-button yellow long-card-br'>
-                            <FontAwesomeIcon icon={faPen} className="card-image" />
-                        </NavLink>
+                        {!readOnly ?
+                            <NavLink to={`/profile-form`} className='round-button yellow long-card-br'>
+                                <FontAwesomeIcon icon={faPen} className="card-image" />
+                            </NavLink>
+                            : <></>}
                     </div>
                     <div className="row centered">
-                        <button type='button' className={`button-flat ${user.public ? ' green ' : ' red '} text-white`}
-                            onClick={() => changeUserVisibility()}>
-                            {user.public ?
-                                'Make Profile Public'
-                                :
-                                'Make Profile Private'
-                            }
-                        </button>
+                        {!readOnly ?
+                            <button type='button' className={`button-flat ${user.public ? ' red ' : ' green '} text-white`}
+                                onClick={() => changeUserVisibility()}>
+                                {user.public ?
+                                    'Make Profile Private'
+                                    :
+                                    'Make Profile Public'
+                                }
+                            </button>
+                            : <></>}
                     </div>
                 </div>
                 <div className="list-container col">
@@ -201,12 +207,12 @@ function ProfileView({ removeUser, ...props }) {
                     <div className='list-container col gap-15'>
                         {appliedJobs.length > 0 ?
                             appliedJobs.map((job) => (
-                                <div className='long-card highlight-left-blue'>
+                                <NavLink to={`/job/${job.id}`} className='long-card highlight-left-blue'>
                                     <div className='long-card-title text-blue'>
                                         {job.title} • {jobLevels[job.level]}
                                     </div>
                                     <div className='long-card-content gap-15'>
-                                        <img src={logo} alt="" className='company-logo' />
+                                        <img src={missingImg} alt="" className='company-logo' />
                                         <div className='align-center'>
                                             <p className='info-name'>{job.companyName}</p>
                                             {!job.displaySalary ?
@@ -222,7 +228,7 @@ function ProfileView({ removeUser, ...props }) {
                                                 : null}
                                         </div>
                                     </div>
-                                </div>
+                                </NavLink>
                             ))
                             : <>
                                 <div className="row centered w-100">
@@ -242,7 +248,7 @@ function ProfileView({ removeUser, ...props }) {
                             user.experience?.map((experience, index) => (
                                 <div key={index} className="form-card p-15">
                                     <div className='row gap-15'>
-                                        <img src={logo} alt="" className='company-logo' />
+                                        <img src={missingImg} alt="" className='company-logo' />
                                         <div className='col gap-15'>
                                             <span className='info-name'>{jobLevels[experience.level]}, {experience.title}</span>
                                             <div className='col'>
@@ -277,7 +283,7 @@ function ProfileView({ removeUser, ...props }) {
                             user.education.map((education, index) => (
                                 <div className="form-card p-15">
                                     <div className='row gap-15'>
-                                        <img src={logo} alt="" className='company-logo' />
+                                        <img src={missingImg} alt="" className='company-logo' />
                                         <div className='col gap-15'>
                                             <span className='info-name'>{education.name}</span>
                                             <div className='col'>
@@ -348,6 +354,15 @@ function ProfileView({ removeUser, ...props }) {
                         </div>
                     }
                 </div>
+                {readOnly ?
+                    <div className="list-container">
+                        <div className="row justify-right gap-25">
+                            <NavLink to="/heros" className='button-rounded gray text-white'>
+                                Return
+                            </NavLink>
+                        </div>
+                    </div>
+                    : <></>}
             </div>
         </div >
     );

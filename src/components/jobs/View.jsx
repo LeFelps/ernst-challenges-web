@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import logo from '../../logo.svg';
+import missingImg from '../../missing.png';
 import { NavLink, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -78,7 +78,7 @@ function JobView() {
                             {`${job.title || ""} • ${jobLevels[job.level] || ""}`}
                         </div>
                         <div className='long-card-content gap-15'>
-                            <img src={logo} alt="" className='company-logo' />
+                            <img src={missingImg} alt="" className='company-logo' />
                             <div className='align-center'>
                                 <p className='info-name'>{job.companyName}</p>
                                 {!job.hideSalary && job.salary ?

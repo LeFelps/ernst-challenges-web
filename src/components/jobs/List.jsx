@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import logo from '../../logo.svg';
+import { faPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import missingImg from '../../missing.png';
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import consts from '../../consts';
@@ -46,7 +46,7 @@ function JobList() {
                                 {`${job.title || ''} • ${jobLevels[job.level] || ''}`}
                             </div>
                             <div className='long-card-content gap-15'>
-                                <img src={logo} alt="Business Logo" className='company-logo' />
+                                <img src={missingImg} alt="Business Logo" className='company-logo' />
                                 <div className='align-center'>
                                     <p className='info-name'>{job.companyName}</p>
                                     <p className='info-value' hidden={job.displaySalary === false}>{job.salary}</p>

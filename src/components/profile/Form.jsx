@@ -1,11 +1,11 @@
-import { faCircleXmark, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, faPen, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import consts from '../../consts';
-import logo from '../../logo.svg';
+import missingImg from '../../missing.png';
 import profileLogo from '../../profile.svg';
 import Modal from '../utilities/modals/Modal';
 import { getDegreeTypes, getJobLevels, getLanguageLevels } from '../utilities/functions/knownLists.js'
@@ -240,9 +240,17 @@ function ProfileForm({ ...props }) {
                                 user.experience?.map((experience, index) => (
                                     <div key={index} className="form-card p-15">
                                         <div className='row gap-15'>
-                                            <img src={logo} alt="" className='company-logo' />
+                                            <img src={missingImg} alt="" className='company-logo' />
                                             <div className='col gap-15'>
-                                                <span className='info-name'>{jobLevels[experience.level]}, {experience.title}</span>
+                                                <div className="row gap-10">
+                                                    <span className='info-name'>{jobLevels[experience.level]}, {experience.title}</span>
+                                                    <span className='card-value white pointer' onClick={() => {
+                                                        setShowExperienceModal(true)
+                                                        setEditExperience({ ...experience, index: index })
+                                                    }}>
+                                                        <FontAwesomeIcon className="text-dark" icon={faPen} />
+                                                    </span>
+                                                </div>
                                                 <div className='col'>
                                                     <b>{experience.companyName}</b>
                                                     <span className='info-value'>
@@ -282,7 +290,7 @@ function ProfileForm({ ...props }) {
                                 user.education.map((education, index) => (
                                     <div className="form-card p-15">
                                         <div className='row gap-15'>
-                                            <img src={logo} alt="" className='company-logo' />
+                                            <img src={missingImg} alt="" className='company-logo' />
                                             <div className='col gap-15'>
                                                 <span className='info-name'>{education.name}</span>
                                                 <div className='col'>
@@ -394,14 +402,14 @@ function ProfileForm({ ...props }) {
                         e.stopPropagation()
 
                         let experienceList = [...(user.experience || [])]
-                        if (editExperience.index) {
+                        if (editExperience.index !== null) {
                             experienceList[editExperience.index] = { ...editExperience }
                         } else {
                             experienceList = [...experienceList, editExperience]
                         }
                         setUser({ ...user, experience: experienceList })
                         setEditExperience({ ...initialExperience })
-
+                        closeExperienceModal()
                     }}>
                     <div className="row w-100">
                         <b className="text-huge">
@@ -476,8 +484,9 @@ function ProfileForm({ ...props }) {
                         </div>
                     </div>
                     <div className="row justify-right vertical-center gap-25">
-                        <button className="button-rounded green text-white" type="submit">
-                            Add
+
+                        <button className={`button-rounded ${editExperience.index !== null ? "yellow" : "green"} text-white`} type="submit">
+                            {editExperience.index !== null ? "Edit" : "Add"}
                         </button>
                     </div>
                 </form>

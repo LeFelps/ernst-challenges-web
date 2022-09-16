@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import consts from '../../consts';
 import profileLogo from '../../profile.svg';
 import { getJobLevels } from '../utilities/functions/knownLists';
@@ -33,7 +34,7 @@ function ProfileList() {
             </div>
             <div className="list-container col gap-25">
                 {users.map((user, index) => (
-                    <div className='long-card' style={{ boxShadow: `7px 0px 0px ${user.category?.accentColor || '#CCC'} inset` }}>
+                    <NavLink to={`/user/${user.id}`}  className='long-card' style={{ boxShadow: `7px 0px 0px ${user.category?.accentColor || '#CCC'} inset` }}>
                         {console.log(user)}
                         <div className='long-card-title'>
                             {user.fullName}
@@ -46,7 +47,7 @@ function ProfileList() {
                                 <p>{user.skills?.map((skill, index) => ((index !== 0 ? ", " : '') + skill))}</p>
                             </div>
                         </div>
-                    </div>
+                    </NavLink>
                 ))}
             </div>
         </div>

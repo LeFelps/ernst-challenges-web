@@ -1,7 +1,7 @@
 import React from 'react';
 import { faClock, faHandBackFist, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import logo from '../../logo.svg';
+import monsterImg from '../../monster.png';
 
 function ProfileView() {
 
@@ -17,7 +17,7 @@ function ProfileView() {
                     <div className="col gap-25">
                         <div className="row">
                             <div className='long-card-content gap-25'>
-                                <img src={logo} alt="" className='round-img highlight-green' />
+                                <img src={monsterImg} alt="" className='round-img highlight-green' />
                                 <div className="col justify-center">
                                     <div className='row gap-15'>
                                         <span className='info-name'>Personality</span>
@@ -71,7 +71,7 @@ function ProfileView() {
                             </div>
                         </div>
                         <div className='p-25'>
-
+                            <b className="text-bigger text-center">This is where your question will be displayed.</b>
                         </div>
                     </div>
                     <div className='row space-between wrap gap-5'>

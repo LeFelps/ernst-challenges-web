@@ -2,11 +2,12 @@ import React from 'react'
 import { faCartShopping, faCircleCheck, faClock, faHandBackFist, faListCheck, faPen, faPlus, faShield, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
-import logo from '../../logo.svg';
+import monsterImg from '../../monster.png';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
 import consts from '../../consts';
+import { getArchetipes, getDifficultyLevels } from '../utilities/functions/knownLists';
 
 function OpponentView() {
 
@@ -26,17 +27,9 @@ function OpponentView() {
             })
     }
 
-    const levels = {
-        EASY: "Easy",
-        MEDIUM: "Medium",
-        HARD: "Hard"
-    }
+    const levels = getDifficultyLevels()
 
-    const personalities = {
-        PRACTICAL: "Practical",
-        THEORICAL: "Theoretical",
-        SPECIALIST: "Specialist"
-    }
+    const personalities = getArchetipes()
 
     const colors = {
         EASY: "green",
@@ -67,7 +60,7 @@ function OpponentView() {
                             </div>
                             <div className="col gap-25">
                                 <div className='long-card-content gap-25'>
-                                    <img src={logo} alt="" className={`round-img highlight-${colors[opponent.level]}`} />
+                                    <img src={monsterImg} alt="" className={`round-img highlight-${colors[opponent.level]}`} />
                                     <div className="col justify-center">
                                         <div className='row gap-15'>
                                             <span className='info-name'>Personality</span>
@@ -100,7 +93,7 @@ function OpponentView() {
                 </div>
                 <div className="list-container col gap-15">
                     <div className="row">
-                        <span className="group-title">Choose tour weapons!</span>
+                        <span className="group-title">Choose your weapons!</span>
                     </div>
                     <div className='row gap-35 p-25'>
                         <div className="round-card w-50 gap-15 vertical-center">

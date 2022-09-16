@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import consts from '../../consts';
-import logo from '../../logo.svg';
+import monsterImg from '../../monster.png';
 
 function OpponentList() {
 
@@ -22,7 +22,7 @@ function OpponentList() {
 
     const personalities = {
         PRACTICAL: "Practical",
-        THEORICAL: "Theorical",
+        THEORETICAL: "Theorical",
         SPECIALIST: "Specialist"
     }
 
@@ -59,7 +59,7 @@ function OpponentList() {
                         </div>
                         <div className="col gap-25">
                             <div className='long-card-content gap-25'>
-                                <img src={logo} alt="" className={`round-img highlight-${colors[opponent.level]}`} />
+                                <img src={monsterImg} alt="" className={`round-img highlight-${colors[opponent.level]}`} />
                                 <div className="col justify-center">
                                     <div className='row gap-15'>
                                         <span className='info-name'>Personality</span>
