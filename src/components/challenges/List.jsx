@@ -1,21 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as fa from '@fortawesome/free-solid-svg-icons';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import consts from '../../consts';
 import CategoryModal from '../categories/Modal';
+import Modal from '../utilities/modals/Modal';
 
 function ChallengeList() {
 
     const [categoryList, setCategoryList] = useState([])
 
     const [showCategoryModal, setShowCategoryModal] = useState(false)
+    const [showDeleteCategoryModal, setShowDeleteCategoryModal] = useState(false)
+    const [selectedCategory, setSelectedCategory] = useState({})
 
-    const navigate = useNavigate()
+    function closeDeleteCategoryModal() {
+        setShowDeleteCategoryModal(false)
+    }
+
+    function deleteCategory(category) {
+        axios.delete(`${consts.LOCAL_API}/categories/${category.id}`)
+            .then(resp => {
+                let categories = [...categoryList]
+                categories.splice(categories.indexOf(category), 1)
+                setCategoryList(categories)
+                closeDeleteCategoryModal()
+            }).catch(err => {
+                console.error(err)
+            })
+    }
 
     useEffect(() => {
-        axios.get(`${consts.LOCAL_API}/challenges/categories`)
+        axios.get(`${consts.LOCAL_API}/categories`)
             .then((response) => {
                 setCategoryList(response.data || [])
             })
@@ -40,9 +57,18 @@ function ChallengeList() {
 
             {categoryList.map((category, index) => (
                 <div className='list-container' key={category.id}>
-                    <p className="group-title" style={{ color: category.accentColor }}>
-                        {category.name}
-                    </p>
+                    <div className="row w-100 vertical-center" style={{ color: category.accentColor }}>
+                        <span className='group-title'>
+                            {category.name}
+                        </span>
+                        <button type="button" className="round-icon white pointer text-center to-right"
+                            onClick={() => {
+                                setSelectedCategory(category)
+                                setShowDeleteCategoryModal(true)
+                            }}>
+                            <FontAwesomeIcon icon={fa.faTrashAlt} className="text-light text-big" />
+                        </button>
+                    </div>
                     <div className='card-group'>
                         {category.challenges?.map((challenge, index) => (
                             <NavLink to={`/challenge/${challenge.id}`} key={challenge.id}>
@@ -85,6 +111,34 @@ function ChallengeList() {
                 close={() => setShowCategoryModal(false)}
                 show={showCategoryModal}
             />
+
+            <Modal show={showDeleteCategoryModal} close={() => closeDeleteCategoryModal()} >
+                <div className='col gap-25'>
+                    <div className="row w-100">
+                        <b className="text-huge">
+                            Delete Category: <span style={{ color: selectedCategory.accentColor }}>{selectedCategory.name}</span>
+                        </b>
+                        <div className="round-icon white text-light to-right text-bigger pointer"
+                            onClick={() => closeDeleteCategoryModal()}
+                        >
+                            <FontAwesomeIcon icon={fa.faTimes} />
+                        </div>
+                    </div>
+                    <div className='lm-25'>
+                        This will permanently delete the category and all associated challenges.
+                    </div>
+                    <div className="row justify-right vertical-center gap-25">
+                        <button className="button-rounded gray text-white" type="button"
+                            onClick={() => closeDeleteCategoryModal()}>
+                            Cancel
+                        </button>
+                        <button className="button-rounded red text-white" type="button"
+                            onClick={() => deleteCategory(selectedCategory)}>
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 }

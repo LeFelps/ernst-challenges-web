@@ -108,7 +108,7 @@ function ProfileForm({ ...props }) {
 
             })
 
-        axios.get(`${consts.LOCAL_API}/challenges/categories?min=true`)
+        axios.get(`${consts.LOCAL_API}/categories?min=true`)
             .then((resp) => {
                 setCategories(resp.data || [])
             })

@@ -115,7 +115,7 @@ function ChallengeForm({ ...props }) {
 
         categoryId && setChallenge({ ...challenge, category: { id: categoryId } })
 
-        axios.get(`${consts.LOCAL_API}/challenges/categories?min=true`)
+        axios.get(`${consts.LOCAL_API}/categories?min=true`)
             .then(res => {
                 setCategories(res.data || [])
             })
@@ -353,8 +353,8 @@ function ChallengeForm({ ...props }) {
                                         <span className="group-title">References</span>
                                         <div className="box-section">
                                             {checkpoint.sources?.map((source, rIndex) => (
-                                                <div className="radius-15 filled-container row" key={rIndex}>
-                                                    <div className="row p-20 w-100">
+                                                <div className="radius-15 filled-container row p-20 gap-15" key={rIndex}>
+                                                    <div className="row w-100">
                                                         <div className='input-group-50'>
                                                             <label>Title</label>
                                                             <input type="text" className='input-field' required disabled={loadingChallenge}
@@ -378,16 +378,18 @@ function ChallengeForm({ ...props }) {
                                                                 }} value={source?.link || ""} />
                                                         </div>
                                                     </div>
-                                                    <button className='p-10 red flex vertical-center text-white text-bigger pointer' disabled={loadingChallenge}
-                                                        onClick={() => {
-                                                            let checkpointList = [...challenge.checkpoints]
-                                                            let sourceList = [...checkpoint.sources]
-                                                            sourceList.splice(rIndex, 1)
-                                                            checkpointList[index].sources = sourceList
-                                                            setChallenge({ ...challenge, checkpoints: checkpointList })
-                                                        }}>
-                                                        <FontAwesomeIcon icon={fa.faTrashAlt} />
-                                                    </button>
+                                                    <div className='flex vertical-center p-10' disabled={loadingChallenge}>
+                                                        <button type='button' className='text-bigger red text-white round-icon pointer'
+                                                            onClick={() => {
+                                                                let checkpointList = [...challenge.checkpoints]
+                                                                let sourceList = [...checkpoint.sources]
+                                                                sourceList.splice(rIndex, 1)
+                                                                checkpointList[index].sources = sourceList
+                                                                setChallenge({ ...challenge, checkpoints: checkpointList })
+                                                            }}>
+                                                            <FontAwesomeIcon icon={fa.faTrashAlt} />
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             ))}
                                             <div className="row centered">

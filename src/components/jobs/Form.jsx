@@ -47,7 +47,7 @@ function JobForm({ ...props }) {
 
     useEffect(() => {
 
-        axios.get(`${consts.LOCAL_API}/challenges/categories?min=true`)
+        axios.get(`${consts.LOCAL_API}/categories?min=true`)
             .then(res => {
                 setCategories(res.data || [])
             })

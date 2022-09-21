@@ -10,6 +10,8 @@ function ChallengeView() {
 
     const { id } = useParams()
 
+    const userId = JSON.parse(localStorage.getItem('user')).id
+
     const [challenge, setChallenge] = useState({
         category: {
             accentColor: "",
@@ -22,13 +24,48 @@ function ChallengeView() {
         checkpoints: [],
     })
 
+    const [checkpoints, setCheckpoints] = useState([])
+
     useEffect(() => {
-        axios.get(`${consts.LOCAL_API}/challenges/${id}`)
+        axios.all([
+            axios.get(`${consts.LOCAL_API}/challenges/${id}`),
+            axios.get(`${consts.LOCAL_API}/challenge-submissions?userId=${userId}&challengeId=${id}`)
+        ]).then(([challenges, submissions]) => {
+            const challengesData = challenges.data
+            const submissionsData = submissions.data
+
+            submissionsData.map((s, index) => {
+                submissionsData[index].existing = true
+                return s
+            })
+
+            setChallenge({ ...challengesData } || {})
+
+            const checkpoints = challengesData.checkpoints
+
+            checkpoints.map((checkpoint, index) => {
+                checkpoints[index].submission = submissionsData.find(s => s.checkpointId === checkpoint.id) || {}
+                return checkpoint
+            })
+
+            setCheckpoints([
+                ...checkpoints
+            ])
+        })
+    }, [])
+
+    function sendSubmission(submission) {
+
+        const type = submission.existing ? "put" : "post"
+        console.log(submission)
+        axios[type](`${consts.LOCAL_API}/challenge-submissions`, submission)
             .then(resp => {
-                setChallenge(resp.data || {})
 
             })
-    }, [])
+            .catch(err => {
+
+            })
+    }
 
     const [selectedCheckpoint, setSelectedCheckpoint] = useState(0)
 
@@ -68,8 +105,8 @@ function ChallengeView() {
                         <b className='group-title text-center'>
                             Checkpoint
                         </b>
-                        {challenge.checkpoints?.map((c, index) => (
-                            <button type="button" className={`round-icon-sm ${index === selectedCheckpoint ? 'blue' : 'gray'} text-white pointer`}
+                        {checkpoints?.map((c, index) => (
+                            <button type="button" key={index} className={`round-icon-sm ${index === selectedCheckpoint ? 'blue' : 'gray'} text-white pointer`}
                                 onClick={() => {
                                     setSelectedCheckpoint(index)
                                 }}>
@@ -78,8 +115,8 @@ function ChallengeView() {
                         ))}
                     </div>
                 </div>
-                {challenge.checkpoints?.map((checkpoint, index) => (
-                    <div hidden={index !== selectedCheckpoint}>
+                {checkpoints?.map((checkpoint, index) => (
+                    <div key={index} hidden={index !== selectedCheckpoint}>
                         <div className='container'>
                             <p>
                                 {checkpoint.description}
@@ -88,36 +125,50 @@ function ChallengeView() {
                                 <div className='input-group-50'>
                                     <label>Submission link</label>
                                     <input type="text" className='input-field'
-                                    // onChange={(e) => {
-                                    //     setUserData({ ...userData, username: e.target.value })
-                                    // }} value={userData.username}
+                                        onChange={(e) => {
+                                            let checkpointList = [...checkpoints]
+                                            checkpointList[index].submission.link = e.target.value
+                                            setCheckpoints([...checkpointList])
+                                        }} value={checkpoint.submission?.link || ""}
                                     />
                                     <span className='input-description'>
                                         This can be either a github repository or codepen example
                                     </span>
                                 </div>
                                 <div className="vertical-center w-50 gap-15 row">
-                                    {checkpoint.complete ?
-                                        <button type="button" className='round-icon green text-white pointer'
-                                            onClick={() => {
-                                                let checkpointList = [...challenge.checkpoints]
-                                                checkpointList[index].complete = false
-                                                setChallenge({ ...challenge, checkpoint })
-                                            }}>
-                                            <FontAwesomeIcon icon={fa.faCheck} className="card-image" />
-                                        </button>
+                                    {checkpoint.submission?.completed ?
+                                        <div className="row w-100 gap-15 vertical-center">
+                                            <button type="button" className='round-icon green text-white pointer'
+                                                onClick={() => {
+                                                    let checkpointList = [...checkpoints]
+                                                    checkpointList[index].submission.completed = false
+                                                    setCheckpoints([...checkpointList])
+                                                }}>
+                                                <FontAwesomeIcon icon={fa.faCheck} className="card-image" />
+                                            </button>
+                                            <span className="text-thicker">Completed</span>
+                                        </div>
                                         :
-                                        <button type="button" className='round-icon yellow text-black pointer'
-                                            onClick={() => {
-                                                let checkpointList = [...challenge.checkpoints]
-                                                checkpointList[index].complete = true
-                                                setChallenge({ ...challenge, checkpoint })
-                                            }}>
-                                            <FontAwesomeIcon icon={fa.faBarsProgress} className="card-image" />
-                                        </button>
+                                        <div className="row w-100 gap-15 vertical-center">
+                                            <button type="button" className='round-icon yellow text-black pointer'
+                                                onClick={() => {
+                                                    let checkpointList = [...checkpoints]
+                                                    checkpointList[index].submission.completed = true
+                                                    setCheckpoints([...checkpointList])
+                                                }}>
+                                                <FontAwesomeIcon icon={fa.faBarsProgress} className="card-image" />
+                                            </button>
+                                            <span className="text-thicker">Ongoing</span>
+                                        </div>
                                     }
                                     <div className="div to-right">
-                                        <button className="button-rounded green text-white to-right">
+                                        <button type="button"
+                                            className="button-rounded green text-white to-right"
+                                            onClick={() => sendSubmission({
+                                                ...checkpoint.submission,
+                                                userId: userId,
+                                                checkpointId: checkpoint.id
+                                            })}>
                                             Send
                                         </button>
                                     </div>
@@ -139,8 +190,8 @@ function ChallengeView() {
                                 References and documentation
                             </b>
                             <ul>
-                                {checkpoint.sources?.map((source) => (
-                                    <li>
+                                {checkpoint.sources?.map((source, index) => (
+                                    <li key={index}>
                                         <a className="text-blue text-thick"
                                             href={source.link}>{source.title}</a>
                                     </li>

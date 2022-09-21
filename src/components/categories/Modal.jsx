@@ -52,7 +52,7 @@ function CategoryModal({ show, close, afterSave, ...props }) {
                         type = "put"
 
                     setLoadingChanges(true)
-                    axios[type](`${consts.LOCAL_API}/challenges/categories`, categoryData)
+                    axios[type](`${consts.LOCAL_API}/categories`, categoryData)
                         .then((res) => {
                             afterSave(res.data)
                         })

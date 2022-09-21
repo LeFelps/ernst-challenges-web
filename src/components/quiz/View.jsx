@@ -29,7 +29,7 @@ function ProfileView() {
                                     </div>
                                 </div>
                             </div>
-                            <div className='row gap-10 justify-right vertical-bottom'>
+                            <div className='row p-10 gap-10 to-right vertical-bottom'>
                                 <FontAwesomeIcon className="text-red" icon={faHeart} size="2x" />
                                 <FontAwesomeIcon className="text-red" icon={faHeart} size="2x" />
                                 <FontAwesomeIcon className="text-red" icon={faHeart} size="2x" />
