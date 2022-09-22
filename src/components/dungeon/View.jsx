@@ -1,5 +1,5 @@
 import React from 'react'
-import { faCartShopping, faCircleCheck, faClock, faHandBackFist, faListCheck, faPen, faPlus, faShield, faStar } from "@fortawesome/free-solid-svg-icons";
+import * as fa from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 import monsterImg from '../../monster.png';
@@ -12,6 +12,9 @@ import { getArchetipes, getDifficultyLevels } from '../utilities/functions/known
 function OpponentView() {
 
     const [opponent, setOpponent] = useState({})
+
+    const [selectedWeapon, setSelectedWeapon] = useState({})
+    const [selectedShield, setSelectedShield] = useState({})
 
     useEffect(() => {
         getRandomOpponent()
@@ -44,7 +47,7 @@ function OpponentView() {
                     <div className="row">
                         <span className="group-title">Your opponent is...</span>
                         <NavLink to="/opponent-form/new" className="add-button to-right">
-                            <FontAwesomeIcon icon={faPlus} />
+                            <FontAwesomeIcon icon={fa.faPlus} />
                             <span>Add opponent</span>
                         </NavLink>
                     </div>
@@ -80,7 +83,7 @@ function OpponentView() {
                                 </div>
                             </div>
                             <NavLink to={`/opponent-form/${opponent.id}`} className='round-button yellow long-card-br'>
-                                <FontAwesomeIcon icon={faPen} className="card-image" />
+                                <FontAwesomeIcon icon={fa.faPen} className="card-image" />
                             </NavLink>
                         </div>
                         :
@@ -98,60 +101,80 @@ function OpponentView() {
                     <div className='row gap-35 p-25'>
                         <div className="round-card w-50 gap-15 vertical-center">
                             <div className="card-icon dark  text-bigger">
-                                <FontAwesomeIcon icon={faHandBackFist} />
+                                <FontAwesomeIcon icon={fa.faHandBackFist} />
                             </div>
                             <div>
                                 <div className='card-sm'>
-                                    <FontAwesomeIcon icon={faCartShopping} className="card-image" style={{ color: '#188EB9' }} />
+                                    <FontAwesomeIcon className="card-image"
+                                        icon={selectedWeapon.logo ? fa[selectedWeapon.logo] : fa.faHandBackFist}
+                                        style={{ color: selectedWeapon.accentColor ? selectedWeapon.accentColor : '#4D4D4D' }} />
                                 </div>
                             </div>
                             <div className="col w-100">
                                 <div className='card-description-sm'>
                                     <p>
-                                        Shopping Cart
+                                        {selectedWeapon.logo ? fa[selectedWeapon.logo] : 'Weapon'}
                                     </p>
                                 </div>
                                 <div className='w-100'>
                                     <span>
-                                        <b className="text-big">Level 3</b>
-                                        <span className="text-small text-light">/4</span>
+                                        <b className="text-big">Level {selectedWeapon.checkpoints?.filter(c => c.submissionCompleted)?.length || '0'}</b>
+                                        <span className="text-small text-light">/{selectedWeapon.checkpoints?.length || '0'}</span>
                                     </span>
                                     <div className="progress-bar w-100 maxw-200">
-                                        <div className="progress-bar-item blue" />
-                                        <div className="progress-bar-item blue" />
-                                        <div className="progress-bar-item blue" />
-                                        <div className="progress-bar-item lightgray" />
+                                        {selectedWeapon.checkpoints ?
+                                            selectedWeapon.checkpoints.sort((a, b) => {
+                                                if (a.submissionCompleted > b.submissionCompleted) {
+                                                    return -1;
+                                                }
+                                                if (a.submissionCompleted < b.submissionCompleted) {
+                                                    return 1;
+                                                }
+                                                return 0;
+                                            }).map((checkpoint, index) => (
+                                                <div className={`progress-bar-item ${checkpoint.submissionCompleted ? ' blue ' : ' lightgray '}`} />
+                                            ))
+                                            : <div className={`progress-bar-item lightgray`} />}
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="round-card w-50 gap-15 vertical-center">
                             <div className="card-icon dark text-bigger">
-                                <FontAwesomeIcon icon={faShield} />
+                                <FontAwesomeIcon icon={fa.faShield} />
                             </div>
                             <div>
                                 <div className='card-sm'>
-                                    <FontAwesomeIcon icon={faListCheck} className="card-image" style={{ color: '#188EB9' }} />
+                                    <FontAwesomeIcon className="card-image"
+                                        icon={selectedShield.logo ? fa[selectedShield.logo] : fa.faShield}
+                                        style={{ color: selectedShield.accentColor ? selectedShield.accentColor : '#4D4D4D' }} />
                                 </div>
                             </div>
                             <div className="col w-100">
                                 <div className='card-description-sm'>
                                     <p>
-                                        To-Do List
+                                        Shield
                                     </p>
                                 </div>
                                 <div>
                                     <span>
-                                        <b className="text-big">Level 2</b>
-                                        <span className="text-small text-light">/6</span>
+                                        <b className="text-big">Level {selectedShield.checkpoints?.filter(c => c.submissionCompleted)?.length || '0'}</b>
+                                        <span className="text-small text-light">/{selectedShield.checkpoints?.length || '0'}</span>
                                     </span>
                                     <div className="progress-bar">
-                                        <div className="progress-bar-item blue" />
-                                        <div className="progress-bar-item blue" />
-                                        <div className="progress-bar-item lightgray" />
-                                        <div className="progress-bar-item lightgray" />
-                                        <div className="progress-bar-item lightgray" />
-                                        <div className="progress-bar-item lightgray" />
+                                        {selectedShield.checkpoints ?
+                                            selectedShield.checkpoints.sort((a, b) => {
+                                                if (a.submissionCompleted > b.submissionCompleted) {
+                                                    return -1;
+                                                }
+                                                if (a.submissionCompleted < b.submissionCompleted) {
+                                                    return 1;
+                                                }
+                                                return 0;
+                                            }).map((checkpoint, index) => (
+                                                <div className={`progress-bar-item ${checkpoint.submissionCompleted ? ' blue ' : ' lightgray '}`} />
+                                            ))
+                                            : <div className={`progress-bar-item lightgray`} />}
                                     </div>
                                 </div>
                             </div>
@@ -170,14 +193,14 @@ function OpponentView() {
                     <div className="col gap-35 p-25">
                         <div className='row gap-35'>
                             <div className="round-card w-50 gap-15">
-                                <FontAwesomeIcon icon={faClock} className="text-bigger" />
+                                <FontAwesomeIcon icon={fa.faClock} className="text-bigger" />
                                 <span className="card-title">
                                     Average answer time
                                 </span>
                                 <span className='card-value purple'>45s</span>
                             </div>
                             <div className="round-card w-50 gap-15">
-                                <FontAwesomeIcon icon={faStar} className="text-bigger" />
+                                <FontAwesomeIcon icon={fa.faStar} className="text-bigger" />
                                 <span className="card-title">
                                     Average score
                                 </span>
@@ -186,14 +209,14 @@ function OpponentView() {
                         </div>
                         <div className='row gap-35'>
                             <div className="round-card w-50 gap-15">
-                                <FontAwesomeIcon icon={faHandBackFist} className="text-bigger" />
+                                <FontAwesomeIcon icon={fa.faHandBackFist} className="text-bigger" />
                                 <span className="card-title">
                                     Successfull attacks
                                 </span>
                                 <span className='card-value red'>85%</span>
                             </div>
                             <div className="round-card w-50 gap-15">
-                                <FontAwesomeIcon icon={faShield} className="text-bigger" />
+                                <FontAwesomeIcon icon={fa.faShield} className="text-bigger" />
                                 <span className="card-title">
                                     Successfull defences
                                 </span>
@@ -202,7 +225,7 @@ function OpponentView() {
                         </div>
                         <div className='row gap-35'>
                             <div className="round-card w-50 gap-15">
-                                <FontAwesomeIcon icon={faCircleCheck} className="text-bigger" />
+                                <FontAwesomeIcon icon={fa.faCircleCheck} className="text-bigger" />
                                 <span className="card-title">
                                     Completed fights
                                 </span>

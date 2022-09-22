@@ -1,4 +1,4 @@
-import { faCartShopping, faListCheck, faPen, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import * as fa from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useState } from 'react';
@@ -36,6 +36,35 @@ function ProfileView({ removeUser = false, readOnly, ...props }) {
 
     const [appliedJobs, setAppliedJobs] = useState([])
     const languageLevels = getLanguageLevels()
+
+    const [challenges, setChallenges] = useState([])
+
+    useEffect(() => {
+        axios.all([
+            axios.get(`${consts.LOCAL_API}/challenges?checkpoints=true`),
+            axios.get(`${consts.LOCAL_API}/challenge-submissions/${userId}`)
+        ]).then(([
+            challenges,
+            submissions
+        ]) => {
+
+            let challengesData = challenges.data || []
+            const submissionsData = submissions.data || []
+
+            challengesData.map((challenge) => {
+                challenge.checkpoints?.map((checkpoint) => {
+                    const submission = submissionsData.find(s => s.checkpointId === checkpoint.id)
+                    checkpoint.submissionCompleted = submission ? submission.completed === true : false
+                    return checkpoint
+                })
+                return challenge
+            })
+
+            setChallenges(challengesData)
+        }).catch(err => {
+
+        })
+    }, [])
 
     useEffect(() => {
         axios.get(`${consts.LOCAL_API}/job-applications/${userId}`)
@@ -108,7 +137,7 @@ function ProfileView({ removeUser = false, readOnly, ...props }) {
                         </div>
                         {!readOnly ?
                             <NavLink to={`/profile-form`} className='round-button yellow long-card-br'>
-                                <FontAwesomeIcon icon={faPen} className="card-image" />
+                                <FontAwesomeIcon icon={fa.faPen} className="card-image" />
                             </NavLink>
                             : <></>}
                     </div>
@@ -136,60 +165,44 @@ function ProfileView({ removeUser = false, readOnly, ...props }) {
                     </div>
                     <div className="p-25">
                         <div className='row gap-35'>
-                            <div className="row w-50 gap-15 vertical-center">
-                                <div>
-                                    <div className='card-sm'>
-                                        <FontAwesomeIcon icon={faCartShopping} className="card-image" style={{ color: '#188EB9' }} />
-                                    </div>
-                                </div>
-                                <div className="col w-100">
-                                    <div className='card-description-sm'>
-                                        <p>
-                                            Shopping Cart
-                                        </p>
-                                    </div>
+                            {challenges.map((challenge, index) => (
+                                <div className="row w-50 gap-15 vertical-center">
                                     <div>
-                                        <span>
-                                            <b className="text-big">Level 3</b>
-                                            <span className="text-small text-light">/4</span>
-                                        </span>
-                                        <div className="progress-bar maxw-200">
-                                            <div className="progress-bar-item blue" />
-                                            <div className="progress-bar-item blue" />
-                                            <div className="progress-bar-item blue" />
-                                            <div className="progress-bar-item lightgray" />
+                                        <div className='card-sm' onClick={() => { }}>
+                                            <FontAwesomeIcon icon={fa[challenge.icon]} className="card-image" style={{ color: '#188EB9' }} />
+                                        </div>
+                                    </div>
+                                    <div className="col w-100">
+                                        <div className='card-description-sm'>
+                                            <p>
+                                                Shopping Cart
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <span>
+                                                <b className="text-big">Level {challenge.checkpoints?.filter(c => c.submissionCompleted)?.length || '0'}</b>
+                                                <span className="text-small text-light">/{challenge.checkpoints?.length || '0'}</span>
+                                            </span>
+                                            <div className="progress-bar maxw-200">
+                                                {challenge.checkpoints ?
+                                                    challenge.checkpoints.sort((a, b) => {
+                                                        console.log(a.submissionCompleted, b.submissionCompleted, a.submissionCompleted > b.submissionCompleted)
+                                                        if (a.submissionCompleted > b.submissionCompleted) {
+                                                            return -1;
+                                                        }
+                                                        if (a.submissionCompleted < b.submissionCompleted) {
+                                                            return 1;
+                                                        }
+                                                        return 0;
+                                                    }).map((checkpoint, index) => (
+                                                        <div className={`progress-bar-item ${checkpoint.submissionCompleted === true ? ' blue ' : ' lightgray '}`} />
+                                                    ))
+                                                    : <div className={`progress-bar-item lightgray`} />}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="row w-50 gap-15 vertical-center">
-                                <div>
-                                    <div className='card-sm'>
-                                        <FontAwesomeIcon icon={faListCheck} className="card-image" style={{ color: '#188EB9' }} />
-                                    </div>
-                                </div>
-                                <div className="col w-100">
-                                    <div className='card-description-sm'>
-                                        <p>
-                                            To-Do List
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <span>
-                                            <b className="text-big">Level 2</b>
-                                            <span className="text-small text-light">/6</span>
-                                        </span>
-                                        <div className="progress-bar  maxw-200">
-                                            <div className="progress-bar-item blue" />
-                                            <div className="progress-bar-item blue" />
-                                            <div className="progress-bar-item lightgray" />
-                                            <div className="progress-bar-item lightgray" />
-                                            <div className="progress-bar-item lightgray" />
-                                            <div className="progress-bar-item lightgray" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -220,7 +233,7 @@ function ProfileView({ removeUser = false, readOnly, ...props }) {
                                                 : null}
                                             {job.compensations?.length > 0 ?
                                                 <div className='info-extra'>
-                                                    <FontAwesomeIcon className='icon-margin-right' icon={faPlusCircle} color='#188EB9' />
+                                                    <FontAwesomeIcon className='icon-margin-right' icon={fa.faPlusCircle} color='#188EB9' />
                                                     <p>
                                                         Benefits
                                                     </p>
