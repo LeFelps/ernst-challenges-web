@@ -292,7 +292,15 @@ function ProfileForm({ ...props }) {
                                         <div className='row gap-15'>
                                             <img src={missingImg} alt="" className='company-logo' />
                                             <div className='col gap-15'>
-                                                <span className='info-name'>{education.name}</span>
+                                                <div className="row gap-10">
+                                                    <span className='info-name'>{education.name}</span>
+                                                    <span className='card-value white pointer' onClick={() => {
+                                                        setShowEducationModal(true)
+                                                        setEditEducation({ ...education, index: index })
+                                                    }}>
+                                                        <FontAwesomeIcon className="text-dark" icon={faPen} />
+                                                    </span>
+                                                </div>
                                                 <div className='col'>
                                                     <b>{education.course}, {degreeTypes[education.type]}</b>
                                                     <span className='info-value'>
@@ -333,9 +341,17 @@ function ProfileForm({ ...props }) {
                                     {user.languages.map((language, index) => (
                                         <div className='w-50' key={index}>
                                             <div className="round-card centered">
-                                                <span className="card-title">
-                                                    {`${language.language} (${languageLevels[language.level]})`}
-                                                </span>
+                                                <div className="row gap-10">
+                                                    <span className="card-title">
+                                                        {`${language.language} (${languageLevels[language.level]})`}
+                                                    </span>
+                                                    <span className='card-value white pointer' onClick={() => {
+                                                        setShowLanguageModal(true)
+                                                        setEditLanguage({ ...language, index: index })
+                                                    }}>
+                                                        <FontAwesomeIcon className="text-dark" icon={faPen} />
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     ))}
@@ -498,13 +514,14 @@ function ProfileForm({ ...props }) {
                         e.stopPropagation()
 
                         let educationList = [...(user.education || [])]
-                        if (editEducation.index) {
+                        if (editEducation.index !== null) {
                             educationList[editEducation.index] = { ...editEducation }
                         } else {
                             educationList = [...educationList, editEducation]
                         }
                         setUser({ ...user, education: educationList })
                         setEditEducation({ ...initialEducation })
+                        closeEducationModal()
 
                     }}>
                     <div className="row w-100">
@@ -571,8 +588,8 @@ function ProfileForm({ ...props }) {
                         </div>
                     </div>
                     <div className="row justify-right vertical-center gap-25">
-                        <button className="button-rounded green text-white" type="submit">
-                            Add
+                        <button className={`button-rounded ${editEducation.index !== null ? "yellow" : "green"} text-white`} type="submit">
+                            {editEducation.index !== null ? "Edit" : "Add"}
                         </button>
                     </div>
                 </form>
@@ -584,7 +601,7 @@ function ProfileForm({ ...props }) {
                         e.stopPropagation()
 
                         let langList = [...(user.languages || [])]
-                        if (editLanguage.index) {
+                        if (editLanguage.index !== null) {
                             langList[editLanguage.index] = { ...editLanguage }
                         } else {
                             langList = [...langList, editLanguage]
@@ -629,8 +646,8 @@ function ProfileForm({ ...props }) {
                         </div>
                     </div>
                     <div className="row justify-right vertical-center gap-25">
-                        <button className="button-rounded green text-white" type="submit">
-                            Add
+                        <button className={`button-rounded ${editLanguage.index !== null ? "yellow" : "green"} text-white`} type="submit">
+                            {editLanguage.index !== null ? "Edit" : "Add"}
                         </button>
                     </div>
                 </form>

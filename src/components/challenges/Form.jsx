@@ -58,7 +58,7 @@ function ChallengeForm({ ...props }) {
         level: null,
         type: null,
         answerType: null,
-        answers: []
+        options: []
     }
 
     const initialTechnology = {
@@ -127,7 +127,6 @@ function ChallengeForm({ ...props }) {
             setLoadingChallenge(true)
             axios.get(`${consts.LOCAL_API}/challenges/${challengeId}`)
                 .then(res => {
-                    console.log(res.data)
                     setChallenge(res.data || { ...initialChallenge })
                 }).catch(err => {
                     console.error(err)
@@ -200,7 +199,6 @@ function ChallengeForm({ ...props }) {
                                                 <button type='button' className="round-icon yellow pointer" disabled={loadingChallenge}
                                                     onClick={() => {
                                                         setShowCategoryModal(true)
-                                                        console.log(categories)
                                                         setEditCategory({ ...categories.find(c => parseInt(c.id) === parseInt(challenge.category.id)) })
                                                     }}>
                                                     <FontAwesomeIcon icon={fa.faPen} />
@@ -523,7 +521,7 @@ function ChallengeForm({ ...props }) {
                                     <div>
                                         <div className="round-icon green text-white pointer text-bigger"
                                             onClick={() => {
-                                                setEditQuestion({ ...editQuestion, answers: [...(editQuestion.answers || []), { value: (newQuestionAnswer || ""), correctAnswer: false }] })
+                                                setEditQuestion({ ...editQuestion, options: [...(editQuestion.options || []), { value: (newQuestionAnswer || ""), correctAnswer: false }] })
                                                 setNewQuestionAnswer("")
                                             }}>
                                             <FontAwesomeIcon icon={fa.faPlus} />
@@ -534,9 +532,9 @@ function ChallengeForm({ ...props }) {
                         </div>
                         <div className="w-100 col p-10 gap-10">
                             <span className='text-big text-thick'>Answer Options</span>
-                            {editQuestion.answers?.length > 0 ?
+                            {editQuestion.options?.length > 0 ?
                                 <div className='row gap-10 wrap p-5'>
-                                    {editQuestion.answers?.map((answer, index) => (
+                                    {editQuestion.options?.map((answer, index) => (
                                         <div className="col" key={index}>
                                             <div className="button-flat dark text-white">
                                                 {answer.value}
@@ -544,17 +542,17 @@ function ChallengeForm({ ...props }) {
                                             <div className='row'>
                                                 <input type="checkbox" name={`check-${index}`} id={`check-${index}`}
                                                     onChange={() => {
-                                                        let answerList = [...editQuestion.answers]
+                                                        let answerList = [...editQuestion.options]
                                                         answerList[index].correctAnswer = !answerList[index].correctAnswer
-                                                        setEditQuestion({ ...editQuestion, answers: answerList })
+                                                        setEditQuestion({ ...editQuestion, options: answerList })
                                                     }}
                                                     checked={answer.correctAnswer} />
                                                 <label className="check-label" for={`check-${index}`}>Correct answer</label>
                                                 <FontAwesomeIcon icon={fa.faTrashAlt} className="to-right text-red p-5 pointer"
                                                     onClick={() => {
-                                                        let answerList = [...editQuestion.answers]
+                                                        let answerList = [...editQuestion.options]
                                                         answerList.splice(index, 1)
-                                                        setEditQuestion({ ...editQuestion, answers: answerList })
+                                                        setEditQuestion({ ...editQuestion, options: answerList })
                                                     }} />
                                             </div>
                                         </div>
@@ -630,7 +628,7 @@ function ChallengeForm({ ...props }) {
                                                             {questionLevels[question.level]}
                                                         </td>
                                                         <td className='p-10 text-center'>
-                                                            {question.answers?.length || 0}
+                                                            {question.options?.length || 0}
                                                         </td>
                                                         <td className='p-10 row'>
                                                             <button className="round-icon text-bigger pointer" type="button"

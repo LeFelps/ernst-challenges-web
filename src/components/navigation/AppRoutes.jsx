@@ -23,7 +23,7 @@ function AppRoutes({ removeUser, ...props }) {
         <Routes>
             {/* Route for standard landing page */}
             {/* TODO -> Add 'directions' or 'gaphs' page */}
-            <Route path='/' exact element={<div />}></Route>
+            {/* <Route path='/' exact element={<div />}></Route> */}
 
             <> {/* CHALLENGES */}
                 {/* Route for challegne list */}
@@ -67,8 +67,10 @@ function AppRoutes({ removeUser, ...props }) {
                 {/* Route for user form */}
                 <Route path='/profile-form' element={<ProfileForm />}></Route>
 
-                {/* ROute for user list */}
+                {/* Route for user list */}
                 <Route path='/heros' element={<ProfileList />}></Route>
+                <Route path='/job-applications/:jobId' element={<ProfileList />}></Route>
+
             </>
 
 
@@ -78,7 +80,7 @@ function AppRoutes({ removeUser, ...props }) {
             {/* Fallback route for unmapped locations */}
             <Route
                 path="*"
-                element={<Navigate to="/" replace />}
+                element={<Navigate to="/challenges" replace />}
             />
         </Routes>
     )

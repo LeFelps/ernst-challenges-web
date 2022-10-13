@@ -57,7 +57,6 @@ function ChallengeView() {
     function sendSubmission(submission) {
 
         const type = submission.existing ? "put" : "post"
-        console.log(submission)
         axios[type](`${consts.LOCAL_API}/challenge-submissions`, submission)
             .then(resp => {
 

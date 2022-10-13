@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import consts from '../../consts';
 import profileLogo from '../../profile.svg';
 import { getJobLevels } from '../utilities/functions/knownLists';
@@ -13,8 +13,10 @@ function ProfileList() {
 
     const [users, setUsers] = useState([])
 
+    const { jobId } = useParams()
+
     useEffect(() => {
-        axios.get(`${consts.LOCAL_API}/users/public`)
+        axios.get(`${consts.LOCAL_API}/users/public${jobId ? '?byJob=' + jobId : ''}`)
             .then(response => {
                 setUsers(response.data || [])
             }).catch(err => {
@@ -24,17 +26,19 @@ function ProfileList() {
 
     return (
         <div className="content">
-            <div className="content-description">
-                <p className='text-title'>
-                    The Heros
-                </p>
-                <p className='text-secondary'>
-                    Look at how your fellow adventurers are doing!
-                </p>
-            </div>
+            {!jobId ?
+                <div className="content-description">
+                    <p className='text-title'>
+                        The Heros
+                    </p>
+                    <p className='text-secondary'>
+                        Look at how your fellow adventurers are doing!
+                    </p>
+                </div>
+                : <></>}
             <div className="list-container col gap-25">
                 {users.map((user, index) => (
-                    <NavLink to={`/user/${user.id}`}  className='long-card' style={{ boxShadow: `7px 0px 0px ${user.category?.accentColor || '#CCC'} inset` }}>
+                    <NavLink to={`/user/${user.id}`} className='long-card' style={{ boxShadow: `7px 0px 0px ${user.category?.accentColor || '#CCC'} inset` }}>
                         {console.log(user)}
                         <div className='long-card-title'>
                             {user.fullName}

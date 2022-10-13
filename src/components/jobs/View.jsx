@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import missingImg from '../../missing.png';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
@@ -13,6 +13,8 @@ function JobView() {
 
     const { id } = useParams()
     const userId = JSON.parse(localStorage.getItem('user')).id
+
+    const navigate = useNavigate()
 
     const [job, setJob] = useState({
         title: null,
@@ -114,7 +116,9 @@ function JobView() {
                                 applyTojob()
                             }}>Apply for Job</button>)
                     }
-                    {/* <button className="button-flat blue text-white">Applications</button> */}
+                    <button className="button-flat blue text-white" onClick={e => {
+                        navigate(`/job-applications/${id}`)
+                    }}>Applications</button>
                 </div>
                 <div className='list-container'>
                     <b className='group-title text-center'>

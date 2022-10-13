@@ -157,11 +157,12 @@ function ProfileView({ removeUser = false, readOnly, ...props }) {
                 <div className="list-container col">
                     <div className="row gap-25">
                         <b className='group-title text-center'>
-                            Inventory Highlights
+                            Inventory
+                            {/* Highlights */}
                         </b>
-                        <span className='card-value green pointer'>
+                        {/* <span className='card-value green pointer'>
                             View all
-                        </span>
+                        </span> */}
                     </div>
                     <div className="p-25">
                         <div className='row gap-35'>
@@ -169,13 +170,13 @@ function ProfileView({ removeUser = false, readOnly, ...props }) {
                                 <div className="row w-50 gap-15 vertical-center">
                                     <div>
                                         <div className='card-sm' onClick={() => { }}>
-                                            <FontAwesomeIcon icon={fa[challenge.icon]} className="card-image" style={{ color: '#188EB9' }} />
+                                            <FontAwesomeIcon icon={fa[challenge.icon]} className="card-image" style={{ color: challenge.accentColor }} />
                                         </div>
                                     </div>
                                     <div className="col w-100">
                                         <div className='card-description-sm'>
                                             <p>
-                                                Shopping Cart
+                                                {challenge.title}
                                             </p>
                                         </div>
                                         <div>
@@ -186,7 +187,6 @@ function ProfileView({ removeUser = false, readOnly, ...props }) {
                                             <div className="progress-bar maxw-200">
                                                 {challenge.checkpoints ?
                                                     challenge.checkpoints.sort((a, b) => {
-                                                        console.log(a.submissionCompleted, b.submissionCompleted, a.submissionCompleted > b.submissionCompleted)
                                                         if (a.submissionCompleted > b.submissionCompleted) {
                                                             return -1;
                                                         }
@@ -211,11 +211,11 @@ function ProfileView({ removeUser = false, readOnly, ...props }) {
                         <b className='group-title text-center'>
                             My Job Applications
                         </b>
-                        {appliedJobs.length > 0 ?
+                        {/* {appliedJobs.length > 0 ?
                             <span className='card-value green pointer'>
                                 View all
                             </span>
-                            : <></>}
+                            : <></>} */}
                     </div>
                     <div className='list-container col gap-15'>
                         {appliedJobs.length > 0 ?

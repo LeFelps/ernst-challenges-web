@@ -4,6 +4,7 @@ import './App.css';
 import Dashboard from './components/navigation/Dashboard';
 import Auth from './components/auth/Auth';
 import { ToastProvider } from './components/utilities/toast/ToastContext';
+import { BattleProvider } from './components/utilities/battle/BattleProvider';
 import ToastContainer from './components/utilities/toast/ToastContainer';
 
 
@@ -14,12 +15,14 @@ function App() {
   return (
     <div className="app">
       <ToastProvider>
-        <ToastContainer />
-        {user ?
-          <Dashboard removeUser={() => setUser(null)} />
-          :
-          <Auth setUser={setUser} />
-        }
+        <BattleProvider>
+          <ToastContainer />
+          {user ?
+            <Dashboard removeUser={() => setUser(null)} />
+            :
+            <Auth setUser={setUser} />
+          }
+        </BattleProvider>
       </ToastProvider>
     </div>
   );
