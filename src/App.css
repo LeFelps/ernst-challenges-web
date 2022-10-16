@@ -1416,6 +1416,10 @@ a {
   animation: spin infinite .9s linear;
 }
 
+.row-of-2 {
+  flex: 1 0 40%;
+}
+
 @keyframes spin {
   from {
     transform: rotate(0deg);

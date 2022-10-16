@@ -14,6 +14,8 @@ function OpponentList() {
 
     const [opponents, setOpponents] = useState([])
 
+    const role = JSON.parse(localStorage.getItem('user')).role
+
     const levels = {
         EASY: "Easy",
         MEDIUM: "Medium",
@@ -78,22 +80,26 @@ function OpponentList() {
                                 </div>
                             </div>
                         </div>
-                        <button type="button" className='round-button yellow long-card-br'
-                            onClick={() => {
-                                navigate(`/opponent-form/${opponent.id}`)
-                            }}>
-                            <FontAwesomeIcon icon={faPen} className="card-image" />
-                        </button>
+                        {role === "ADMIN" ?
+                            <button type="button" className='round-button yellow long-card-br'
+                                onClick={() => {
+                                    navigate(`/opponent-form/${opponent.id}`)
+                                }}>
+                                <FontAwesomeIcon icon={faPen} className="card-image" />
+                            </button>
+                            : null}
                     </div>
                 </div>
             ))}
             <div className="list-container">
-                <div className="row centered w-100">
-                    <NavLink to="/opponent-form/new" className="add-button text-thick">
-                        <FontAwesomeIcon icon={faPlus} />
-                        <span>Add Opponent</span>
-                    </NavLink>
-                </div>
+                {role === "ADMIN" ?
+                    <div className="row centered w-100">
+                        <NavLink to="/opponent-form/new" className="add-button text-thick">
+                            <FontAwesomeIcon icon={faPlus} />
+                            <span>Add Opponent</span>
+                        </NavLink>
+                    </div>
+                    : null}
             </div>
         </div>
     );

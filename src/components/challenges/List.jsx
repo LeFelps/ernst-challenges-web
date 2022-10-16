@@ -15,6 +15,8 @@ function ChallengeList() {
     const [showDeleteCategoryModal, setShowDeleteCategoryModal] = useState(false)
     const [selectedCategory, setSelectedCategory] = useState({})
 
+    const role = JSON.parse(localStorage.getItem('user')).role
+
     function closeDeleteCategoryModal() {
         setShowDeleteCategoryModal(false)
     }
@@ -55,19 +57,22 @@ function ChallengeList() {
                 </p>
             </div>
 
+
             {categoryList.map((category, index) => (
-                <div className='list-container' key={category.id}>
+                <div className='list-container' key={category.id} hidden={role !== "ADMIN" && category.challenges?.length <= 0}>
                     <div className="row w-100 vertical-center" style={{ color: category.accentColor }}>
                         <span className='group-title'>
                             {category.name}
                         </span>
-                        <button type="button" className="round-icon white pointer text-center to-right"
-                            onClick={() => {
-                                setSelectedCategory(category)
-                                setShowDeleteCategoryModal(true)
-                            }}>
-                            <FontAwesomeIcon icon={fa.faTrashAlt} className="text-light text-big" />
-                        </button>
+                        {role === "ADMIN" ?
+                            <button type="button" className="round-icon white pointer text-center to-right"
+                                onClick={() => {
+                                    setSelectedCategory(category)
+                                    setShowDeleteCategoryModal(true)
+                                }}>
+                                <FontAwesomeIcon icon={fa.faTrashAlt} className="text-light text-big" />
+                            </button>
+                            : null}
                     </div>
                     <div className='card-group'>
                         {category.challenges?.map((challenge, index) => (
@@ -85,25 +90,29 @@ function ChallengeList() {
                                 </div>
                             </NavLink>
                         ))}
-                        <NavLink to={`/challenge-form/new/${category.id}`}>
-                            <div className='card-add'>
-                                <FontAwesomeIcon icon={fa.faPlus} className="card-add-image text-white" />
-                            </div>
-                        </NavLink>
+                        {role === "ADMIN" ?
+                            <NavLink to={`/challenge-form/new/${category.id}`}>
+                                <div className='card-add'>
+                                    <FontAwesomeIcon icon={fa.faPlus} className="card-add-image text-white" />
+                                </div>
+                            </NavLink>
+                            : null}
                     </div>
                 </div>
             ))}
 
             <div className="list-container">
-                <div className="row centered w-100">
-                    <button type="button" className="add-button text-thick"
-                        onClick={() => {
-                            setShowCategoryModal(true)
-                        }}>
-                        <FontAwesomeIcon icon={fa.faPlus} />
-                        <span>Add Category</span>
-                    </button>
-                </div>
+                {role === "ADMIN" ?
+                    <div className="row centered w-100">
+                        <button type="button" className="add-button text-thick"
+                            onClick={() => {
+                                setShowCategoryModal(true)
+                            }}>
+                            <FontAwesomeIcon icon={fa.faPlus} />
+                            <span>Add Category</span>
+                        </button>
+                    </div>
+                    : null}
             </div>
 
             <CategoryModal

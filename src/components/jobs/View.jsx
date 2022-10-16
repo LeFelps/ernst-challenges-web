@@ -13,6 +13,7 @@ function JobView() {
 
     const { id } = useParams()
     const userId = JSON.parse(localStorage.getItem('user')).id
+    const role = JSON.parse(localStorage.getItem('user')).role
 
     const navigate = useNavigate()
 
@@ -96,17 +97,15 @@ function JobView() {
                                 }
                             </div>
                         </div>
-                        <NavLink to={`/job-form/${job.id}`} className='round-button yellow long-card-br'>
-                            <FontAwesomeIcon icon={faPen} className="card-image" />
-                        </NavLink>
+                        {role === "ADMIN" ?
+                            <NavLink to={`/job-form/${job.id}`} className='round-button yellow long-card-br'>
+                                <FontAwesomeIcon icon={faPen} className="card-image" />
+                            </NavLink>
+                            : null}
                     </div>
                 </div>
                 <div className="row centered gap-25">
-                    {/* 
-                        TODO
-                        JOB APPLICATIONS LIST
-                    */}
-                    {appliedToJob !== undefined && (appliedToJob ?
+                    {role !== "ADMIN" ? appliedToJob !== undefined && (appliedToJob ?
                         <button className="button-flat red text-white"
                             onClick={() => {
                                 removeApplication()
@@ -115,10 +114,12 @@ function JobView() {
                             onClick={() => {
                                 applyTojob()
                             }}>Apply for Job</button>)
-                    }
-                    <button className="button-flat blue text-white" onClick={e => {
-                        navigate(`/job-applications/${id}`)
-                    }}>Applications</button>
+                        : null}
+                    {role === "ADMIN" ?
+                        <button className="button-flat blue text-white" onClick={e => {
+                            navigate(`/job-applications/${id}`)
+                        }}>Applications</button>
+                        : null}
                 </div>
                 <div className='list-container'>
                     <b className='group-title text-center'>

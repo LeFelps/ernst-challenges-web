@@ -11,6 +11,7 @@ function ChallengeView() {
     const { id } = useParams()
 
     const userId = JSON.parse(localStorage.getItem('user')).id
+    const role = JSON.parse(localStorage.getItem('user')).role
 
     const [challenge, setChallenge] = useState({
         category: {
@@ -76,9 +77,11 @@ function ChallengeView() {
                         <div>
                             <div className='card-sm'>
                                 <FontAwesomeIcon icon={fa[challenge.icon]} className="card-image" style={{ color: challenge.category?.accentColor }} />
-                                <NavLink to={`/challenge-form/${challenge.id}`} className='round-icon yellow text-dark card-sm-br'>
-                                    <FontAwesomeIcon icon={fa.faPen} className="card-image" />
-                                </NavLink>
+                                {role === "ADMIN" ?
+                                    <NavLink to={`/challenge-form/${challenge.id}`} className='round-icon yellow text-dark card-sm-br'>
+                                        <FontAwesomeIcon icon={fa.faPen} className="card-image" />
+                                    </NavLink>
+                                    : null}
                             </div>
                         </div>
                         <div className="col gap-15 centered text-small lm-25">
@@ -120,59 +123,61 @@ function ChallengeView() {
                             <p>
                                 {checkpoint.description}
                             </p>
-                            <div className="row gap-10">
-                                <div className='input-group-50'>
-                                    <label>Submission link</label>
-                                    <input type="text" className='input-field'
-                                        onChange={(e) => {
-                                            let checkpointList = [...checkpoints]
-                                            checkpointList[index].submission.link = e.target.value
-                                            setCheckpoints([...checkpointList])
-                                        }} value={checkpoint.submission?.link || ""}
-                                    />
-                                    <span className='input-description'>
-                                        This can be either a github repository or codepen example
-                                    </span>
-                                </div>
-                                <div className="vertical-center w-50 gap-15 row">
-                                    {checkpoint.submission?.completed ?
-                                        <div className="row w-100 gap-15 vertical-center">
-                                            <button type="button" className='round-icon green text-white pointer'
-                                                onClick={() => {
-                                                    let checkpointList = [...checkpoints]
-                                                    checkpointList[index].submission.completed = false
-                                                    setCheckpoints([...checkpointList])
-                                                }}>
-                                                <FontAwesomeIcon icon={fa.faCheck} className="card-image" />
+                            {role !== "ADMIN" ?
+                                <div className="row gap-10">
+                                    <div className='input-group-50'>
+                                        <label>Submission link</label>
+                                        <input type="text" className='input-field'
+                                            onChange={(e) => {
+                                                let checkpointList = [...checkpoints]
+                                                checkpointList[index].submission.link = e.target.value
+                                                setCheckpoints([...checkpointList])
+                                            }} value={checkpoint.submission?.link || ""}
+                                        />
+                                        <span className='input-description'>
+                                            This can be either a github repository or codepen example
+                                        </span>
+                                    </div>
+                                    <div className="vertical-center w-50 gap-15 row">
+                                        {checkpoint.submission?.completed ?
+                                            <div className="row w-100 gap-15 vertical-center">
+                                                <button type="button" className='round-icon green text-white pointer'
+                                                    onClick={() => {
+                                                        let checkpointList = [...checkpoints]
+                                                        checkpointList[index].submission.completed = false
+                                                        setCheckpoints([...checkpointList])
+                                                    }}>
+                                                    <FontAwesomeIcon icon={fa.faCheck} className="card-image" />
+                                                </button>
+                                                <span className="text-thicker">Completed</span>
+                                            </div>
+                                            :
+                                            <div className="row w-100 gap-15 vertical-center">
+                                                <button type="button" className='round-icon yellow text-black pointer'
+                                                    onClick={() => {
+                                                        let checkpointList = [...checkpoints]
+                                                        checkpointList[index].submission.completed = true
+                                                        setCheckpoints([...checkpointList])
+                                                    }}>
+                                                    <FontAwesomeIcon icon={fa.faBarsProgress} className="card-image" />
+                                                </button>
+                                                <span className="text-thicker">Ongoing</span>
+                                            </div>
+                                        }
+                                        <div className="div to-right">
+                                            <button type="button"
+                                                className="button-rounded green text-white to-right"
+                                                onClick={() => sendSubmission({
+                                                    ...checkpoint.submission,
+                                                    userId: userId,
+                                                    checkpointId: checkpoint.id
+                                                })}>
+                                                Send
                                             </button>
-                                            <span className="text-thicker">Completed</span>
                                         </div>
-                                        :
-                                        <div className="row w-100 gap-15 vertical-center">
-                                            <button type="button" className='round-icon yellow text-black pointer'
-                                                onClick={() => {
-                                                    let checkpointList = [...checkpoints]
-                                                    checkpointList[index].submission.completed = true
-                                                    setCheckpoints([...checkpointList])
-                                                }}>
-                                                <FontAwesomeIcon icon={fa.faBarsProgress} className="card-image" />
-                                            </button>
-                                            <span className="text-thicker">Ongoing</span>
-                                        </div>
-                                    }
-                                    <div className="div to-right">
-                                        <button type="button"
-                                            className="button-rounded green text-white to-right"
-                                            onClick={() => sendSubmission({
-                                                ...checkpoint.submission,
-                                                userId: userId,
-                                                checkpointId: checkpoint.id
-                                            })}>
-                                            Send
-                                        </button>
                                     </div>
                                 </div>
-                            </div>
+                                : null}
                         </div>
                         <div className='list-container'>
                             <b className='group-title text-center'>

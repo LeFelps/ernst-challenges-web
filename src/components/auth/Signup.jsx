@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import challengesLogo from '../../challenges-logo.svg'
 import consts from '../../consts';
 
 
@@ -12,6 +11,7 @@ function Signup({ saveUser, ...props }) {
         password: '',
         email: '',
         passwordConfirm: '',
+        role: 'PLAYER',
     })
 
     const navigate = useNavigate()

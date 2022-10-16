@@ -10,6 +10,8 @@ function JobList() {
 
     const [jobList, setjobList] = useState([])
 
+    const role = JSON.parse(localStorage.getItem('user')).role
+
     useEffect(() => {
         axios.get(`${consts.LOCAL_API}/jobs`)
             .then((response) => {
@@ -66,15 +68,17 @@ function JobList() {
             ))
             }
             <div className="list-container">
-                <div className="row centered w-100">
-                    <button type="button" className="add-button text-thick"
-                        onClick={() => {
-                            navigate('/job-form/new')
-                        }}>
-                        <FontAwesomeIcon icon={faPlus} />
-                        <span>Add Job</span>
-                    </button>
-                </div>
+                {role === "ADMIN" ?
+                    <div className="row centered w-100">
+                        <button type="button" className="add-button text-thick"
+                            onClick={() => {
+                                navigate('/job-form/new')
+                            }}>
+                            <FontAwesomeIcon icon={faPlus} />
+                            <span>Add Job</span>
+                        </button>
+                    </div>
+                    : null}
             </div>
         </div >
     );

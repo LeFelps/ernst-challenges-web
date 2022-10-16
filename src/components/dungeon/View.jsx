@@ -16,6 +16,7 @@ function OpponentView() {
     const { setBattle, battle } = useContext(BattleContext);
 
     const userId = JSON.parse(localStorage.getItem('user')).id
+    const role = JSON.parse(localStorage.getItem('user')).role
 
     const [opponent, setOpponent] = useState({})
 
@@ -104,10 +105,12 @@ function OpponentView() {
                 <div className="list-container col gap-15">
                     <div className="row">
                         <span className="group-title">Your opponent is...</span>
-                        <NavLink to="/opponent-form/new" className="add-button to-right">
-                            <FontAwesomeIcon icon={fa.faPlus} />
-                            <span>Add opponent</span>
-                        </NavLink>
+                        {role === "ADMIN" ?
+                            <NavLink to="/opponent-form/new" className="add-button to-right">
+                                <FontAwesomeIcon icon={fa.faPlus} />
+                                <span>Add opponent</span>
+                            </NavLink>
+                            : null}
                     </div>
                     {opponent.id ?
                         <div className={`long-card highlight-left-${colors[opponent.level]}`}>
@@ -140,9 +143,11 @@ function OpponentView() {
                                     </div>
                                 </div>
                             </div>
-                            <NavLink to={`/opponent-form/${opponent.id}`} className='round-button yellow long-card-br'>
-                                <FontAwesomeIcon icon={fa.faPen} className="card-image" />
-                            </NavLink>
+                            {role === "ADMIN" ?
+                                <NavLink to={`/opponent-form/${opponent.id}`} className='round-button yellow long-card-br'>
+                                    <FontAwesomeIcon icon={fa.faPen} className="card-image" />
+                                </NavLink>
+                                : null}
                         </div>
                         :
                         <div className="row centered w-100">
@@ -261,11 +266,11 @@ function OpponentView() {
                     <div className="col gap-35 p-25">
                         <div className='row gap-35'>
                             <div className="round-card w-50 gap-15">
-                                <FontAwesomeIcon icon={fa.faClock} className="text-bigger" />
+                                <FontAwesomeIcon icon={fa.faCircleCheck} className="text-bigger" />
                                 <span className="card-title">
-                                    Average answer time
+                                    Completed fights
                                 </span>
-                                <span className='card-value purple'>45s</span>
+                                <span className='card-value orange'>107</span>
                             </div>
                             <div className="round-card w-50 gap-15">
                                 <FontAwesomeIcon icon={fa.faStar} className="text-bigger" />
@@ -290,16 +295,6 @@ function OpponentView() {
                                 </span>
                                 <span className='card-value blue'>60%</span>
                             </div>
-                        </div>
-                        <div className='row gap-35'>
-                            <div className="round-card w-50 gap-15">
-                                <FontAwesomeIcon icon={fa.faCircleCheck} className="text-bigger" />
-                                <span className="card-title">
-                                    Completed fights
-                                </span>
-                                <span className='card-value orange'>107</span>
-                            </div>
-                            <div className="w-50" />
                         </div>
                     </div>
                 </div>

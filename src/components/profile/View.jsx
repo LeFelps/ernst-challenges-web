@@ -7,13 +7,14 @@ import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import consts from '../../consts';
 import missingImg from '../../missing.png';
 import profileLogo from '../../profile.svg';
-import { getJobLevels, getLanguageLevels } from '../utilities/functions/knownLists.js'
+import { getJobLevels, getLanguageLevels, getDegreeTypes } from '../utilities/functions/knownLists.js'
 
 function ProfileView({ removeUser = false, readOnly, ...props }) {
 
     const { id } = useParams()
 
     const userId = id || JSON.parse(localStorage.getItem('user')).id
+    const role = JSON.parse(localStorage.getItem('user')).role
 
     const initialUser = {
         fullName: "",
@@ -36,6 +37,8 @@ function ProfileView({ removeUser = false, readOnly, ...props }) {
 
     const [appliedJobs, setAppliedJobs] = useState([])
     const languageLevels = getLanguageLevels()
+
+    const degreeTypes = getDegreeTypes()
 
     const [challenges, setChallenges] = useState([])
 
@@ -142,7 +145,7 @@ function ProfileView({ removeUser = false, readOnly, ...props }) {
                             : <></>}
                     </div>
                     <div className="row centered">
-                        {!readOnly ?
+                        {role !== "ADMIN" ? !readOnly ?
                             <button type='button' className={`button-flat ${user.public ? ' red ' : ' green '} text-white`}
                                 onClick={() => changeUserVisibility()}>
                                 {user.public ?
@@ -151,107 +154,111 @@ function ProfileView({ removeUser = false, readOnly, ...props }) {
                                     'Make Profile Public'
                                 }
                             </button>
-                            : <></>}
+                            : null : null}
                     </div>
                 </div>
-                <div className="list-container col">
-                    <div className="row gap-25">
-                        <b className='group-title text-center'>
-                            Inventory
-                            {/* Highlights */}
-                        </b>
-                        {/* <span className='card-value green pointer'>
+                {role !== "ADMIN" || readOnly ?
+                    <>
+                        <div className="list-container col">
+                            <div className="row gap-25">
+                                <b className='group-title text-center'>
+                                    Inventory
+                                    {/* Highlights */}
+                                </b>
+                                {/* <span className='card-value green pointer'>
                             View all
                         </span> */}
-                    </div>
-                    <div className="p-25">
-                        <div className='row gap-35'>
-                            {challenges.map((challenge, index) => (
-                                <div className="row w-50 gap-15 vertical-center">
-                                    <div>
-                                        <div className='card-sm' onClick={() => { }}>
-                                            <FontAwesomeIcon icon={fa[challenge.icon]} className="card-image" style={{ color: challenge.accentColor }} />
-                                        </div>
-                                    </div>
-                                    <div className="col w-100">
-                                        <div className='card-description-sm'>
-                                            <p>
-                                                {challenge.title}
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <span>
-                                                <b className="text-big">Level {challenge.checkpoints?.filter(c => c.submissionCompleted)?.length || '0'}</b>
-                                                <span className="text-small text-light">/{challenge.checkpoints?.length || '0'}</span>
-                                            </span>
-                                            <div className="progress-bar maxw-200">
-                                                {challenge.checkpoints ?
-                                                    challenge.checkpoints.sort((a, b) => {
-                                                        if (a.submissionCompleted > b.submissionCompleted) {
-                                                            return -1;
-                                                        }
-                                                        if (a.submissionCompleted < b.submissionCompleted) {
-                                                            return 1;
-                                                        }
-                                                        return 0;
-                                                    }).map((checkpoint, index) => (
-                                                        <div className={`progress-bar-item ${checkpoint.submissionCompleted === true ? ' blue ' : ' lightgray '}`} />
-                                                    ))
-                                                    : <div className={`progress-bar-item lightgray`} />}
+                            </div>
+                            <div className="p-25">
+                                <div className='row wrap gap-35'>
+                                    {challenges.map((challenge, index) => (
+                                        <div className="row-of-2 row w-50 gap-15 vertical-center">
+                                            <div>
+                                                <div className='card-sm' onClick={() => { }}>
+                                                    <FontAwesomeIcon icon={fa[challenge.icon]} className="card-image" style={{ color: challenge.accentColor }} />
+                                                </div>
+                                            </div>
+                                            <div className="col w-100">
+                                                <div className='card-description-sm'>
+                                                    <p>
+                                                        {challenge.title}
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <span>
+                                                        <b className="text-big">Level {challenge.checkpoints?.filter(c => c.submissionCompleted)?.length || '0'}</b>
+                                                        <span className="text-small text-light">/{challenge.checkpoints?.length || '0'}</span>
+                                                    </span>
+                                                    <div className="progress-bar maxw-200">
+                                                        {challenge.checkpoints ?
+                                                            challenge.checkpoints.sort((a, b) => {
+                                                                if (a.submissionCompleted > b.submissionCompleted) {
+                                                                    return -1;
+                                                                }
+                                                                if (a.submissionCompleted < b.submissionCompleted) {
+                                                                    return 1;
+                                                                }
+                                                                return 0;
+                                                            }).map((checkpoint, index) => (
+                                                                <div className={`progress-bar-item ${checkpoint.submissionCompleted === true ? ' blue ' : ' lightgray '}`} />
+                                                            ))
+                                                            : <div className={`progress-bar-item lightgray`} />}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    ))}
                                 </div>
-                            ))}
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div className="list-container col">
-                    <div className="row gap-25">
-                        <b className='group-title text-center'>
-                            My Job Applications
-                        </b>
-                        {/* {appliedJobs.length > 0 ?
+                        <div className="list-container col">
+                            <div className="row gap-25">
+                                <b className='group-title text-center'>
+                                    My Job Applications
+                                </b>
+                                {/* {appliedJobs.length > 0 ?
                             <span className='card-value green pointer'>
                                 View all
                             </span>
                             : <></>} */}
-                    </div>
-                    <div className='list-container col gap-15'>
-                        {appliedJobs.length > 0 ?
-                            appliedJobs.map((job) => (
-                                <NavLink to={`/job/${job.id}`} className='long-card highlight-left-blue'>
-                                    <div className='long-card-title text-blue'>
-                                        {job.title} • {jobLevels[job.level]}
-                                    </div>
-                                    <div className='long-card-content gap-15'>
-                                        <img src={missingImg} alt="" className='company-logo' />
-                                        <div className='align-center'>
-                                            <p className='info-name'>{job.companyName}</p>
-                                            {!job.displaySalary ?
-                                                <p className='info-value'>{job.salary}</p>
-                                                : null}
-                                            {job.compensations?.length > 0 ?
-                                                <div className='info-extra'>
-                                                    <FontAwesomeIcon className='icon-margin-right' icon={fa.faPlusCircle} color='#188EB9' />
-                                                    <p>
-                                                        Benefits
-                                                    </p>
+                            </div>
+                            <div className='list-container col gap-15'>
+                                {appliedJobs.length > 0 ?
+                                    appliedJobs.map((job) => (
+                                        <NavLink to={`/job/${job.id}`} className='long-card' style={{ boxShadow: `7px 0px 0px ${job?.accentColor || '#CCC'} inset` }}>
+                                            <div className='long-card-title' style={{ color: job?.accentColor || '#CCC' }}>
+                                                {job.title} • {jobLevels[job.level]}
+                                            </div>
+                                            <div className='long-card-content gap-15'>
+                                                <img src={missingImg} alt="" className='company-logo' />
+                                                <div className='align-center'>
+                                                    <p className='info-name'>{job.companyName}</p>
+                                                    {!job.displaySalary ?
+                                                        <p className='info-value'>{job.salary}</p>
+                                                        : null}
+                                                    {job.compensations?.length > 0 ?
+                                                        <div className='info-extra'>
+                                                            <FontAwesomeIcon className='icon-margin-right' icon={fa.faPlusCircle} color={job?.accentColor} />
+                                                            <p>
+                                                                Benefits
+                                                            </p>
+                                                        </div>
+                                                        : null}
                                                 </div>
-                                                : null}
+                                            </div>
+                                        </NavLink>
+                                    ))
+                                    : <>
+                                        <div className="row centered w-100">
+                                            <span className="text-gray no-select">
+                                                No Current Job Applications
+                                            </span>
                                         </div>
-                                    </div>
-                                </NavLink>
-                            ))
-                            : <>
-                                <div className="row centered w-100">
-                                    <span className="text-gray no-select">
-                                        No Current Job Applications
-                                    </span>
-                                </div>
-                            </>}
-                    </div>
-                </div>
+                                    </>}
+                            </div>
+                        </div>
+                    </>
+                    : null}
                 <div className='list-container col gap-15'>
                     <div className="row">
                         <span className="group-title">Work Experience</span>
@@ -300,7 +307,7 @@ function ProfileView({ removeUser = false, readOnly, ...props }) {
                                         <div className='col gap-15'>
                                             <span className='info-name'>{education.name}</span>
                                             <div className='col'>
-                                                <b>{education.course}, {education.type}</b>
+                                                <b>{education.course}, {degreeTypes[education.type]}</b>
                                                 <span className='info-value'>
                                                     {
                                                         education.timeStart.split("-")[0]

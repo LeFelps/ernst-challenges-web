@@ -5,6 +5,9 @@ import profileLogo from '../../profile.svg';
 import AppRoutes from './AppRoutes';
 
 function Dashboard({ removeUser, ...props }) {
+
+    const role = JSON.parse(localStorage.getItem('user')).role
+
     return (
         <div className="app">
             <BrowserRouter>
@@ -44,17 +47,19 @@ function Dashboard({ removeUser, ...props }) {
                                 Heros
                             </p>
                         </NavLink>
-                        <NavLink
-                            className={({ isActive }) => {
-                                let linkClasses = 'nav-link';
-                                if (isActive) linkClasses = linkClasses + '-active';
-                                return linkClasses
-                            }}
-                            to="/dungeon">
-                            <p>
-                                The Dungeon
-                            </p>
-                        </NavLink>
+                        {role !== "ADMIN" ?
+                            <NavLink
+                                className={({ isActive }) => {
+                                    let linkClasses = 'nav-link';
+                                    if (isActive) linkClasses = linkClasses + '-active';
+                                    return linkClasses
+                                }}
+                                to="/dungeon">
+                                <p>
+                                    The Dungeon
+                                </p>
+                            </NavLink>
+                            : null}
                         <NavLink to="/profile" className="nav-profile highlight-blue to-right" >
                             <img src={profileLogo} alt="Small profile" />
                         </NavLink>
